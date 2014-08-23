@@ -61,7 +61,7 @@ int _tmain(int argc, _TCHAR* argv[])
         n2 = FibonacciRecursive(i);
         tc2.End();
 
-        printf("Fibonacci(%d) : %d [%d], %d [%d]\n", i,
+        printf("Fibonacci(%d) : %4d [%4d], %4d [%4d]\n", i,
             n1, tc1.GetElapsedTimeInMS(), n2, tc2.GetElapsedTimeInMS());
     }
 
