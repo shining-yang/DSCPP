@@ -1,7 +1,13 @@
+//
+// HighResTimeCounter.h
+//
+// Shining @ 2014-08-23
+//
 #pragma once
 
 #include <Windows.h>
 
+// High resolution time counter
 class CHighResTimeCounter
 {
 public:

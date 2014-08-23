@@ -1,3 +1,8 @@
+//
+// TickCounter.h
+//
+// Shining @ 2014-08-23
+//
 #pragma once
 
 class CTickCounter

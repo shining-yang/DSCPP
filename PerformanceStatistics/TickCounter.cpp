@@ -1,3 +1,8 @@
+//
+// TickCounter.cpp
+//
+// Shining @ 2014-08-23
+//
 #include "stdafx.h"
 #include "TickCounter.h"
 
