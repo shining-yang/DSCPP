@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_Fibonacci", "01_Fibonacci\01_Fibonacci.vcxproj", "{4738BCB0-C8D4-4917-892E-11A4CCDBDC79}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C882E9C5-379E-4FEA-B0FB-535798FB6C66} = {C882E9C5-379E-4FEA-B0FB-535798FB6C66}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceStatistics", "PerformanceStatistics\PerformanceStatistics.vcxproj", "{C882E9C5-379E-4FEA-B0FB-535798FB6C66}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4738BCB0-C8D4-4917-892E-11A4CCDBDC79}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4738BCB0-C8D4-4917-892E-11A4CCDBDC79}.Debug|Win32.Build.0 = Debug|Win32
+		{4738BCB0-C8D4-4917-892E-11A4CCDBDC79}.Release|Win32.ActiveCfg = Release|Win32
+		{4738BCB0-C8D4-4917-892E-11A4CCDBDC79}.Release|Win32.Build.0 = Release|Win32
+		{C882E9C5-379E-4FEA-B0FB-535798FB6C66}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C882E9C5-379E-4FEA-B0FB-535798FB6C66}.Debug|Win32.Build.0 = Debug|Win32
+		{C882E9C5-379E-4FEA-B0FB-535798FB6C66}.Release|Win32.ActiveCfg = Release|Win32
+		{C882E9C5-379E-4FEA-B0FB-535798FB6C66}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
