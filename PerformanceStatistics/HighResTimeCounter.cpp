@@ -54,10 +54,12 @@ LARGE_INTEGER CHighResTimeCounter::GetElapsedTimeInMicroseconds()
 
 unsigned long CHighResTimeCounter::GetElapsedTimeInMS()
 {
-    return GetElapsedTimeInMicroseconds().QuadPart / 1000;
+    return static_cast<unsigned long>(
+        GetElapsedTimeInMicroseconds().QuadPart / 1000);
 }
 
 unsigned long CHighResTimeCounter::GetElapsedTimeInSeconds()
 {
-    return GetElapsedTimeInMicroseconds().QuadPart / 1000000;
+    return static_cast<unsigned long>(
+        GetElapsedTimeInMicroseconds().QuadPart / 1000000);
 }

@@ -1,5 +1,10 @@
 // 01_Fibonacci.cpp : Defines the entry point for the console application.
 //
+// Fibonacci
+//
+// F(1) = 1, F(2) = 1, F3 = 2, F4 = 3, ...., F(n) = F(n-1) + F(n-2)
+//
+
 
 #include "stdafx.h"
 
@@ -7,12 +12,6 @@
 #include "../PerformanceStatistics//HighResTimeCounter.h"
 
 #pragma comment(lib, "PerformanceStatistics")
-
-//
-// Fibonacci
-//
-// F(1) = 1, F(2) = 1, F3 = 2, F4 = 3, ...., F(n) = F(n-1) + F(n-2)
-//
 
 int Fibonacci(int n)
 {
