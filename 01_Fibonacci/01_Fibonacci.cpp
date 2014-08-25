@@ -9,7 +9,7 @@
 #include "stdafx.h"
 
 #include "../PerformanceStatistics/TickCounter.h"
-#include "../PerformanceStatistics//HighResTimeCounter.h"
+#include "../PerformanceStatistics/HighResTimeCounter.h"
 
 #pragma comment(lib, "PerformanceStatistics")
 
@@ -64,6 +64,6 @@ int _tmain(int argc, _TCHAR* argv[])
             n1, tc1.GetElapsedTimeInMS(), n2, tc2.GetElapsedTimeInMS());
     }
 
-	return 0;
+    return 0;
 }
 
