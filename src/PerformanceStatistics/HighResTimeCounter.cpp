@@ -1,9 +1,8 @@
 //
 // HighResTimeCounter.cpp
 //
-// Shining @ 2014-08-23
+// 2014-08-23, Shining Yang <y.s.n@live.com>
 //
-#include "stdafx.h"
 #include "HighResTimeCounter.h"
 
 
@@ -54,12 +53,14 @@ LARGE_INTEGER CHighResTimeCounter::GetElapsedTimeInMicroseconds()
 
 unsigned long CHighResTimeCounter::GetElapsedTimeInMS()
 {
+    // NOTE: conversion from 'LONGLONG' to 'unsigned long', possible loss of data
     return static_cast<unsigned long>(
         GetElapsedTimeInMicroseconds().QuadPart / 1000);
 }
 
 unsigned long CHighResTimeCounter::GetElapsedTimeInSeconds()
 {
+    // NOTE: conversion from 'LONGLONG' to 'unsigned long', possible loss of data
     return static_cast<unsigned long>(
         GetElapsedTimeInMicroseconds().QuadPart / 1000000);
 }
