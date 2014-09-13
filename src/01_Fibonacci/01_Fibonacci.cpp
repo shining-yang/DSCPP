@@ -1,13 +1,13 @@
 // 01_Fibonacci.cpp : Defines the entry point for the console application.
 //
+// 2014/8/23, Shining Yang <y.s.n@live.com>
+//
 // Fibonacci
 //
 // F(1) = 1, F(2) = 1, F3 = 2, F4 = 3, ...., F(n) = F(n-1) + F(n-2)
 //
 
-
-#include "stdafx.h"
-
+#include <stdio.h>
 #include "../PerformanceStatistics/TickCounter.h"
 #include "../PerformanceStatistics/HighResTimeCounter.h"
 
@@ -44,7 +44,7 @@ int FibonacciRecursive(int n)
     return FibonacciRecursive(n - 1) + FibonacciRecursive(n - 2);
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char* argv[])
 {
     int n1 = 0;
     int n2 = 0;
@@ -64,6 +64,6 @@ int _tmain(int argc, _TCHAR* argv[])
             n1, tc1.GetElapsedTimeInMS(), n2, tc2.GetElapsedTimeInMS());
     }
 
-    return 0;
+	return 0;
 }
 

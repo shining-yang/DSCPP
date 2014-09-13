@@ -1,11 +1,10 @@
 //
 // TickCounter.cpp
 //
-// Shining @ 2014-08-23
+// 2014-08-23, Shining Yang <y.s.n@live.com>
 //
-#include "stdafx.h"
 #include "TickCounter.h"
-
+#include <windows.h>
 
 CTickCounter::CTickCounter()
 {

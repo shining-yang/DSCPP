@@ -1,7 +1,7 @@
 //
 // HighResTimeCounter.h
 //
-// Shining @ 2014-08-23
+// 2014-08-23, Shining Yang <y.s.n@live.com>
 //
 #pragma once
 
