@@ -7,13 +7,17 @@
 #include <ostream>
 using namespace std;
 
+class OutOfRange {
+public:
+    OutOfRange() {}
+};
+
 template<class T> class Array;
 
 template<class T>
 class ArrayElem {
 	friend class Array<T>;
 private:
-	//int index;
 	T data;
 };
 
@@ -50,7 +54,7 @@ template<class T>
 const T& Array<T>::operator[](int n) const
 {
 	if (n < 0 || n >= size) {
-		throw new int(-1);
+		throw new OutOfRange();
 	}
 
 	return elements[n].data;
@@ -77,5 +81,3 @@ ostream& operator<<(ostream& os, const Array<T>& a)
 	a.Output(os);
 	return os;
 }
-
-

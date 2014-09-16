@@ -1,7 +1,7 @@
 //
 // File: 04_Array.cpp
 //
-// Shining Yang <y.s.n@live.com>, 2014/09
+
 //
 #include <iostream>
 #include "Array.h"
