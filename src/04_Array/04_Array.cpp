@@ -17,6 +17,5 @@ int main(int argc, char* argv[])
 	}
 
 	cout << "Array elements: \n" << a << endl;
-
 	return 0;
 }
