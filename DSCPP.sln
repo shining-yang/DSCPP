@@ -31,12 +31,18 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_LinearList", "src\03_LinearList\03_LinearList.vcxproj", "{753935E4-1284-4D24-BA94-F1AF6D58D179}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_SinglyLinkedList", "src\03_SinglyLinkedList\03_SinglyLinkedList.vcxproj", "{EC5C7D6D-6A3D-4822-A0EE-D582BFC8E094}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EB34778B-E640-45B5-9525-2A34552FC311} = {EB34778B-E640-45B5-9525-2A34552FC311}
+		{C882E9C5-379E-4FEA-B0FB-535798FB6C66} = {C882E9C5-379E-4FEA-B0FB-535798FB6C66}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "src\Utility\Utility.vcxproj", "{EB34778B-E640-45B5-9525-2A34552FC311}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_SimulatedPointer", "src\03_SimulatedPointer\03_SimulatedPointer.vcxproj", "{E04D447D-F56D-48FB-BA3B-EB6C40F51ABC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Array", "src\04_Array\04_Array.vcxproj", "{B8213F1F-75BA-48BE-A641-AF81B02C0FD6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Matrix", "src\04_Matrix\04_Matrix.vcxproj", "{60526E52-317B-48DC-A2A7-C71CF6A48DB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,6 +114,10 @@ Global
 		{B8213F1F-75BA-48BE-A641-AF81B02C0FD6}.Debug|Win32.Build.0 = Debug|Win32
 		{B8213F1F-75BA-48BE-A641-AF81B02C0FD6}.Release|Win32.ActiveCfg = Release|Win32
 		{B8213F1F-75BA-48BE-A641-AF81B02C0FD6}.Release|Win32.Build.0 = Release|Win32
+		{60526E52-317B-48DC-A2A7-C71CF6A48DB6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{60526E52-317B-48DC-A2A7-C71CF6A48DB6}.Debug|Win32.Build.0 = Debug|Win32
+		{60526E52-317B-48DC-A2A7-C71CF6A48DB6}.Release|Win32.ActiveCfg = Release|Win32
+		{60526E52-317B-48DC-A2A7-C71CF6A48DB6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
