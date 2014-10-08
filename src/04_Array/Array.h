@@ -6,11 +6,8 @@
 #pragma once
 #include <ostream>
 using namespace std;
-
-class OutOfRange {
-public:
-    OutOfRange() {}
-};
+#include "../Utility/Exception.h"
+using namespace DSCPP::Utils;
 
 template<class T> class Array;
 

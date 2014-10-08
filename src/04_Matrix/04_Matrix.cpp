@@ -10,13 +10,27 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    Matrix<int> m1(3, 4);
-//     m1(0, 0) = 1;
-//     m1(0, 2) = 3;
+    Matrix<int> m1(2, 3);
+    m1(1, 1) = 1;
+    m1(1, 2) = 2;
+    m1(1, 3) = 3;
+    m1(2, 1) = 2;
+    m1(2, 2) = 1;
+    m1(2, 3) = 4;
 
-    int d = m1(0, 2);
-    cout << "d: " << d << endl;
+    const Matrix<int> cm1 = m1;
+    cm1.Output(cout);
 
-    m1.Output(cout);
+    Matrix<int> m2(3, 1);
+    m2(1, 1) = 0;
+    m2(2, 1) = 1;
+    m2(3, 1) = 2;
+
+    Matrix<int> m3 = m1 * m2;
+
+    cout << "m1:" << endl << m1 << endl;
+    cout << "m2:" << endl << m2 << endl;
+    cout << "m3:" << endl << m3 << endl;
+
     return 0;
 }
