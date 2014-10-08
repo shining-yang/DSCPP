@@ -24,8 +24,8 @@ public:
     int Columns() const { return column; }
     const T& operator()(int i, int j) const;
     T& operator()(int i, int j);
-
     void Output(ostream& os) const;
+    Matrix<T> Transpose() const;
 
     Matrix<T>& operator=(const Matrix<T>& m);
     Matrix<T>& operator+=(const Matrix<T>& m);
@@ -40,6 +40,19 @@ private:
     int column;
     T* elements;
 };
+
+template<class T>
+Matrix<T> Matrix<T>::Transpose() const
+{
+    int k = 0;
+    Matrix<T> w(column, row);
+    for (int j = 0; j < column; j++) {
+        for (int i = 0; i < row; i++) {
+            w.elements[k++] = elements[i * column + j];
+        }
+    }
+    return w;
+}
 
 template<class T>
 Matrix<T>& Matrix<T>::operator=(const Matrix<T>& m)

@@ -32,5 +32,7 @@ int main(int argc, char* argv[])
     cout << "m2:" << endl << m2 << endl;
     cout << "m3:" << endl << m3 << endl;
 
+    Matrix<int> tm1 = m1.Transpose();
+    cout << "tm1:" << endl << tm1 << endl;
     return 0;
 }
