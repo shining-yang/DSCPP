@@ -44,6 +44,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Array", "src\04_Array\04
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Matrix", "src\04_Matrix\04_Matrix.vcxproj", "{60526E52-317B-48DC-A2A7-C71CF6A48DB6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_SparseMatrix", "src\04_SparseMatrix\04_SparseMatrix.vcxproj", "{30CD3DE2-3CB5-4E5C-B65C-91DB0744DA21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -118,6 +120,10 @@ Global
 		{60526E52-317B-48DC-A2A7-C71CF6A48DB6}.Debug|Win32.Build.0 = Debug|Win32
 		{60526E52-317B-48DC-A2A7-C71CF6A48DB6}.Release|Win32.ActiveCfg = Release|Win32
 		{60526E52-317B-48DC-A2A7-C71CF6A48DB6}.Release|Win32.Build.0 = Release|Win32
+		{30CD3DE2-3CB5-4E5C-B65C-91DB0744DA21}.Debug|Win32.ActiveCfg = Debug|Win32
+		{30CD3DE2-3CB5-4E5C-B65C-91DB0744DA21}.Debug|Win32.Build.0 = Debug|Win32
+		{30CD3DE2-3CB5-4E5C-B65C-91DB0744DA21}.Release|Win32.ActiveCfg = Release|Win32
+		{30CD3DE2-3CB5-4E5C-B65C-91DB0744DA21}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
