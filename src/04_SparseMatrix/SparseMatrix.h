@@ -14,10 +14,14 @@ using namespace std;
 using namespace DSCPP::Utils;
 
 template<class T> class SparseMatrix;
+template<class T> istream& operator>>(istream&, SparseMatrix<T>&);
+template<class T> ostream& operator<<(ostream&, const SparseMatrix<T>&);
 
 template<class T>
 class Term {
     friend class SparseMatrix<T>;
+    friend istream& operator>>(istream& is, SparseMatrix<T>& m);
+    friend ostream& operator<<(ostream& os, const SparseMatrix<T>& m);
 private:
     int r; // row No.
     int c; // column No.
@@ -173,8 +177,8 @@ void SparseMatrix<T>::Transpose(SparseMatrix<T>& dm) const
     // 计算* this每一列的非0元素数
     for (int i = 1; i <= columns; i++)
         ColSize[i] = 0;
-    for (int = 0; i < terms; i++)
-        ColSize[a[i].c]++;
+    for (int i = 0; i < size; i++)
+        ColSize[elements[i].c]++;
 
     // 给出b中每一行的起始点
     RowNext[1] = 0;
@@ -182,11 +186,11 @@ void SparseMatrix<T>::Transpose(SparseMatrix<T>& dm) const
         RowNext[i] = RowNext[i - 1] + ColSize[i - 1];
 
     // 执行转置操作
-    for (int i = 0; i < terms; i++) {
-        int j = RowNext[a[i].col]++; // 在b中的位置
-        b.a[j].r = a[i].c;
-        b.a[j].c = a[i].r;
-        b.a[j].v = a[i].v;
+    for (int i = 0; i < size; i++) {
+        int j = RowNext[elements[i].col]++; // 在b中的位置
+        dm.elements[j].r = elements[i].c;
+        dm.elements[j].c = elements[i].r;
+        dm.elements[j].v = elements[i].v;
     }
 
     delete[] ColSize;
