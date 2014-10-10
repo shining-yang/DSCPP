@@ -4,6 +4,9 @@
 // Some operations on sparse matrix.
 // NOTE: The row and column number of a matrix are counted from 1.
 //
+// ATTENTION on C++ template friends, for more details on C++ syntax, see:
+// http://msdn.microsoft.com/en-us/library/f1b2td24.aspx
+//
 // Shining Yang <y.s.n@live.com>, 2014-10-09
 //
 #pragma once
@@ -14,14 +17,12 @@ using namespace std;
 using namespace DSCPP::Utils;
 
 template<class T> class SparseMatrix;
-template<class T> istream& operator>>(istream&, SparseMatrix<T>&);
-template<class T> ostream& operator<<(ostream&, const SparseMatrix<T>&);
 
 template<class T>
 class Term {
     friend class SparseMatrix<T>;
-    friend istream& operator>>(istream& is, SparseMatrix<T>& m);
-    friend ostream& operator<<(ostream& os, const SparseMatrix<T>& m);
+    template<class T> friend istream& operator>>(istream&, SparseMatrix<T>&);
+    template<class T> friend ostream& operator<<(ostream&, const SparseMatrix<T>&);
 private:
     int r; // row No.
     int c; // column No.
@@ -47,8 +48,8 @@ public:
     void Add(const SparseMatrix<T>& sm, SparseMatrix<T>& dm) const;
 
     // I/O operators
-    friend istream& operator>>(istream& is, SparseMatrix<T>& m);
-    friend ostream& operator<<(ostream& os, const SparseMatrix<T>& m);
+    template<class T> friend istream& operator>>(istream&, SparseMatrix<T>&);
+    template<class T> friend ostream& operator<<(ostream&, const SparseMatrix<T>&);
     void Output(ostream& os) const;
 
 protected:
@@ -65,7 +66,7 @@ private:
 template<class T>
 istream& operator>>(istream& is, SparseMatrix<T>& m)
 {
-    cout << "Provide info about rows, columns, none-zero elements:" << endl;
+    cout << "First, provide info about rows, columns, none-zero elements:" << endl;
 
     int r, c, n;
     is >> r >> c >> n;
@@ -77,18 +78,22 @@ istream& operator>>(istream& is, SparseMatrix<T>& m)
     m.columns = c;
     m.size = n;
 
-    cout << "Your inputs are accepted.\n"
-        << "\trows: " << r
-        << "\tcolumns: " << c
-        << "\tnone-zero elements: " << n
+    cout << "Your inputs are accepted. "
+        << "rows: " << r
+        << "columns: " << c
+        << "none-zero elements: " << n
         << endl;
         
-    cout << "Enter the none-zero elements (row column value):" << endl;
+    cout << "Second, enter the none-zero elements (row column value):" << endl;
 
     for (int i = 0; i < m.size; i++) {
+        cout << "No. " << (i + 1) << ": ";
         is >> r >> c >> n;
         if ((r > m.rows) || (c > m.columns)) {
             throw new OutOfBounds();
+        }
+        if (n == 0) {
+            throw new InvalideArgument();
         }
 
         m.elements[i].r = r;
@@ -160,34 +165,33 @@ void SparseMatrix<T>::Output(ostream& os) const
 
 template<class T>
 void SparseMatrix<T>::Transpose(SparseMatrix<T>& dm) const
-{// 把*this 的转置结果送入b
+{
     if (capacity < dm.capacity) {
         throw new OutOfMemory();
     }
 
-    // 设置转置特征
     dm.columns = rows;
     dm.rows = columns;
     dm.size = size;
 
-    // 初始化
-    int *ColSize = new int[columns + 1];
-    int *RowNext = new int[rows + 1];
+    int* ColSize = new int[columns + 1];
+    int* RowNext = new int[columns + 1];
 
-    // 计算* this每一列的非0元素数
-    for (int i = 1; i <= columns; i++)
+    for (int i = 1; i <= columns; i++) {
         ColSize[i] = 0;
-    for (int i = 0; i < size; i++)
-        ColSize[elements[i].c]++;
+    }
 
-    // 给出b中每一行的起始点
-    RowNext[1] = 0;
-    for (int i = 2; i <= columns; i++)
-        RowNext[i] = RowNext[i - 1] + ColSize[i - 1];
-
-    // 执行转置操作
     for (int i = 0; i < size; i++) {
-        int j = RowNext[elements[i].col]++; // 在b中的位置
+        ColSize[elements[i].c]++;
+    }
+
+    RowNext[1] = 0;
+    for (int i = 2; i <= columns; i++) {
+        RowNext[i] = RowNext[i - 1] + ColSize[i - 1];
+    }
+
+    for (int i = 0; i < size; i++) {
+        int j = RowNext[elements[i].c]++;
         dm.elements[j].r = elements[i].c;
         dm.elements[j].c = elements[i].r;
         dm.elements[j].v = elements[i].v;

@@ -23,5 +23,8 @@ namespace DSCPP {
 
         class BadInitializer {
         };
+
+        class InvalideArgument {
+        };
     }
 }
