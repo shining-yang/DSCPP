@@ -53,7 +53,8 @@ public:
     void Output(ostream& os) const;
 
 protected:
-    T _GetMatrixElements(int i, int j) const; // i, j are 1-based
+    T _GetElementContent(int i, int j) const; // i, j are 1-based
+    void _Append(const Term<T>& e);
 
 private:
     int capacity;
@@ -140,7 +141,7 @@ SparseMatrix<T>::~SparseMatrix()
 }
 
 template<class T>
-T SparseMatrix<T>::_GetMatrixElements(int i, int j) const // i, j are 1-based
+T SparseMatrix<T>::_GetElementContent(int i, int j) const // i, j are 1-based
 {
     for (int n = 0; n < size; n++) {
         if (elements[n].r == i && elements[n].c == j) {
@@ -157,7 +158,7 @@ void SparseMatrix<T>::Output(ostream& os) const
     // Simple way just for diagnostics purpose
     for (int i = 1; i <= rows; i++) { // 1-based
         for (int j = 1; j <= columns; j++) {
-            os << _GetMatrixElements(i, j) << " ";
+            os << _GetElementContent(i, j) << " ";
         }
         os << endl;
     }
@@ -202,7 +203,60 @@ void SparseMatrix<T>::Transpose(SparseMatrix<T>& dm) const
 }
 
 template<class T>
+void SparseMatrix<T>::_Append(const Term<T>& e)
+{
+    if (size >= capacity) {
+        throw new OutOfMemory();
+    }
+
+    elements[size++] = e;
+}
+
+template<class T>
 void SparseMatrix<T>::Add(const SparseMatrix<T>& sm, SparseMatrix<T>& dm) const
 {
+    if (rows != sm.rows || columns != sm.columns) {
+        throw new SizeNotMatch();
+    }
 
+    dm.rows = rows;
+    dm.columns = columns;
+    dm.size = 0;
+
+    int ptr1 = 0; // pointer for *this
+    int ptr2 = 0; // pointer for sm
+    
+    while (ptr1 < size && ptr2 < sm.size) {
+        int pos1 = elements[ptr1].r * columns + elements[ptr1].c;
+        int pos2 = sm.elements[ptr2].r * columns + sm.elements[ptr2].c;
+
+        if (pos1 < pos2) {
+            dm._Append(elements[ptr1]);
+            ptr1++;
+        } else if (pos1 > pos2) {
+            dm._Append(sm.elements[ptr2]);
+            ptr2++;
+        } else {
+            if (elements[ptr1].v + sm.elements[ptr2].v != 0) {
+                Term<T> e;
+                e.r = elements[ptr1].r;
+                e.c = elements[ptr1].c;
+                e.v = elements[ptr1].v + sm.elements[ptr2].v;
+                dm._Append(e);
+            }
+
+            ptr1++;
+            ptr2++;
+        }
+    }
+
+    while (ptr1 < size) {
+        dm._Append(elements[ptr1]);
+        ptr1++;
+    }
+
+    while (ptr2 < sm.size) {
+        dm._Append(sm.elements[ptr2]);
+        ptr2++;
+    }
 }
