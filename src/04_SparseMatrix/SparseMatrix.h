@@ -71,6 +71,11 @@ istream& operator>>(istream& is, SparseMatrix<T>& m)
 
     int r, c, n;
     is >> r >> c >> n;
+
+    if (r < 1 || c < 1 || n < 1) {
+        throw new InvalideArgument();
+    }
+
     if (n > m.capacity) {
         throw new OutOfRange();
     }
@@ -85,7 +90,7 @@ istream& operator>>(istream& is, SparseMatrix<T>& m)
         << "none-zero elements: " << n
         << endl;
         
-    cout << "Second, enter the none-zero elements (row column value):" << endl;
+    cout << "Second, enter the none-zero elements INCREAMENTLY (row column value):" << endl;
 
     for (int i = 0; i < m.size; i++) {
         cout << "No. " << (i + 1) << ": ";
