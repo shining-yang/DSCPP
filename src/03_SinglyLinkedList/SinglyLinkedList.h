@@ -130,15 +130,15 @@ public:
     void SelectionSort(bool ascending = true);
 
 protected:
-    bool Bubble(int n, bool ascending = true);
-    void Insert(ChainNode<T>* t, bool ascending = true);
+    bool DoBubble(int n, bool ascending = true);
+    void DoInsertion(ChainNode<T>* t, bool ascending = true);
 
 private:
     ChainNode<T> *first;
 };
 
 template<class T>
-bool Chain<T>::Bubble(int n, bool ascending /*= true*/)
+bool Chain<T>::DoBubble(int n, bool ascending /*= true*/)
 {
     bool swap_occurred = false;
     ChainNode<T>* p = first; // current node
@@ -176,13 +176,13 @@ template<class T>
 void Chain<T>::BubbleSort(bool ascending /*= true*/)
 {
     int n = Length();
-    for (int i = n; i > 0 && Bubble(i, ascending); i--) {
+    for (int i = n; i > 0 && DoBubble(i, ascending); i--) {
         ;
     }
 }
 
 template<class T>
-void Chain<T>::Insert(ChainNode<T>* t, bool ascending /*= true*/)
+void Chain<T>::DoInsertion(ChainNode<T>* t, bool ascending /*= true*/)
 {
     ChainNode<T>* prev = this->first;
     ChainNode<T>* p = this->first;
@@ -218,7 +218,7 @@ void Chain<T>::InsertionSort(bool ascending /*= true*/)
     first = NULL;
     while (p) {
         ChainNode<T>* q = p->link;
-        Insert(p, ascending);
+        DoInsertion(p, ascending);
         p = q;
     }
 }
