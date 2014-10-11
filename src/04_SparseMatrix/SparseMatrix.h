@@ -94,17 +94,16 @@ istream& operator>>(istream& is, SparseMatrix<T>& m)
 
     for (int i = 0; i < m.size; i++) {
         cout << "No. " << (i + 1) << ": ";
-        is >> r >> c >> n;
-        if ((r > m.rows) || (c > m.columns)) {
-            throw new OutOfBounds();
-        }
-        if (n == 0) {
+
+        T v;
+        is >> r >> c >> v;
+        if (r < 1 || c < 1 || r > m.rows || c > m.columns || v == 0) {
             throw new InvalideArgument();
         }
 
         m.elements[i].r = r;
         m.elements[i].c = c;
-        m.elements[i].v = n;
+        m.elements[i].v = v;
     }
 
     return is;
