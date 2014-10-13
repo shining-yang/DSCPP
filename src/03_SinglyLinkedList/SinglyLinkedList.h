@@ -7,19 +7,9 @@
 //
 #pragma once
 
-template<class T>
-void Swap(T& a, T& b)
-{
-    T x = a; a = b; b = x;
-}
-
-class OutOfBounds
-{
-};
-
-class NoMemory
-{
-};
+#include "../Utility/Exception.h"
+#include "../Utility/Misc.h"
+using namespace DSCPP::Utils;
 
 template<class T> class Chain;
 template<class T> class ChainNode;
@@ -108,6 +98,7 @@ public:
 
 public:
     Chain();
+    Chain(const Chain& o); // copy constructor
     ~Chain();
 
 public:
@@ -122,7 +113,6 @@ public:
 
     // additional
 public:
-    Chain(const Chain& o); // copy constructor
     void Reverse();
     void BubbleSort(bool ascending = true);
     void InsertionSort(bool ascending = true);
@@ -475,7 +465,10 @@ void Chain<T>::Output(std::ostream& os) const
 {
     ChainNode<T>* p = first;
     while (p) {
-        os << p->data << " ";
+        if (p != first) { // append separator if there are more than 1 node and not at the first one
+            os << " ";
+        }
+        os << p->data;
         p = p->link;
     }
 }

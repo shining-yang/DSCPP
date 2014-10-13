@@ -6,12 +6,9 @@
 // 并把它移动到a[n-2]，如此进行下去，这种排序方法为选择排序（selection sort）
 //
 #include <stdio.h>
+#include "../Utility/Misc.h"
+using namespace DSCPP::Utils;
 
-template<class T>
-inline void Swap(T& a, T& b)
-{
-    T t = a; a = b; b = t;
-}
 
 template<class T>
 int GetMaxIndex(T a[], int n)

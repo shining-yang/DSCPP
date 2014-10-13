@@ -7,11 +7,9 @@
 #include <iostream>
 using namespace std;
 
-template<typename T>
-inline void Swap(T& x, T& y)
-{
-    T z = x; x = y; y = z;
-}
+#include "../Utility/Misc.h"
+using namespace DSCPP::Utils;
+
 
 //
 // @param a[] element array

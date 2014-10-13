@@ -8,12 +8,8 @@
 //
 
 #include <stdio.h>
-
-template<class T>
-void Swap(T& x, T& y)
-{
-    T t = x; x = y; y = t;
-}
+#include "../Utility/Misc.h"
+using namespace DSCPP::Utils;
 
 //
 // 对于i 的每个取值，执行比较的次数为i ,所以总的比较次数为

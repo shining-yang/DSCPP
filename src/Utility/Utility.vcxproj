@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exception.h" />
+    <ClInclude Include="Misc.h" />
     <ClInclude Include="NewHandler.h" />
   </ItemGroup>
   <ItemGroup>

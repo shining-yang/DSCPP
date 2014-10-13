@@ -7,12 +7,9 @@
 //
 
 #include <stdio.h>
+#include "../Utility/Misc.h"
+using namespace DSCPP::Utils;
 
-template<class T>
-void Swap(T& x, T& y)
-{
-    T t = x; x = y; y = t;
-}
 
 template<class T>
 void Bubble(T a[], int n)
