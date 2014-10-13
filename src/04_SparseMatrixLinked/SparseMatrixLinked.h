@@ -3,6 +3,8 @@
 //
 // Sparse matrix implemented by linked list.
 //
+// 2014-10-13, Shining Yang <y.s.n@live.com>
+//
 #pragma once
 
 #include <iostream>
@@ -101,9 +103,6 @@ ostream& operator<<(ostream& os, const RowNode<T>& o)
 template<class T>
 class SparseMatrixLinked {
 public:
-    SparseMatrixLinked(int r, int c);
-
-public:
     template<class T>
     friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
 
@@ -122,20 +121,9 @@ private:
 };
 
 template<class T>
-SparseMatrixLinked<T>::SparseMatrixLinked(int r, int c)
-{
-    if (r < 1 || c < 1) {
-        throw new BadInitializer();
-    }
-
-    rows = r;
-    columns = c;
-}
-
-template<class T>
 istream& operator>>(istream& is, SparseMatrixLinked<T>& o)
 {
-    cout << "First, provide info about rows, columns, none-zero elements:" << endl;
+    cout << "First, provide info about rows, columns, none-zero elements: ";
 
     int r, c, n;
     is >> r >> c >> n;

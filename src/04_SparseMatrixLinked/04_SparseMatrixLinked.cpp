@@ -12,8 +12,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    SparseMatrixLinked<int> sml(4, 5);
-    
+    SparseMatrixLinked<int> sml;
     cin >> sml;
     cout << sml << endl;
 

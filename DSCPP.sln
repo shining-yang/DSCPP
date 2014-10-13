@@ -48,6 +48,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_SparseMatrix", "src\04_S
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_SparseMatrixLinked", "src\04_SparseMatrixLinked\04_SparseMatrixLinked.vcxproj", "{0D9AED32-08FB-483C-AFAE-150AE378C2DA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_SparseMatrixStdList", "src\04_SparseMatrixStdList\04_SparseMatrixStdList.vcxproj", "{AD4A62CB-09CC-49C2-8A37-F39BCEA2F361}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -130,6 +132,10 @@ Global
 		{0D9AED32-08FB-483C-AFAE-150AE378C2DA}.Debug|Win32.Build.0 = Debug|Win32
 		{0D9AED32-08FB-483C-AFAE-150AE378C2DA}.Release|Win32.ActiveCfg = Release|Win32
 		{0D9AED32-08FB-483C-AFAE-150AE378C2DA}.Release|Win32.Build.0 = Release|Win32
+		{AD4A62CB-09CC-49C2-8A37-F39BCEA2F361}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AD4A62CB-09CC-49C2-8A37-F39BCEA2F361}.Debug|Win32.Build.0 = Debug|Win32
+		{AD4A62CB-09CC-49C2-8A37-F39BCEA2F361}.Release|Win32.ActiveCfg = Release|Win32
+		{AD4A62CB-09CC-49C2-8A37-F39BCEA2F361}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
