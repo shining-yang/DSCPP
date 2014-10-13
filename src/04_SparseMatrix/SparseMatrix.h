@@ -86,8 +86,8 @@ istream& operator>>(istream& is, SparseMatrix<T>& m)
 
     cout << "Your inputs are accepted. "
         << "rows: " << r
-        << "columns: " << c
-        << "none-zero elements: " << n
+        << ", columns: " << c
+        << ", none-zero elements: " << n
         << endl;
         
     cout << "Second, enter the none-zero elements INCREAMENTLY (row column value):" << endl;
