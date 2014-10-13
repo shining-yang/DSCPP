@@ -112,8 +112,8 @@ istream& operator>>(istream& is, SparseMatrix<T>& m)
 template<class T>
 ostream& operator<<(ostream& os, const SparseMatrix<T>& m)
 {
-    cout << "Info about the sparse matrix:" << endl;
-    cout << "Dimension: " << m.rows << " x " << m.columns << endl;
+    os << "Info about the sparse matrix:" << endl;
+    os << "Dimension: " << m.rows << " x " << m.columns << endl;
     for (int i = 0; i < m.size; i++) {
         if (i > 0) {
             os << ", ";
