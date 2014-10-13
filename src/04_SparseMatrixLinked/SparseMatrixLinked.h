@@ -25,14 +25,6 @@ template<class T> class SparseMatrixLinked;
 template<class T>
 class ColumnNode {
 public:
-    bool operator==(const ColumnNode<T>& o) const {
-        return col == o.col;
-    }
-
-    bool operator!=(const ColumnNode<T>& o) const {
-        return !operator==(o);
-    }
-
     void Output(ostream& os) const {
         os << "Column: " << col << " Value: " << val;
     }
@@ -41,15 +33,8 @@ private:
     int col;
     T   val;
 
-    friend class RowNode < T > ;
-    friend class SparseMatrixLinked < T > ;
-
     template<class T>
     friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
-
-    template<class T>
-    friend ostream& operator<<(ostream& os, const SparseMatrixLinked<T>& o);
-
 };
 
 template<class T>
@@ -65,14 +50,6 @@ ostream& operator<<(ostream& os, const ColumnNode<T>& o)
 template<class T>
 class RowNode {
 public:
-    bool operator==(const RowNode<T>& o) const {
-        return row == o.row;
-    }
-
-    bool operator!=(const RowNode<T>& o) const {
-        return !operator==(o);
-    }
-
     void Output(ostream& os) const {
         os << "Row " << row << ": " << chainCol;
     }
@@ -81,13 +58,8 @@ private:
     int row;
     Chain<ColumnNode<T> > chainCol;
 
-    friend class SparseMatrixLinked < T > ;
-
     template<class T>
     friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
-
-    template<class T>
-    friend ostream& operator<<(ostream& os, const SparseMatrixLinked<T>& o);
 };
 
 template<class T>
@@ -103,12 +75,6 @@ ostream& operator<<(ostream& os, const RowNode<T>& o)
 template<class T>
 class SparseMatrixLinked {
 public:
-    template<class T>
-    friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
-
-    template<class T>
-    friend ostream& operator<<(ostream& os, const SparseMatrixLinked<T>& o);
-
     void Output(ostream& os) const {
         os << "Sparse matrix: " << rows << " x " << columns << endl;
         os << chainRow;
@@ -118,6 +84,9 @@ private:
     int rows;
     int columns;
     Chain<RowNode<T> > chainRow;
+
+    template<class T>
+    friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
 };
 
 template<class T>
