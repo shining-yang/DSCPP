@@ -32,7 +32,7 @@ public:
     }
 
     void Output(ostream& os) const {
-        os << "column: " << col << "value: " << val;
+        os << "Column: " << col << " Value: " << val;
     }
 
 private:
@@ -41,6 +41,13 @@ private:
 
     friend class RowNode < T > ;
     friend class SparseMatrixLinked < T > ;
+
+    template<class T>
+    friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
+
+    template<class T>
+    friend ostream& operator<<(ostream& os, const SparseMatrixLinked<T>& o);
+
 };
 
 template<class T>
@@ -56,7 +63,7 @@ ostream& operator<<(ostream& os, const ColumnNode<T>& o)
 template<class T>
 class RowNode {
 public:
-    bool oprator==(const RowNode<T>& o) const {
+    bool operator==(const RowNode<T>& o) const {
         return row == o.row;
     }
 
@@ -65,15 +72,20 @@ public:
     }
 
     void Output(ostream& os) const {
-        os << "Row: " << endl;
-        os << chain_col;
+        os << "Row " << row << ": " << chainCol;
     }
 
 private:
     int row;
-    Chain<ColumnNode<T> > chain_col;
+    Chain<ColumnNode<T> > chainCol;
 
     friend class SparseMatrixLinked < T > ;
+
+    template<class T>
+    friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
+
+    template<class T>
+    friend ostream& operator<<(ostream& os, const SparseMatrixLinked<T>& o);
 };
 
 template<class T>
@@ -100,17 +112,28 @@ public:
 
     void Output(ostream& os) const {
         os << "Sparse matrix: " << rows << " x " << columns << endl;
-        os << chain_row;
+        os << chainRow;
     }
 
 private:
     int rows;
     int columns;
-    Chain<RowNode<T> > chain_row;
+    Chain<RowNode<T> > chainRow;
 };
 
 template<class T>
-friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o)
+SparseMatrixLinked<T>::SparseMatrixLinked(int r, int c)
+{
+    if (r < 1 || c < 1) {
+        throw new BadInitializer();
+    }
+
+    rows = r;
+    columns = c;
+}
+
+template<class T>
+istream& operator>>(istream& is, SparseMatrixLinked<T>& o)
 {
     cout << "First, provide info about rows, columns, none-zero elements:" << endl;
 
@@ -126,83 +149,54 @@ friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o)
 
     cout << "Your inputs are accepted. "
         << "rows: " << r
-        << "columns: " << c
-        << "none-zero elements: " << n
+        << ", columns: " << c
+        << ", none-zero elements: " << n
         << endl;
 
     cout << "Second, enter the none-zero elements INCREAMENTLY (row column value):" << endl;
-
-    int nCurRow = -1;
-    int nPreRow = -1;
 
     for (int i = 0; i < n; i++) {
         cout << "No. " << (i + 1) << ": ";
 
         T v;
-        is >> r >> c >> n;
+        is >> r >> c >> v;
         if (r < 1 || c < 1 || r > o.rows || c > o.columns || v == 0) {
             throw new InvalideArgument();
         }
 
-        ColumnNode<T> cnode;
-        cnode.col = c;
-        cnode.val = v;
-
         RowNode<T> rnode;
         rnode.row = r;
 
-        int k = o.chain_row.Length();
+        // {{ BAD practices. Since there are not proper methods available yet.
+        bool inserted = false;
+_TryInsertColumnData:
+        for (Chain<RowNode<T> >::Iterator rit = o.chainRow.Begin();
+            rit != o.chainRow.End();
+            ++rit) {
+            if ((*rit).row == r) { // find the existing one
+                ColumnNode<T> cnode;
+                cnode.col = c;
+                cnode.val = v;
 
-        if (nPreRow != r) { // new row occurred
-            o.chain_row.Insert(k, rnode);
-            nPreRow = r;
+                (*rit).chainCol.Insert((*rit).chainCol.Length(), cnode);
+                inserted = true;
+                break;
+            }
         }
 
-        RowNode<T> rx;
-        o.chain_row.Find(k, rx);
-        int l = rx.chain_col.Length();
-        rx.chain_col.Insert(l, cnode);
-    }
-}
-
-#if 0
-template<class T>
-ostream& SparseMatrixLinked::operator<<(ostream& os, const SparseMatrixLinked<T>& o)
-{
-    os << "Info about the sparse matrix (linked):" << endl;
-    os << "Dimension: " << o.rows << " x " << o.columns << endl;
-    for (Chain<RowNode<T> >::Iterator it = o.chain_row.Begin();
-        it != o.chain_row.End();
-        ++it) {
-        os << "Row " << (*it).row << ": " << endl;
-
-        for (Chain<ColumnNode<T> >::Iterator itcol = (*it).chain_col.Begin();
-            itcol != (*it).chain_col.End();
-            ++itcol) {
-            os << (*itcol).col << " [" << (*itcol).val << "], ";
+        if (!inserted) {
+            o.chainRow.Insert(o.chainRow.Length(), rnode);
+            goto _TryInsertColumnData;
         }
-
-        os << endl;
+        // }}
     }
 
-    return os;
+    return is;
 }
-#endif
 
 template<class T>
 ostream& operator<<(ostream& os, const SparseMatrixLinked<T>& o)
 {
     o.Output(os);
     return os;
-}
-
-template<class T>
-SparseMatrixLinked<T>::SparseMatrixLinked(int r, int c)
-{
-    if (r < 1 || c < 1) {
-        throw new BadInitializer();
-    }
-
-    rows = r;
-    columns = c;
 }
