@@ -6,14 +6,8 @@
 #pragma once
 #include <iostream>
 using namespace std;
-
-class OutOfBounds
-{
-};
-
-class NoMemory
-{
-};
+#include "../Utility/Exception.h"
+using namespace DSCPP::Utils;
 
 template<class T>
 class CLinearList
@@ -106,7 +100,7 @@ CLinearList<T>& CLinearList<T>::Insert(int k, const T& x)
     }
 
     if (m_nLength >= m_nMaxSize) {
-        throw NoMemory();
+        throw OutOfBounds();
     }
 
     for (int i = m_nLength - 1; i >= k; i--) {
