@@ -9,5 +9,9 @@ int main(int argc, char* argv[])
     cin >> sml;
     cout << sml << endl;
 
+    CSparseMatrixStdList<int> smlCopy;
+    sml.Transpose(smlCopy);
+    cout << smlCopy << endl;
+
     return 0;
 }
