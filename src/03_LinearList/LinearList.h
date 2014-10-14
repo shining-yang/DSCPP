@@ -25,6 +25,9 @@ public:
     CLinearList<T>& Insert(int k, const T& x);
     void Output(std::ostream& os) const;
     
+protected:
+    int GetMaxSize() const { return m_nMaxSize; }
+
 private:
     int m_nMaxSize;
     int m_nLength;

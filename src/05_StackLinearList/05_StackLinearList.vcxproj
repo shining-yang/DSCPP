@@ -84,6 +84,9 @@
   <ItemGroup>
     <ClInclude Include="StackLinearList.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="05_StackLinearList.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
