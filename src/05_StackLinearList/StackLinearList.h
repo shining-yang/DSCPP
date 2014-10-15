@@ -24,19 +24,15 @@ protected:
     Stack<T>& operator=(const Stack<T>& s);
 
 public:
-    T Top(void);
-    void Clear(void);
-    bool IsEmpty(void);
-    bool IsFull(void);
+    T Top();
+    bool IsEmpty();
+    bool IsFull();
     Stack<T>& Push(const T& e);
     Stack<T>& Pop(T& e);
-
-private:
-    int capacity;
 };
 
 template<typename T>
-DSCPP::Stack::Stack<T>::Stack(int c/* = 16*/) : capacity(c), CLinearList<T>(c)
+DSCPP::Stack::Stack<T>::Stack(int c) : CLinearList<T>(c)
 {
 }
 
@@ -46,7 +42,7 @@ DSCPP::Stack::Stack<T>::~Stack()
 }
 
 template<typename T>
-T Stack<T>::Top(void)
+T Stack<T>::Top()
 {
     if (IsEmpty()) {
         throw new OutOfBounds();
@@ -58,18 +54,13 @@ T Stack<T>::Top(void)
 }
 
 template<typename T>
-void Stack<T>::Clear(void)
-{
-}
-
-template<typename T>
-bool Stack<T>::IsEmpty(void)
+bool Stack<T>::IsEmpty()
 {
     return CLinearList<T>::IsEmpty();
 }
 
 template<typename T>
-bool Stack<T>::IsFull(void)
+bool Stack<T>::IsFull()
 {
     return GetMaxSize() == Length();
 }

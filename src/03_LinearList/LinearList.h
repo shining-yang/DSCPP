@@ -67,6 +67,7 @@ bool CLinearList<T>::Find(int k, T& x) const
         x = m_element[k];
         return true;
     }
+
     return false;
 }
 
@@ -78,6 +79,7 @@ int CLinearList<T>::Search(const T& x) const
             return i;
         }
     }
+
     return -1;
 }
 
@@ -91,6 +93,7 @@ CLinearList<T>& CLinearList<T>::Delete(int k, T& x)
     for (int i = k; i < m_nLength - 1; i++) {
         m_element[i] = m_element[i + 1];
     }
+
     m_nLength--;
     return *this;
 }
@@ -109,6 +112,7 @@ CLinearList<T>& CLinearList<T>::Insert(int k, const T& x)
     for (int i = m_nLength - 1; i >= k; i--) {
         m_element[i + 1] = m_element[i];
     }
+
     m_element[k] = x;
     m_nLength++;
     return *this;
