@@ -8,25 +8,28 @@ using namespace std;
 #include "StackLinkedList.h"
 using namespace DSCPP::Stack;
 
-void DoHanoiRecursively(char t1, char t2, char t3, int n)
+void HanoiRecursively(char t1, char t2, char t3, int n)
 {
+    static int _num = 0;
+    
     if (n == 1) {
-        cout << t1 << " --> " << t3 << endl;
+        cout << "[" << ++_num << "] " << t1 << " --> " << t3 << endl;
     } else {
-        DoHanoiRecursively(t1, t3, t2, n - 1);
-        cout << t1 << " --> " << t3 << endl;
-        DoHanoiRecursively(t2, t1, t3, n - 1);
+        HanoiRecursively(t1, t3, t2, n - 1);
+        HanoiRecursively(t1, t2, t3, 1);
+        HanoiRecursively(t2, t1, t3, n - 1);
     }
 }
 
 class HanoiParameter {
 public:
     HanoiParameter() {}
-    HanoiParameter(char a, char b, char c, int i) : from(a), via(b), to(c), n(i) {}
+    HanoiParameter(char a, char b, char c, int i, int j) : from(a), via(b), to(c), n(i), d(j) {}
     char from;
     char via;
     char to;
-    int n;
+    int n; // number of plates to be moved
+    int d; // direction: -1, 0, 1
 };
 
 class Hanoi {
@@ -47,23 +50,43 @@ private:
 void Hanoi::Perform()
 {
     HanoiParameter x, t;
-
-    s.Push(HanoiParameter(from, via, to, n));
-
+    static int _num = 0;
+    s.Push(HanoiParameter(from, via, to, n, -1));
     while (!s.IsEmpty()) {
-        x = s.Top();
-        if (x.n == 1) {
-            cout << x.from << " --> " << x.to << endl;
-            s.Pop(t);
-        } else {
-            s.Push(HanoiParameter(x.from, x.to, x.via, x.n - 1));
+        s.Pop(x);
+        switch (x.d) {
+        case -1:
+            s.Push(HanoiParameter(x.from, x.via, x.to, x.n, 0));
+            if (x.n > 1) {
+                s.Push(HanoiParameter(x.from, x.to, x.via, x.n - 1, -1));
+            }
+            break;
+        case 0:
+            cout << "[" << ++_num << "] " << x.from << " --> " << x.to << endl;
+            if (x.n > 1) {
+                s.Push(HanoiParameter(x.via, x.from, x.to, x.n - 1, 1));
+            }
+            break;
+        case 1:
+            s.Push(HanoiParameter(x.from, x.via, x.to, x.n, 0));
+            if (x.n > 1) {
+                s.Push(HanoiParameter(x.from, x.to, x.via, x.n - 1, -1));
+            }
+            break;
         }
     }
 }
 
-
 int main(int argc, char* argv[])
 {
-//     DoHanoiRecursively('A', 'B', 'C', 3);
+    int n = 4;
+
+#if 0
+    HanoiRecursively('A', 'B', 'C', n);
+#else
+    Hanoi h('A', 'B', 'C', n);
+    h.Perform();
+#endif
+
     return 0;
 }
