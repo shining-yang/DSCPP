@@ -7,6 +7,9 @@
 //
 #pragma once
 
+#include <iostream>
+using namespace std;
+
 #include "../Utility/Exception.h"
 #include "../Utility/Misc.h"
 using namespace DSCPP::Utils;
