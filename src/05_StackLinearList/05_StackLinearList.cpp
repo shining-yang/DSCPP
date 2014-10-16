@@ -5,8 +5,14 @@
 
 int main(int argc, char* argv[])
 {
+#if 0
+    typedef DSCPP::Stack::Stack<char>   CharStack;
+#else
+    typedef DSCPP::Stack::Stack2<char>  CharStack;
+#endif
+
     char c;
-    DSCPP::Stack::Stack<char> sc;
+    CharStack sc;
 
     cout << "Stack is empty: " << (sc.IsEmpty() ? "Yes" : "No") << endl;
     cout << "Stack is full: " << (sc.IsFull() ? "Yes" : "No") << endl;
@@ -19,6 +25,15 @@ int main(int argc, char* argv[])
     sc.Pop(c);
     sc.Pop(c);
     sc.Pop(c);
+
+#if 0
+    typedef DSCPP::Stack::Stack<DSCPP::Stack::Stack<char> > CharStackStack;
+#else
+    typedef DSCPP::Stack::Stack2<DSCPP::Stack::Stack2<char> > CharStackStack;
+#endif
+    CharStackStack css;
+    cout << (css.IsFull() ? "Y" : "N") << endl;
+//     css.Push(sc); // Error: no proper copy-constructor/operator=() provided
 
     return 0;
 }

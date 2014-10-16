@@ -52,6 +52,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_SparseMatrixStdList", "s
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_StackLinearList", "src\05_StackLinearList\05_StackLinearList.vcxproj", "{0AE3FB3D-6009-4633-A665-174A8D8A27FD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_StackLinkedList", "src\05_StackLinkedList\05_StackLinkedList.vcxproj", "{820D8851-D8AC-4609-AE5B-0C03C8E4F43B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -142,6 +144,10 @@ Global
 		{0AE3FB3D-6009-4633-A665-174A8D8A27FD}.Debug|Win32.Build.0 = Debug|Win32
 		{0AE3FB3D-6009-4633-A665-174A8D8A27FD}.Release|Win32.ActiveCfg = Release|Win32
 		{0AE3FB3D-6009-4633-A665-174A8D8A27FD}.Release|Win32.Build.0 = Release|Win32
+		{820D8851-D8AC-4609-AE5B-0C03C8E4F43B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{820D8851-D8AC-4609-AE5B-0C03C8E4F43B}.Debug|Win32.Build.0 = Debug|Win32
+		{820D8851-D8AC-4609-AE5B-0C03C8E4F43B}.Release|Win32.ActiveCfg = Release|Win32
+		{820D8851-D8AC-4609-AE5B-0C03C8E4F43B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
