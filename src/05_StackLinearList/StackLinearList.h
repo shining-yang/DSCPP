@@ -31,7 +31,11 @@ namespace DSCPP { namespace Stack {
 template<typename T>
 class Stack : private CLinearList<T> {
 public:
-    Stack(int c = 16);
+    enum {
+        DEFAULT_STACK_SIZE = 20
+    };
+
+    Stack(int c = DEFAULT_STACK_SIZE);
     ~Stack();
 
 protected:
@@ -101,7 +105,11 @@ T Stack<T>::Top() const
 template<typename T>
 class Stack2 {
 public:
-    Stack2(int c = 16) : capacity(c), top(-1) {
+    enum {
+        DEFAULT_STACK_SIZE = 20
+    };
+
+    Stack2(int c = DEFAULT_STACK_SIZE) : capacity(c), top(-1) {
         elements = new T[c];
     }
 

@@ -16,13 +16,26 @@ using namespace DSCPP::Stack;
 void HanoiRecursively(char t1, char t2, char t3, int n)
 {
     static int _times = 0;
-    
+
     if (n == 1) {
-        cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
+//         cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
     } else {
         HanoiRecursively(t1, t3, t2, n - 1);
         HanoiRecursively(t1, t2, t3, 1);
         HanoiRecursively(t2, t1, t3, n - 1);
+    }
+}
+
+void HanoiRecursively2(char t1, char t2, char t3, int n)
+{
+    static int _times = 0;
+
+    if (n == 1) {
+//         cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
+    } else {
+        HanoiRecursively2(t1, t3, t2, n - 1);
+//         cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
+        HanoiRecursively2(t2, t1, t3, n - 1);
     }
 }
 
@@ -39,6 +52,7 @@ public:
     enum { SINGLE, MULTIPLE };
 };
 
+template<typename T>
 class Hanoi {
 public:
     Hanoi(char a, char b, char c, int n) : from(a), via(b), to(c), num(n) {}
@@ -51,16 +65,17 @@ private:
     char via;
     char to;
     int num;
-#if 1
+#if 0
     DSCPP::Stack::StackLinkedList<HanoiPara> s;
-#elif 1
+#elif 0
     DSCPP::Stack::Stack<HanoiPara> s;
 #else
-    DSCPP::Stack::Stack2<HanoiPara> s;
+    T s; // the stack
 #endif
 };
 
-void Hanoi::Perform()
+template<typename T>
+void Hanoi<T>::Perform()
 {
     static int _times = 0;
 
@@ -76,7 +91,7 @@ void Hanoi::Perform()
             }
             break;
         case HanoiPara::SINGLE:
-            cout << "[" << ++_times << "] " << x.from << " --> " << x.to << endl;
+//             cout << "[" << ++_times << "] " << x.from << " --> " << x.to << endl;
             if (x.num > 1) {
                 s.Push(HanoiPara(x.via, x.from, x.to, x.num - 1, HanoiPara::MULTIPLE));
             }
@@ -87,38 +102,50 @@ void Hanoi::Perform()
 
 int main(int argc, char* argv[])
 {
-    int n = 16;
-
+    int n = 20;
     CHighResTimeCounter tc;
+
+    //----
     tc.Begin();
     HanoiRecursively('A', 'B', 'C', n);
     tc.End();
-
-    CHighResTimeCounter tc2;
-    tc2.Begin();
-    Hanoi h('A', 'B', 'C', n);
-    h.Perform();
-    tc2.End();
-
     cout << "Time costs on recursive: " << tc.GetElapsedTimeInMS() << " ms" << endl;
-    cout << "Time costs on non-recursive: " << tc2.GetElapsedTimeInMS() << " ms" << endl;
+
+    //----
+    tc.Begin();
+    HanoiRecursively2('A', 'B', 'C', n);
+    tc.End();
+    cout << "Time costs on recursive2: " << tc.GetElapsedTimeInMS() << " ms" << endl;
+
+    //----
+    tc.Begin();
+    Hanoi<DSCPP::Stack::Stack<HanoiPara> > h1('A', 'B', 'C', n);
+    h1.Perform();
+    tc.End();
+    cout << "Time costs on non-recursive (Stack): " << tc.GetElapsedTimeInMS() << " ms" << endl;
+
+    //----
+    tc.Begin();
+    Hanoi<DSCPP::Stack::Stack2<HanoiPara> > h2('A', 'B', 'C', n);
+    h2.Perform();
+    tc.End();
+    cout << "Time costs on non-recursive (Stack2): " << tc.GetElapsedTimeInMS() << " ms" << endl;
+
+    //----
+    tc.Begin();
+    Hanoi<DSCPP::Stack::StackLinkedList<HanoiPara> > h3('A', 'B', 'C', n);
+    h3.Perform();
+    tc.End();
+    cout << "Time costs on non-recursive (StackLinkedList): " << tc.GetElapsedTimeInMS() << " ms" << endl;
 
     //
-    // Test result on 16 plates
+    // {{ Test results on 20 plates when commenting off `cout' statements 
     //
-    // {{
-    // Time costs on recursive : 508773 ms
-    // Time costs on non - recursive : 458749 ms
-    // }}
-    //
-    // {{ DSCPP::Stack::Stack
-    // Time costs on recursive: 44047 ms
-    // Time costs on non - recursive: 35915 ms
-    // }}
-    //
-    // {{ DSCPP::Stack::Stack2
-    // Time costs on recursive: 42686 ms
-    // Time costs on non - recursive: 42655 ms
+    // Time costs on recursive : 61 ms
+    // Time costs on recursive2 : 42 ms
+    // Time costs on non-recursive(Stack) : 765 ms
+    // Time costs on non-recursive(Stack2) : 468 ms
+    // Time costs on non-recursive(StackLinkedList) : 12502 ms
     // }}
     //
     return 0;
