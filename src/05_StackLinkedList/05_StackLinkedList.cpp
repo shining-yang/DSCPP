@@ -65,13 +65,7 @@ private:
     char via;
     char to;
     int num;
-#if 0
-    DSCPP::Stack::StackLinkedList<HanoiPara> s;
-#elif 0
-    DSCPP::Stack::Stack<HanoiPara> s;
-#else
     T s; // the stack
-#endif
 };
 
 template<typename T>
