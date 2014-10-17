@@ -13,12 +13,16 @@ using namespace DSCPP::Stack;
 #include "../PerformanceStatistics/HighResTimeCounter.h"
 #pragma comment(lib, "PerformanceStatistics")
 
+#define NO_CONSOLE_OUTPUT
+
 void HanoiRecursively(char t1, char t2, char t3, int n)
 {
     static int _times = 0;
 
     if (n == 1) {
-//         cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
+#ifndef NO_CONSOLE_OUTPUT
+        cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
+#endif
     } else {
         HanoiRecursively(t1, t3, t2, n - 1);
         HanoiRecursively(t1, t2, t3, 1);
@@ -31,10 +35,14 @@ void HanoiRecursively2(char t1, char t2, char t3, int n)
     static int _times = 0;
 
     if (n == 1) {
-//         cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
+#ifndef NO_CONSOLE_OUTPUT
+        cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
+#endif
     } else {
         HanoiRecursively2(t1, t3, t2, n - 1);
-//         cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
+#ifndef NO_CONSOLE_OUTPUT
+        cout << "[" << ++_times << "] " << t1 << " --> " << t3 << endl;
+#endif
         HanoiRecursively2(t2, t1, t3, n - 1);
     }
 }
@@ -85,7 +93,9 @@ void Hanoi<T>::Perform()
             }
             break;
         case HanoiPara::SINGLE:
-//             cout << "[" << ++_times << "] " << x.from << " --> " << x.to << endl;
+#ifndef NO_CONSOLE_OUTPUT
+            cout << "[" << ++_times << "] " << x.from << " --> " << x.to << endl;
+#endif
             if (x.num > 1) {
                 s.Push(HanoiPara(x.via, x.from, x.to, x.num - 1, HanoiPara::MULTIPLE));
             }
@@ -97,49 +107,55 @@ void Hanoi<T>::Perform()
 int main(int argc, char* argv[])
 {
     int n = 20;
-    CHighResTimeCounter tc;
 
     //----
-    tc.Begin();
+    CHighResTimeCounter tc1;
+    tc1.Begin();
     HanoiRecursively('A', 'B', 'C', n);
-    tc.End();
-    cout << "Time costs on recursive: " << tc.GetElapsedTimeInMS() << " ms" << endl;
+    tc1.End();
 
     //----
-    tc.Begin();
+    CHighResTimeCounter tc2;
+    tc2.Begin();
     HanoiRecursively2('A', 'B', 'C', n);
-    tc.End();
-    cout << "Time costs on recursive2: " << tc.GetElapsedTimeInMS() << " ms" << endl;
+    tc2.End();
 
     //----
-    tc.Begin();
-    Hanoi<DSCPP::Stack::Stack<HanoiPara> > h1('A', 'B', 'C', n);
-    h1.Perform();
-    tc.End();
-    cout << "Time costs on non-recursive (Stack): " << tc.GetElapsedTimeInMS() << " ms" << endl;
-
-    //----
-    tc.Begin();
-    Hanoi<DSCPP::Stack::Stack2<HanoiPara> > h2('A', 'B', 'C', n);
-    h2.Perform();
-    tc.End();
-    cout << "Time costs on non-recursive (Stack2): " << tc.GetElapsedTimeInMS() << " ms" << endl;
-
-    //----
-    tc.Begin();
-    Hanoi<DSCPP::Stack::StackLinkedList<HanoiPara> > h3('A', 'B', 'C', n);
+    CHighResTimeCounter tc3;
+    tc3.Begin();
+    Hanoi<DSCPP::Stack::Stack<HanoiPara> > h3('A', 'B', 'C', n);
     h3.Perform();
-    tc.End();
-    cout << "Time costs on non-recursive (StackLinkedList): " << tc.GetElapsedTimeInMS() << " ms" << endl;
+    tc3.End();
+
+    //----
+    CHighResTimeCounter tc4;
+    tc4.Begin();
+    Hanoi<DSCPP::Stack::Stack2<HanoiPara> > h4('A', 'B', 'C', n);
+    h4.Perform();
+    tc4.End();
+
+    //----
+    CHighResTimeCounter tc5;
+    tc5.Begin();
+    Hanoi<DSCPP::Stack::StackLinkedList<HanoiPara> > h5('A', 'B', 'C', n);
+    h5.Perform();
+    tc5.End();
+
+
+    cout << "Time costs on recursive: " << tc1.GetElapsedTimeInMS() << " ms" << endl;
+    cout << "Time costs on recursive2: " << tc2.GetElapsedTimeInMS() << " ms" << endl;
+    cout << "Time costs on non-recursive (Stack): " << tc3.GetElapsedTimeInMS() << " ms" << endl;
+    cout << "Time costs on non-recursive (Stack2): " << tc4.GetElapsedTimeInMS() << " ms" << endl;
+    cout << "Time costs on non-recursive (StackLinkedList): " << tc5.GetElapsedTimeInMS() << " ms" << endl;
 
     //
     // {{ Test results on 20 plates when commenting off `cout' statements 
     //
-    // Time costs on recursive : 61 ms
-    // Time costs on recursive2 : 42 ms
-    // Time costs on non-recursive(Stack) : 765 ms
-    // Time costs on non-recursive(Stack2) : 468 ms
-    // Time costs on non-recursive(StackLinkedList) : 12502 ms
+    // Time costs on recursive: 55 ms
+    // Time costs on recursive2: 43 ms
+    // Time costs on non-recursive (Stack): 754 ms
+    // Time costs on non-recursive (Stack2): 474 ms
+    // Time costs on non-recursive (StackLinkedList): 5999 ms
     // }}
     //
     return 0;
