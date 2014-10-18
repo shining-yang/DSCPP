@@ -7,6 +7,7 @@
 using namespace std;
 
 #include "../05_StackLinearList/StackLinearList.h"
+#include "../05_StackLinkedListCustomized/StackLinkedListCustomized.h"
 #include "StackLinkedList.h"
 using namespace DSCPP::Stack;
 
@@ -141,21 +142,30 @@ int main(int argc, char* argv[])
     h5.Perform();
     tc5.End();
 
+    //----
+    CHighResTimeCounter tc6;
+    tc6.Begin();
+    Hanoi<DSCPP::Stack::StackLinkedListCustomized<HanoiPara> > h6('A', 'B', 'C', n);
+    h6.Perform();
+    tc6.End();
+
 
     cout << "Time costs on recursive: " << tc1.GetElapsedTimeInMS() << " ms" << endl;
     cout << "Time costs on recursive2: " << tc2.GetElapsedTimeInMS() << " ms" << endl;
     cout << "Time costs on non-recursive (Stack): " << tc3.GetElapsedTimeInMS() << " ms" << endl;
     cout << "Time costs on non-recursive (Stack2): " << tc4.GetElapsedTimeInMS() << " ms" << endl;
     cout << "Time costs on non-recursive (StackLinkedList): " << tc5.GetElapsedTimeInMS() << " ms" << endl;
+    cout << "Time costs on non-recursive (StackLinkedListCustomized): " << tc6.GetElapsedTimeInMS() << " ms" << endl;
 
     //
     // {{ Test results on 20 plates when commenting off `cout' statements 
     //
-    // Time costs on recursive: 55 ms
-    // Time costs on recursive2: 43 ms
-    // Time costs on non-recursive (Stack): 754 ms
-    // Time costs on non-recursive (Stack2): 474 ms
-    // Time costs on non-recursive (StackLinkedList): 5999 ms
+    // Time costs on recursive: 50 ms
+    // Time costs on recursive2: 33 ms
+    // Time costs on non-recursive (Stack): 668 ms
+    // Time costs on non-recursive (Stack2): 408 ms
+    // Time costs on non-recursive (StackLinkedList): 7032 ms
+    // Time costs on non-recursive (StackLinkedListCustomized): 354 ms
     // }}
     //
     return 0;
