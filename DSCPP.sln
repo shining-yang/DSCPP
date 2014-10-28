@@ -54,6 +54,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_StackLinearList", "src\0
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_StackLinkedList", "src\05_StackLinkedList\05_StackLinkedList.vcxproj", "{820D8851-D8AC-4609-AE5B-0C03C8E4F43B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_StackLinkedListCustomized", "src\05_StackLinkedListCustomized\05_StackLinkedListCustomized.vcxproj", "{104C217A-AD35-41B3-B1B0-BD81D63DA6DE}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "06_LinearQueue", "src\06_LinearQueue\06_LinearQueue.vcxproj", "{E2D11136-92DE-40B2-B1A4-57BBF09E68AF}"
 EndProject
 Global
@@ -150,6 +152,10 @@ Global
 		{820D8851-D8AC-4609-AE5B-0C03C8E4F43B}.Debug|Win32.Build.0 = Debug|Win32
 		{820D8851-D8AC-4609-AE5B-0C03C8E4F43B}.Release|Win32.ActiveCfg = Release|Win32
 		{820D8851-D8AC-4609-AE5B-0C03C8E4F43B}.Release|Win32.Build.0 = Release|Win32
+		{104C217A-AD35-41B3-B1B0-BD81D63DA6DE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{104C217A-AD35-41B3-B1B0-BD81D63DA6DE}.Debug|Win32.Build.0 = Debug|Win32
+		{104C217A-AD35-41B3-B1B0-BD81D63DA6DE}.Release|Win32.ActiveCfg = Release|Win32
+		{104C217A-AD35-41B3-B1B0-BD81D63DA6DE}.Release|Win32.Build.0 = Release|Win32
 		{E2D11136-92DE-40B2-B1A4-57BBF09E68AF}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E2D11136-92DE-40B2-B1A4-57BBF09E68AF}.Debug|Win32.Build.0 = Debug|Win32
 		{E2D11136-92DE-40B2-B1A4-57BBF09E68AF}.Release|Win32.ActiveCfg = Release|Win32
