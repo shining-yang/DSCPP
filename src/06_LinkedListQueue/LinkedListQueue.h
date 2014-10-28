@@ -90,14 +90,14 @@ T LinkedListQueue<T>::Rear() const
 template<typename T>
 LinkedListQueue<T>& LinkedListQueue<T>::EnQueue(const T& x)
 {
-    PushFront(x);
+    PushBack(x);
     return *this;
 }
 
 template<typename T>
 LinkedListQueue<T>& LinkedListQueue<T>::DeQueue(T& x)
 {
-    PopBack(x);
+    PopFront(x);
     return *this;
 }
 
