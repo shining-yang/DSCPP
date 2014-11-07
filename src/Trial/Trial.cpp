@@ -36,7 +36,7 @@ int find_char2(char** strings, char c)
 int string_length(char* s)
 {
     char* p = s;
-    while (*p != NULL)
+    while (*p != '\0')
         p++;
     return p - s;
 }
@@ -91,6 +91,8 @@ void test_case_find_max()
 
 int main(int argc, char* argv[])
 {
+    int ret = -1;
+
 #if 0
     char* s = _strdup("This is a string for testing.");
     puts(s);
@@ -98,23 +100,22 @@ int main(int argc, char* argv[])
     puts(s);
     free(s);
 #else
-    char* strings[] = {
-        "Hello, world.",
-        "Hi, test.",
-        "OK, let's go",
-        "End"
-    };
+    char str1[] = "Hello, world.";
+    char str2[] = "perl -v";
+    char str3[] = "linux-3.2.X.0-generic";
+    char str4[] = "vim 7.4";
+    char* strings[] = { str1, str2, str3, str4 };
 
-    int ret = find_char(strings, 'O');
+    ret = find_char(strings, 'X');
     print_strings(strings, sizeof(strings) / sizeof(strings[0]));
     printf("\nFound: %s\n", ret ? "Yes" : "No");
 
-    ret = find_char2(strings, 'O');
+    ret = find_char2(strings, 'X');
     print_strings(strings, sizeof(strings) / sizeof(strings[0]));
     printf("\nFound: %s\n", ret ? "Yes" : "No");
 #endif
 
     test_case_find_max();
-	return 0;
+    return 0;
 }
 
