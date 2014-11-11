@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <iostream>
 #include "../Utility/Exception.h"
 using namespace DSCPP::Utils;
 
@@ -39,6 +40,7 @@ public:
     bool Search(const K& k, E& e);
     SkipList<E, K>& Insert(const E& e);
     SkipList<E, K>& Delete(const K& k, E& e);
+    void Output(std::ostream& os) const;
 
 private:
     void Randomize();
@@ -191,6 +193,25 @@ SkipNode<E, K>* SkipList<E, K>::SaveSearch(const K& k)
     }
 
     return p->link[0];
+}
+
+template<typename E, typename K>
+void SkipList<E, K>::Output(std::ostream& os) const
+{
+    for (int i = Levels; i >= 0; i--) {
+        for (SkipNode<E, K>* p = head->link[i]; p != tail; p = p->link[i]) {
+            os << p->data << ", ";
+        }
+
+        os << std::endl;
+    }
+}
+
+template<typename E, typename K>
+std::ostream& operator<<(std::ostream& os, const SkipList<E, K>& sl)
+{
+    sl.Output(os);
+    return os;
 }
 
 }}
