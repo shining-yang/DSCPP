@@ -3,6 +3,7 @@
 // Queue implemented with linked list.
 // 2014-10-28, Shining Yang <y.s.n@live.com>
 //
+#pragma once
 #include "../03_DoublyLinkedCircularList/DoublyLinkedCircularList.h"
 
 namespace DSCPP { namespace Queue {

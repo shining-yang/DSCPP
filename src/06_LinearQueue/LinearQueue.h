@@ -3,6 +3,7 @@
 // Queue implemented with linear list
 // 2014-10-27, Shining Yang <y.s.n@live.com>
 //
+#pragma once
 #include <iostream>
 using namespace std;
 #include "../Utility/Exception.h"
