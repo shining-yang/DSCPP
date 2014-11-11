@@ -62,6 +62,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_DoublyLinkedCircularList
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "06_LinkedListQueue", "src\06_LinkedListQueue\06_LinkedListQueue.vcxproj", "{7BD0AE3F-A9A1-45BC-B8BE-6571EE0C453D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07_SkipList", "src\07_SkipList\07_SkipList.vcxproj", "{9F46829C-DB6B-47E2-B2CC-6D9FEA7A0DD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -172,6 +174,10 @@ Global
 		{7BD0AE3F-A9A1-45BC-B8BE-6571EE0C453D}.Debug|Win32.Build.0 = Debug|Win32
 		{7BD0AE3F-A9A1-45BC-B8BE-6571EE0C453D}.Release|Win32.ActiveCfg = Release|Win32
 		{7BD0AE3F-A9A1-45BC-B8BE-6571EE0C453D}.Release|Win32.Build.0 = Release|Win32
+		{9F46829C-DB6B-47E2-B2CC-6D9FEA7A0DD0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9F46829C-DB6B-47E2-B2CC-6D9FEA7A0DD0}.Debug|Win32.Build.0 = Debug|Win32
+		{9F46829C-DB6B-47E2-B2CC-6D9FEA7A0DD0}.Release|Win32.ActiveCfg = Release|Win32
+		{9F46829C-DB6B-47E2-B2CC-6D9FEA7A0DD0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
