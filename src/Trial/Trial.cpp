@@ -89,9 +89,42 @@ void test_case_find_max()
 }
 //}} Get max item from array recursively
 
+void test_bit_fields()
+{
+    struct {
+        unsigned char a : 4;
+        unsigned char b : 4;
+    } CHS;
+    
+    int n = 0;
+    for (CHS.a = 1; CHS.a <= 9; CHS.a++) {
+        for (CHS.b = 1; CHS.b <= 9; CHS.b++) {
+            if (CHS.a % 3 != CHS.b % 3) {
+                printf("%d: %d -- %d\n", ++n, CHS.a, CHS.b);
+            }
+        }
+    }
+}
+
+void test_shift_operations()
+{
+    char c1 = 0x01;
+    for (int i = 0; i < 32; i++) {
+        printf("[%d, %u] ", c1 << i, c1 << i);
+    }
+
+    unsigned short s1 = 0xFFFF;
+    for (int i = 0; i < 16; i++) {
+        printf("[%d, %u] ", s1 >> i, s1 >> i);
+    }
+}
+
 int main(int argc, char* argv[])
 {
     int ret = -1;
+
+    test_bit_fields();
+    test_shift_operations();
 
 #if 0
     char* s = _strdup("This is a string for testing.");
