@@ -15,7 +15,11 @@ int main(int argc, char* argv[])
     sl.Insert(25);
     sl.Insert(35);
     sl.Insert(45);
+    std::cout << "NO.1 :" << std::endl << sl << std::endl;
 
-    std::cout << sl << std::endl;
+    int dummy = 0;
+    sl.Insert(18).Insert(17).Delete(18, dummy).Delete(15, dummy);
+    sl.Delete(45, dummy).Insert(44).Insert(28).Delete(35, dummy).Insert(32);
+    std::cout << "NO.2 :" << std::endl << sl << std::endl;
     return 0;
 }
