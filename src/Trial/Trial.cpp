@@ -6,6 +6,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "ChildClass.h"
+#include <limits>
+
+bool AreSame(double a, double b)
+{
+    return std::fabs(a - b) < std::numeric_limits<double>::epsilon();
+}
+
 
 int find_char(char** strings, char c)
 {
@@ -122,6 +130,19 @@ void test_shift_operations()
 int main(int argc, char* argv[])
 {
     int ret = -1;
+
+    Calculator* pVObj = new CDerived();
+    int n1 = pVObj->operator int();
+    double d1 = pVObj->Calc(3.14, 2.0);
+
+    /// Compare two floating point data
+    if (d1 == 5.14) {
+        ret = pVObj->operator int();
+    }
+
+    if (AreSame(d1, 5.14)) {
+        ret = pVObj->operator int();
+    }
 
     test_bit_fields();
     test_shift_operations();
