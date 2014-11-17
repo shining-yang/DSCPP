@@ -26,5 +26,11 @@ namespace DSCPP {
 
         class InvalideArgument {
         };
+
+        class ItemNotExisted {
+        };
+
+        class ItemAlreadyExisted {
+        };
     }
 }
