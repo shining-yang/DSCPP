@@ -83,7 +83,7 @@ void test1()
     SortedChain<Emp, EmpKT> s;
     Emp dummy;
 
-    s.Insert(e1).Insert(e2).Insert(e3).Insert(e4).Insert(e5);
+    s.Insert(e1).Insert(e2).Insert(e3).Insert(e4).Insert(e5).Insert(e6);
     std::cout << s << std::endl;
 
     s.Delete(3, dummy);
