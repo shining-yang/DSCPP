@@ -84,6 +84,9 @@
   <ItemGroup>
     <ClInclude Include="SortedList.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="07_SortedList.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

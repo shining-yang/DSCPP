@@ -5,6 +5,9 @@
 //
 #pragma once
 
+#include <iostream>
+using namespace std;
+
 #include "..\Utility\Exception.h"
 using namespace DSCPP::Utils;
 
@@ -23,11 +26,54 @@ public:
     SortedList<E, K>& Insert(const E& e);
     SortedList<E, K>& Delete(const K& k, E& e);
 
+    template<typename E, typename K>
+    friend std::ostream&  operator<<(std::ostream& os, const SortedList<E, K>& sl);
+
+protected:
+    int _Locate(const K& k) const;
+    void _MoveExpand(int pos);
+    void _MoveShrive(int pos);
+
 private:
     int capacity;
     int length;
     E* elements;
 };
+
+template<typename E, typename K>
+void SortedList<E, K>::_MoveExpand(int pos)
+{
+    for (int i = length - 1; i >= pos; i--) {
+        elements[i + 1] = elements[i];
+    }
+}
+
+template<typename E, typename K>
+void SortedList<E, K>::_MoveShrive(int pos)
+{
+    for (int i = pos; i < length - 1; i++) {
+        elements[i] = elements[i + 1];
+    }
+}
+
+template<typename E, typename K>
+int SortedList<E, K>::_Locate(const K& k) const
+{
+    int lo = 0;
+    int mid = -1;
+    int hi = length - 1;
+    while (lo <= hi) {
+        mid = (lo + hi) >> 1;
+        if (elements[mid] == k) {
+            return mid;
+        } else if (elements[mid] < k) {
+            lo = mid + 1;
+        } else {
+            hi = mid - 1;
+        }
+    }
+    return mid;
+}
 
 template<typename E, typename K>
 SortedList<E, K>::SortedList(int capacity /*= 16*/)
@@ -69,9 +115,9 @@ template<typename E, typename K>
 bool SortedList<E, K>::Search(const K& k, E& e) const
 {
     int low = 0;
-    int high = length;
+    int high = length - 1;
 
-    while (low < high) {
+    while (low <= high) {
         int mid = (high + low) / 2;
         if (elements[mid] == k) {
             e = elements[mid];
@@ -89,13 +135,59 @@ bool SortedList<E, K>::Search(const K& k, E& e) const
 template<typename E, typename K>
 SortedList<E, K>& SortedList<E, K>::Insert(const E& e)
 {
+    if (IsFull()) {
+        throw new OutOfRange;
+    }
 
+    K k = e;
+    int pos = _Locate(k);
+    if (pos == -1) {
+        elements[length++] = e;
+    } else {
+        if (elements[pos] == k) {
+            throw new ItemAlreadyExisted();
+        }
+        
+        if (elements[pos] < k) {
+            pos++;
+        }
+        
+        _MoveExpand(pos);
+        elements[pos] = e;
+        length++;
+    }
+
+    return *this;
 }
 
 template<typename E, typename K>
 SortedList<E, K>& SortedList<E, K>::Delete(const K& k, E& e)
 {
+    if (IsEmpty()) {
+        throw new OutOfRange;
+    }
 
+    int pos = _Locate(k);
+    if (elements[pos] == k) {
+        e = elements[pos];
+        _MoveShrive(pos);
+        length--;
+    } else {
+        throw new ItemNotExisted();
+    }
+
+    return *this;
+}
+
+template<typename E, typename K>
+std::ostream& operator<<(std::ostream& os, const SortedList<E, K>& sl)
+{
+    os << "Contains " << sl.length << " element(s): ";
+    for (int i = 0; i < sl.length; i++) {
+        os << sl.elements[i] << " ";
+    }
+
+    return os;
 }
 
 }}
