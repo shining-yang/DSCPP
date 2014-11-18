@@ -114,8 +114,8 @@ SkipList<E, K>& SkipList<E, K>::Insert(const E& e)
     }
 
     SkipNode<E, K>* p = SaveSearch(k);
-    if (k == p->data) { // duplicated
-        throw new InvalideArgument();
+    if (k == p->data) {
+        throw new ItemAlreadyExisted();
     }
 
     int lev = Level();
@@ -142,8 +142,8 @@ SkipList<E, K>& SkipList<E, K>::Delete(const K& k, E& e)
     }
 
     SkipNode<E, K>* p = SaveSearch(k);
-    if (k != p->data) { // duplicated
-        throw new InvalideArgument();
+    if (k != p->data) {
+        throw new ItemNotExisted();
     }
 
     for (int i = 0; i <= Levels && last[i]->link[i] == p; i++) {
