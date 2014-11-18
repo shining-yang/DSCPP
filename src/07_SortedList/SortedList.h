@@ -22,6 +22,7 @@ public:
     int Length() const;
     bool IsEmpty() const;
     bool IsFull() const;
+    void Clear();
     bool Search(const K& k, E& e) const;
     SortedList<E, K>& Insert(const E& e);
     SortedList<E, K>& Delete(const K& k, E& e);
@@ -33,6 +34,8 @@ protected:
     int _Locate(const K& k) const;
     void _MoveExpand(int pos);
     void _MoveShrive(int pos);
+    void _TryToInflate();
+    void _TryToDeflate();
 
 private:
     int capacity;
@@ -41,19 +44,9 @@ private:
 };
 
 template<typename E, typename K>
-void SortedList<E, K>::_MoveExpand(int pos)
+void SortedList<E, K>::Clear()
 {
-    for (int i = length - 1; i >= pos; i--) {
-        elements[i + 1] = elements[i];
-    }
-}
-
-template<typename E, typename K>
-void SortedList<E, K>::_MoveShrive(int pos)
-{
-    for (int i = pos; i < length - 1; i++) {
-        elements[i] = elements[i + 1];
-    }
+    length = 0;
 }
 
 template<typename E, typename K>
@@ -73,6 +66,62 @@ int SortedList<E, K>::_Locate(const K& k) const
         }
     }
     return mid;
+}
+
+template<typename E, typename K>
+void SortedList<E, K>::_MoveExpand(int pos)
+{
+    for (int i = length - 1; i >= pos; i--) {
+        elements[i + 1] = elements[i];
+    }
+}
+
+template<typename E, typename K>
+void SortedList<E, K>::_MoveShrive(int pos)
+{
+    for (int i = pos; i < length - 1; i++) {
+        elements[i] = elements[i + 1];
+    }
+}
+
+template<typename E, typename K>
+void SortedList<E, K>::_TryToInflate()
+{
+    int n = capacity;
+    if (n < 1024) {
+        n <<= 1; // make double
+    } else {
+        n += 1024;
+    }
+
+    E* pe = new E[n]; // throw exception when failed to allocate memory
+    for (int i = 0; i < length; i++) {
+        pe[i] = elements[i]; // Copy-constructor needed
+    }
+
+    delete[] elements;
+    elements = pe;
+    capacity = n;
+}
+
+template<typename E, typename K>
+void SortedList<E, K>::_TryToDeflate()
+{
+    int n = capacity;
+    if (n > 32) {
+        if ((length << 2) < n) { // 4-times
+            n >>= 1; // make half
+
+            E* pe = new E[n]; // throw exception when failed to allocate memory
+            for (int i = 0; i < length; i++) {
+                pe[i] = elements[i]; // Copy-constructor needed
+            }
+
+            delete[] elements;
+            elements = pe;
+            capacity = n;
+        }
+    }
 }
 
 template<typename E, typename K>
@@ -135,8 +184,8 @@ bool SortedList<E, K>::Search(const K& k, E& e) const
 template<typename E, typename K>
 SortedList<E, K>& SortedList<E, K>::Insert(const E& e)
 {
-    if (IsFull()) {
-        throw new OutOfRange;
+    if (length >= capacity) {
+        _TryToInflate();
     }
 
     K k = e;
@@ -176,6 +225,7 @@ SortedList<E, K>& SortedList<E, K>::Delete(const K& k, E& e)
         throw new ItemNotExisted();
     }
 
+    _TryToDeflate();
     return *this;
 }
 
