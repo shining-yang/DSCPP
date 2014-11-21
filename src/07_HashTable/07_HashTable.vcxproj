@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{20F0C315-BF66-41CA-A6DC-0DA7DA8AF6ED}</ProjectGuid>
+    <ProjectGuid>{933CB7D3-ED2B-4068-8F1C-C14CB1DD33F5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>HashTable</RootNamespace>
+    <RootNamespace>My07_HashTable</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
