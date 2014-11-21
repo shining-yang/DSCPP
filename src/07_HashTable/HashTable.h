@@ -8,6 +8,7 @@
 #include <iostream>
 #include "..\Utility\Exception.h"
 using namespace std;
+using namespace DSCPP::Utils;
 
 namespace DSCPP { namespace Hash {
 
@@ -34,7 +35,7 @@ private:
 };
 
 template<typename E, typename K>
-DSCPP::Hash::HashTable<E, K>::HashTable(int nBuckets /*= 16*/)
+HashTable<E, K>::HashTable(int nBuckets /*= 16*/)
 {
     divisor = nBuckets;
     empty = new bool[nBuckets];
@@ -45,14 +46,14 @@ DSCPP::Hash::HashTable<E, K>::HashTable(int nBuckets /*= 16*/)
 }
 
 template<typename E, typename K>
-DSCPP::Hash::HashTable<E, K>::~HashTable()
+HashTable<E, K>::~HashTable()
 {
     delete[] empty;
     delete[] elements;
 }
 
 template<typename E, typename K>
-bool DSCPP::Hash::HashTable<E, K>::Search(const K& k, E& e) const
+bool HashTable<E, K>::Search(const K& k, E& e) const
 {
     int n = _SearchHelper(k);
     if (empty[n] || elements[n] != k) {
@@ -64,7 +65,7 @@ bool DSCPP::Hash::HashTable<E, K>::Search(const K& k, E& e) const
 }
 
 template<typename E, typename K>
-HashTable<E, K>& DSCPP::Hash::HashTable<E, K>::Insert(const E& e)
+HashTable<E, K>& HashTable<E, K>::Insert(const E& e)
 {
     K k = e; // make a conversion
     int n = _SearchHelper(k);
@@ -75,14 +76,14 @@ HashTable<E, K>& DSCPP::Hash::HashTable<E, K>::Insert(const E& e)
         if (elements[n] == k) {
             throw new ItemAlreadyExisted();
         } else {
-            throw new NoMem();
+            throw new OutOfRange();
         }
     }
     return *this;
 }
 
 template<typename E, typename K>
-HashTable<E, K>& DSCPP::Hash::HashTable<E, K>::Delete(const K& k, E& e)
+HashTable<E, K>& HashTable<E, K>::Delete(const K& k, E& e)
 {
     return *this;
 }
@@ -92,7 +93,7 @@ HashTable<E, K>& DSCPP::Hash::HashTable<E, K>::Delete(const K& k, E& e)
 // 2) 表中没有关键字值为k 的元素，empty[n]为true，则可把关键字值为k 的元素插入到n 号桶中；
 // 3) 表中没有关键字值为k 的元素，empty[n]为false，empty[n]的关键字值不等于k，且表已满。
 template<typename E, typename K>
-int DSCPP::Hash::HashTable<E, K>::_SearchHelper(const K& k) const
+int HashTable<E, K>::_SearchHelper(const K& k) const
 {
     int i = k % divisor;
     int n = i;
@@ -107,8 +108,16 @@ int DSCPP::Hash::HashTable<E, K>::_SearchHelper(const K& k) const
 }
 
 template<typename E, typename K>
-ostream& HashTable::operator<<(ostream& os, const HashTable<E, K>& obj)
+ostream& operator<<(ostream& os, const HashTable<E, K>& obj)
 {
+    for (int i = 0; i < obj.divisor; i++) {
+        if (obj.empty[i]) {
+            os << "*";
+        } else {
+            os << obj.elements[i];
+        }
+        os << " ";
+    }
     return os;
 }
 
