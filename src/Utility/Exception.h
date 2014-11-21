@@ -32,5 +32,11 @@ namespace DSCPP {
 
         class ItemAlreadyExisted {
         };
+
+        class ItemOverFlow {
+        };
+
+        class ItemUnderFlow {
+        };
     }
 }

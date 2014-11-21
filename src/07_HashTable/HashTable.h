@@ -76,7 +76,7 @@ HashTable<E, K>& HashTable<E, K>::Insert(const E& e)
         if (elements[n] == k) {
             throw new ItemAlreadyExisted();
         } else {
-            throw new OutOfRange();
+            throw new ItemOverFlow();
         }
     }
     return *this;
