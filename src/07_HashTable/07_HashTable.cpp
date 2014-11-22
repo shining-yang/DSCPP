@@ -42,5 +42,17 @@ int main(int argc, char* argv[])
     ht.Insert('X').Insert('Y').Insert('Z');
     ShowHashInfo(ht);
 
+    //--
+    ht.Delete('X', dummy).Delete('Y', dummy).Delete('Z', dummy);
+    ShowHashInfo(ht);
+
+    //--
+    ht.Insert('X');
+    ht.Delete('X', dummy);
+    ht.Insert('X');
+    ht.Delete('X', dummy);
+    ht.Insert('X');
+    ShowHashInfo(ht);
+
     return 0;
 }
