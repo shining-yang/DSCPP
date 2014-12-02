@@ -70,6 +70,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07_SortedList", "src\07_Sor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07_HashTable", "src\07_HashTable\07_HashTable.vcxproj", "{933CB7D3-ED2B-4068-8F1C-C14CB1DD33F5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07_HashTableWithSortedChain", "src\07_HashTableWithSortedChain\07_HashTableWithSortedChain.vcxproj", "{22B10B69-7F56-4B71-BDF0-3D7862B55B45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -196,6 +198,10 @@ Global
 		{933CB7D3-ED2B-4068-8F1C-C14CB1DD33F5}.Debug|Win32.Build.0 = Debug|Win32
 		{933CB7D3-ED2B-4068-8F1C-C14CB1DD33F5}.Release|Win32.ActiveCfg = Release|Win32
 		{933CB7D3-ED2B-4068-8F1C-C14CB1DD33F5}.Release|Win32.Build.0 = Release|Win32
+		{22B10B69-7F56-4B71-BDF0-3D7862B55B45}.Debug|Win32.ActiveCfg = Debug|Win32
+		{22B10B69-7F56-4B71-BDF0-3D7862B55B45}.Debug|Win32.Build.0 = Debug|Win32
+		{22B10B69-7F56-4B71-BDF0-3D7862B55B45}.Release|Win32.ActiveCfg = Release|Win32
+		{22B10B69-7F56-4B71-BDF0-3D7862B55B45}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
