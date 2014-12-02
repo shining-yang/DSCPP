@@ -176,7 +176,7 @@ template<typename E, typename K>
 void SortedChain<E, K>::Output(std::ostream& os) const
 {
     for (SortedChainNode<E, K>* p = first; p; p = p->link) {
-        os << p->data;
+        os << p->data << " ";
     }
 }
 
