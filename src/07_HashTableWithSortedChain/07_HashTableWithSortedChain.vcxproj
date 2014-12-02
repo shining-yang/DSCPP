@@ -84,6 +84,9 @@
   <ItemGroup>
     <ClInclude Include="HashTableWithSortedChain.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="07_HashTableWithSortedChain.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

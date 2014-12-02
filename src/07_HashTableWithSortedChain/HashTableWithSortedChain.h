@@ -9,6 +9,7 @@
 #include "../07_SortedChain/SortedChain.h"
 #include "../Utility/Exception.h"
 using namespace std;
+using namespace DSCPP::SortedLinearList;
 using namespace DSCPP::Utils;
 
 namespace DSCPP { namespace Hash {
@@ -57,6 +58,7 @@ bool HashTableWithSortedChain<E, K>::Search(const K& k, E& e) const
 template<typename E, typename K>
 HashTableWithSortedChain<E, K>& HashTableWithSortedChain<E, K>::Insert(const E& e)
 {
+    K k = e; // auto conversion from E to K
     elements[k % D].InsertDistinct(e);
     return *this;
 }
