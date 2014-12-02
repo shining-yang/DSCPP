@@ -18,6 +18,17 @@ public:
     HashTable(int nBuckets = 16);
     virtual ~HashTable();
 
+    bool IsFull() const {
+        return _ReallyFull();
+    }
+    bool IsEmpty() const {
+        for (int i = 0; i < divisor; i++) {
+            if (!deleted[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
     bool Search(const K& k, E& e) const;
     HashTable<E, K>& Insert(const E& e);
     HashTable<E, K>& Delete(const K& k, E& e);
@@ -27,12 +38,16 @@ public:
 
 protected:
     int _SearchHelper(const K& k) const;
+    bool _ReallyFull() const;
+    void _ReorganizeOnApparentFull();
 
 private:
     bool* empty;
     E* elements;
     int divisor;
+    bool* deleted; // add an array to indicate item been deleted
 };
+
 
 template<typename E, typename K>
 HashTable<E, K>::HashTable(int nBuckets /*= 16*/)
@@ -40,8 +55,10 @@ HashTable<E, K>::HashTable(int nBuckets /*= 16*/)
     divisor = nBuckets;
     empty = new bool[nBuckets];
     elements = new E[nBuckets];
+    deleted = new bool[nBuckets];
     for (int i = 0; i < nBuckets; i++) {
         empty[i] = true;
+        deleted[i] = true; // initialized as true so that Insert() is allowed
     }
 }
 
@@ -50,32 +67,43 @@ HashTable<E, K>::~HashTable()
 {
     delete[] empty;
     delete[] elements;
+    delete[] deleted;
 }
 
 template<typename E, typename K>
 bool HashTable<E, K>::Search(const K& k, E& e) const
 {
     int n = _SearchHelper(k);
-    if (empty[n] || elements[n] != k) {
-        return false;
+    if (!empty[n] && !deleted[n] && elements[n] == k) {
+        e = elements[n];
+        return true;
     }
 
-    e = elements[n];
-    return true;
+    return false;
 }
 
 template<typename E, typename K>
 HashTable<E, K>& HashTable<E, K>::Insert(const E& e)
 {
     K k = e; // make a conversion
+    bool checked = false;
+
+_DoSearchOnceAgain:
     int n = _SearchHelper(k);
     if (empty[n]) {
         elements[n] = e;
         empty[n] = false;
+        deleted[n] = false;
     } else {
-        if (elements[n] == k) {
+        if (!deleted[n] && elements[n] == k) {
             throw new ItemAlreadyExisted();
         } else {
+            if (!checked) {
+                _ReorganizeOnApparentFull();
+                checked = true;
+                goto _DoSearchOnceAgain;
+            }
+
             throw new ItemOverFlow();
         }
     }
@@ -85,7 +113,19 @@ HashTable<E, K>& HashTable<E, K>::Insert(const E& e)
 template<typename E, typename K>
 HashTable<E, K>& HashTable<E, K>::Delete(const K& k, E& e)
 {
-    return *this;
+    int i = k % divisor;
+    int n = i;
+
+    do {
+        if (!empty[n] && !deleted[n] && elements[n] == k) {
+            deleted[n] = true;
+            e = elements[n];
+            return *this;
+        }
+        n = (n + 1) % divisor;
+    } while (n != i);
+
+    throw new ItemNotExisted();
 }
 
 // ∑µªÿn ∫≈Õ∞£∫
@@ -97,8 +137,9 @@ int HashTable<E, K>::_SearchHelper(const K& k) const
 {
     int i = k % divisor;
     int n = i;
+    
     do {
-        if (empty[n] || elements[n] == k) {
+        if (empty[n] || (!deleted[n] && elements[n] == k)) {
             return n;
         }
         n = (n + 1) % divisor;
@@ -108,15 +149,67 @@ int HashTable<E, K>::_SearchHelper(const K& k) const
 }
 
 template<typename E, typename K>
+bool HashTable<E, K>::_ReallyFull() const
+{
+    for (int i = 0; i < divisor; i++) {
+        if (deleted[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template<typename E, typename K>
+void HashTable<E, K>::_ReorganizeOnApparentFull()
+{
+    if (_ReallyFull()) {
+        return;
+    }
+
+    bool* emptytmp = empty; // save it
+    empty = new bool[divisor]; // reallocate
+    bool* deletedtmp = deleted; // save it
+    deleted = new bool[divisor];
+    for (int i = 0; i < divisor; i++) {
+        empty[i] = true;
+        deleted[i] = true;
+    }
+
+    E* elementstmp = elements;
+    elements = new E[divisor];
+    for (int i = 0; i < divisor; i++) {
+        if (!deletedtmp[i]) {
+            Insert(elementstmp[i]);
+        }
+    }
+
+    delete[] emptytmp;
+    delete[] deletedtmp;
+    delete[] elementstmp;
+}
+
+template<typename E, typename K>
 ostream& operator<<(ostream& os, const HashTable<E, K>& obj)
 {
     for (int i = 0; i < obj.divisor; i++) {
-        if (obj.empty[i]) {
+        if (obj.deleted[i]) {
             os << "*";
         } else {
             os << obj.elements[i];
         }
         os << " ";
+    }
+
+    os << endl;
+    os << "Empty flags:\t";
+    for (int i = 0; i < obj.divisor; i++) {
+        os << (obj.empty[i] ? "T" : "F") << " ";
+    }
+
+    os << endl;
+    os << "Deleted flags:\t";
+    for (int i = 0; i < obj.divisor; i++) {
+        os << (obj.deleted[i] ? "T" : "F") << " ";
     }
     return os;
 }
