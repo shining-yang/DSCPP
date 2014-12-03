@@ -8,6 +8,8 @@
 using namespace std;
 #include "../Utility/Exception.h"
 using namespace DSCPP::Utils;
+#include "../06_LinkedListQueue/LinkedListQueue.h"
+using namespace DSCPP::Queue;
 
 namespace DSCPP { namespace BinaryTree {
 
@@ -178,7 +180,7 @@ void BinaryTree<T>::PostOrder(BTVisitor v) const
 template<typename T>
 void BinaryTree<T>::LevelOrder(BTVisitor v) const
 {
-
+    _LevelOrder(v, this->root);
 }
 
 template<typename T>
@@ -214,7 +216,25 @@ void BinaryTree<T>::_PostOrder(BTVisitor v, BinaryTreeNode<T>* t) const
 template<typename T>
 void BinaryTree<T>::_LevelOrder(BTVisitor v, BinaryTreeNode<T>* t) const
 {
+    LinkedListQueue<BinaryTreeNode<T>*> q;
 
+    if (t) {
+        q.EnQueue(t);
+
+        while (!q.IsEmpty()) {
+            BinaryTreeNode<T>* p;
+            q.DeQueue(p);
+            v(p);
+
+            if (p->lchild) {
+                q.EnQueue(p->lchild);
+            }
+
+            if (p->rchild) {
+                q.EnQueue(p->rchild);
+            }
+        }
+    }
 }
 
 template<typename T>

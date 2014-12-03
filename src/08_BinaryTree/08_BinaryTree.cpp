@@ -27,6 +27,7 @@ int main(int argc, char* argv[])
     e.InOrder(PrintNode); cout << endl;
     e.PreOrder(PrintNode); cout << endl;
     e.PostOrder(PrintNode); cout << endl;
+    e.LevelOrder(PrintNode); cout << endl;
 
     cout << "Elements count: " << e.GetCount() << endl;
     cout << "Height: " << e.GetHeight() << endl;
