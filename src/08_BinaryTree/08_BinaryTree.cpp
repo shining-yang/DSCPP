@@ -16,21 +16,33 @@ void PrintNode(const BinaryTreeNode<T>* n)
 
 int main(int argc, char* argv[])
 {
-    BinaryTree<int> bt;
-    BinaryTree<int> x, a, b, c, d, e;
-    a.MakeTree(10, x, x);
-    b.MakeTree(20, x, x);
-    c.MakeTree(30, a, x);
-    d.MakeTree(40, b, x);
-    e.MakeTree(50, c, d);
+    BinaryTree<char> bt;
+    BinaryTree<char> x, a, b, c, d, e, f, g, h, i, j, T;
+    a.MakeTree('A', x, x);
+    b.MakeTree('B', x, x);
+    c.MakeTree('C', a, x);
+    d.MakeTree('D', b, x);
+    e.MakeTree('E', c, d);
+    f.MakeTree('F', x, x);
+    g.MakeTree('G', x, x);
+    h.MakeTree('H', f, g);
+    i.MakeTree('I', x, h);
+    j.MakeTree('J', i, x);
+    T.MakeTree('X', e, j);
 
-    e.InOrder(PrintNode); cout << endl;
-    e.PreOrder(PrintNode); cout << endl;
-    e.PostOrder(PrintNode); cout << endl;
-    e.LevelOrder(PrintNode); cout << endl;
+    T.InOrder(PrintNode); cout << endl;
+    T.PreOrder(PrintNode); cout << endl;
+    T.PostOrder(PrintNode); cout << endl;
+    T.LevelOrder(PrintNode); cout << endl;
 
-    cout << "Elements count: " << e.GetCount() << endl;
-    cout << "Height: " << e.GetHeight() << endl;
+    cout << "Elements count: " << T.GetCount() << endl;
+    cout << "Height: " << T.GetHeight() << endl;
+
+    cout << "Print horizontally:" << endl;
+    T.PrintHorizontally(4);
+
+    cout << "Print vertically:" << endl;
+    T.PrintVertically(80);
 
     return 0;
 }
