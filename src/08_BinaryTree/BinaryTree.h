@@ -89,6 +89,7 @@ public:
     void PrintVertically(int width) const;
 
     void Clone(BinaryTree<T>& cp) const;
+    bool Compare(const BinaryTree<T>& bt) const;
 
 protected:
     void _InOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
@@ -112,6 +113,7 @@ protected:
 
     void _PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo<T> > & c) const;
     BinaryTreeNode<T>* _Clone(const BinaryTreeNode<T>* t) const;
+    bool _Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const;
 
 private:
     static void _DestroyVisitor(const BinaryTreeNode<T>* t);
@@ -121,6 +123,26 @@ private:
 private:
     BinaryTreeNode<T>* root;
 };
+
+template<typename T>
+bool BinaryTree<T>::Compare(const BinaryTree<T>& bt) const
+{
+    return _Compare(this->root, bt.root);
+}
+
+template<typename T>
+bool BinaryTree<T>::_Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const
+{
+    if (!s && !t) {
+        return true;
+    }
+
+    if (s && t) {
+        return _Compare(s->lchild, t->lchild) && _Compare(s->rchild, t->rchild);
+    }
+
+    return false;
+}
 
 template<typename T>
 void BinaryTree<T>::Clone(BinaryTree<T>& cp) const

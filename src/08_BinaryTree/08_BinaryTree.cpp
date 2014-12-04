@@ -48,5 +48,16 @@ int main(int argc, char* argv[])
     T.Clone(X);
     cout << "Print vertically (clone):" << endl;
     X.PrintVertically(64);
+    cout << "T & X: Equivalent? " << (T.Compare(X) ? "Yes" : "No") << endl;
+
+    BinaryTree<char> Y, Z;
+    T.Clone(Y);
+    cout << "X & Y: Equivalent? " << (X.Compare(Y) ? "Yes" : "No") << endl;
+    Z.MakeTree('Z', Y, x);
+    cout << "X & Z: Equivalent? " << (X.Compare(Z) ? "Yes" : "No") << endl;
+
+    cout << "Print Z vertically:" << endl;
+    Z.PrintVertically(64);
+    
     return 0;
 }
