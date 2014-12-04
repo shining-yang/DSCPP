@@ -44,5 +44,9 @@ int main(int argc, char* argv[])
     cout << "Print vertically:" << endl;
     T.PrintVertically(80);
 
+    BinaryTree<char> X;
+    T.Clone(X);
+    cout << "Print vertically (clone):" << endl;
+    X.PrintVertically(64);
     return 0;
 }

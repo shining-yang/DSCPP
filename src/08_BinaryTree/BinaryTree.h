@@ -88,6 +88,8 @@ public:
     void PrintHorizontally(int indent) const;
     void PrintVertically(int width) const;
 
+    void Clone(BinaryTree<T>& cp) const;
+
 protected:
     void _InOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
     void _PreOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
@@ -107,7 +109,9 @@ protected:
         int level;
         int pos;
     };
+
     void _PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo<T> > & c) const;
+    BinaryTreeNode<T>* _Clone(const BinaryTreeNode<T>* t) const;
 
 private:
     static void _DestroyVisitor(const BinaryTreeNode<T>* t);
@@ -119,103 +123,28 @@ private:
 };
 
 template<typename T>
-void BinaryTree<T>::_PrintHorz(BinaryTreeNode<T>* t, int pos, int indent) const
+void BinaryTree<T>::Clone(BinaryTree<T>& cp) const
 {
-    // visit order: right, root, left
-    if (t) {
-        _PrintHorz(t->rchild, pos + indent, indent);
-        for (int i = 0; i < pos; i++) {
-            std::cout << " ";
-        }
-        std::cout << t->Data() << endl;
-        _PrintHorz(t->lchild, pos + indent, indent);
-    }
-}
-
-template<typename T>
-void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
-{
-    if (!t) {
-        return;
-    }
-
-    if (level != 0) {
+    if (this == &cp) {
         throw new InvalideArgument();
     }
 
-    int height = _CalcHeight(t);
-
-    // an array of chains
-    Array<Chain<BinaryTreeVerticalPrintInfo<T> > > A(height);
-
-    LinkedListQueue<BinaryTreeVerticalPrintInfo<T> > Q;
-    Q.EnQueue(BinaryTreeVerticalPrintInfo<T>(t, level, width / 2));
-
-    while (!Q.IsEmpty()) {
-        BinaryTreeVerticalPrintInfo<T> p;
-        Q.DeQueue(p);
-
-        A[p.level].Insert(0, p); // save the print-info into linked-list
-
-        if (p.node->lchild) {
-            Q.EnQueue(BinaryTreeVerticalPrintInfo<T>(
-                p.node->lchild, p.level + 1, p.pos - width / (1 << (p.level + 2))));
-        }
-
-        if (p.node->rchild) {
-            Q.EnQueue(BinaryTreeVerticalPrintInfo<T>(
-                p.node->rchild, p.level + 1, p.pos + width / (1 << (p.level + 2))));
-        }
-    }
-
-    // ready to print
-    for (int i = 0; i < height; i++) {
-        _PrintVertByLevel(A[i]);
-        cout << endl;
-    }
+    cp._Destroy();
+    cp.root = _Clone(this->root);
 }
 
 template<typename T>
-void BinaryTree<T>::_PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo<T> > & c) const
+BinaryTreeNode<T>* BinaryTree<T>::_Clone(const BinaryTreeNode<T>* t) const
 {
-    int maxnum = 100;
-    Array<T*> A(maxnum);
-    for (int i = 0; i < maxnum; i++) {
-        A[i] = NULL;
+    if (!t) {
+        return NULL;
     }
 
-    int maxvalid = 0;
-    BinaryTreeVerticalPrintInfo<T> x;
-    for (int i = 0; i < c.Length(); i++) {
-        c.Find(i, x);
-        A[x.pos] = new T(x.node->Data());
-        if (x.pos > maxvalid) {
-            maxvalid = x.pos;
-        }
-    }
-
-    for (int i = 0; i <= maxvalid; i++) {
-        if (A[i]) {
-            cout << *A[i];
-            delete A[i];
-        } else {
-            cout << " ";
-        }
-    }
+    BinaryTreeNode<T>* r = new BinaryTreeNode<T>(t->data);
+    r->lchild = _Clone(t->lchild);
+    r->rchild = _Clone(t->rchild);
+    return r;
 }
-
-template<typename T>
-void BinaryTree<T>::PrintHorizontally(int indent) const
-{
-    _PrintHorz(this->root, 0, indent);
-}
-
-template<typename T>
-void BinaryTree<T>::PrintVertically(int width) const
-{
-    _PrintVert(this->root, 0, width);
-}
-
 
 template<typename T>
 BinaryTree<T>::BinaryTree() : root(NULL)
@@ -391,6 +320,113 @@ template<typename T>
 void BinaryTree<T>::_DestroyVisitor(const BinaryTreeNode<T>* t)
 {
     delete t;
+}
+
+template<typename T>
+void BinaryTree<T>::_PrintHorz(BinaryTreeNode<T>* t, int pos, int indent) const
+{
+    // visit order: right, root, left
+    if (t) {
+        _PrintHorz(t->rchild, pos + indent, indent);
+
+        for (int i = 0; i < pos; i++) {
+            std::cout << " ";
+        }
+        std::cout << t->Data() << endl;
+        
+        _PrintHorz(t->lchild, pos + indent, indent);
+    }
+}
+
+template<typename T>
+void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
+{
+    if (!t) {
+        return;
+    }
+
+    if (level != 0) {
+        throw new InvalideArgument();
+    }
+
+    int height = _CalcHeight(t);
+
+    // an array of chains
+    Array<Chain<BinaryTreeVerticalPrintInfo<T> > > A(height);
+
+    LinkedListQueue<BinaryTreeVerticalPrintInfo<T> > Q;
+    Q.EnQueue(BinaryTreeVerticalPrintInfo<T>(t, level, width / 2));
+
+    while (!Q.IsEmpty()) {
+        BinaryTreeVerticalPrintInfo<T> p;
+        Q.DeQueue(p);
+
+        A[p.level].Insert(0, p); // save the print-info into linked-list
+
+        if (p.node->lchild) {
+            Q.EnQueue(BinaryTreeVerticalPrintInfo<T>(
+                p.node->lchild, p.level + 1, p.pos - width / (1 << (p.level + 2))));
+        }
+
+        if (p.node->rchild) {
+            Q.EnQueue(BinaryTreeVerticalPrintInfo<T>(
+                p.node->rchild, p.level + 1, p.pos + width / (1 << (p.level + 2))));
+        }
+    }
+
+    // ready to print
+    for (int i = 0; i < height; i++) {
+        _PrintVertByLevel(A[i]);
+        cout << endl;
+    }
+}
+
+template<typename T>
+void BinaryTree<T>::_PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo<T> > & c) const
+{
+    int maxpos = 0;
+    BinaryTreeVerticalPrintInfo<T> x;
+
+    // - get the max
+    for (int i = 0; i < c.Length(); i++) {
+        c.Find(i, x);
+        if (maxpos < x.pos) {
+            maxpos = x.pos;
+        }
+    }
+
+    // - fill in valid items
+    Array<T*> A(maxpos + 1);
+    for (int i = 0; i <= maxpos; i++) {
+        A[i] = NULL;
+    }
+
+    for (int i = 0; i < c.Length(); i++) {
+        c.Find(i, x);
+        A[x.pos] = new T(x.node->Data());
+    }
+
+    // - output
+    for (int i = 0; i <= maxpos; i++) {
+        if (A[i]) {
+            cout << *A[i];
+            delete A[i];
+        } else {
+            cout << " ";
+        }
+    }
+}
+
+template<typename T>
+void BinaryTree<T>::PrintHorizontally(int indent) const
+{
+    _PrintHorz(this->root, 0, indent);
+}
+
+template<typename T>
+void BinaryTree<T>::PrintVertically(int width) const
+{
+    _PrintVert(this->root, 0, width);
 }
 
 }}
