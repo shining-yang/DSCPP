@@ -21,14 +21,13 @@ public:
     PriorityQueue<T, P>& DeQueue(T& e);
 
 private:
-    template<typename T, typename P>
     struct PQS {
         PQS() {}
         PQS(const T& e, const P& p) : data(e), priority(p) {}
         T data;
         P priority;
     };
-    CLinearList<PQS<T, P> > linear;
+    CLinearList<PQS> linear;
 };
 
 template<typename T, typename P>
@@ -55,11 +54,11 @@ T PriorityQueue<T, P>::Max() const
         throw new ItemUnderFlow();
     }
 
-    PQS<T, P> t;
+    PQS t;
     this->linear.Find(0, t);
 
     for (int i = 1; i < this->linear.Length(); i++) {
-        PQS<T, P> tmp;
+        PQS tmp;
         this->linear.Find(i, tmp);
         if (P(t.priority) < P(tmp.priority)) {
             t = tmp;
@@ -73,7 +72,7 @@ template<typename T, typename P>
 PriorityQueue<T, P>& PriorityQueue<T, P>::EnQueue(const T& e)
 {
     P p = e; // make a conversion implicitly
-    this->linear.Insert(this->linear.Length(), PQS<T, P>(e, p));
+    this->linear.Insert(this->linear.Length(), PQS(e, p));
     return *this;
 }
 
@@ -84,12 +83,12 @@ PriorityQueue<T, P>& PriorityQueue<T, P>::DeQueue(T& e)
         throw new ItemUnderFlow();
     }
 
-    PQS<T, P> t;
+    PQS t;
     this->linear.Find(0, t);
 
     int maxpos = 0;
     for (int i = 1; i < this->linear.Length(); i++) {
-        PQS<T, P> tmp;
+        PQS tmp;
         this->linear.Find(i, tmp);
         if (P(t.priority) < P(tmp.priority)) {
             maxpos = i;

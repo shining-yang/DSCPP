@@ -21,7 +21,7 @@ protected:
 public:
     bool IsEmpty() const;
     bool IsFull() const;
-    int GetLength() const;
+    int Length() const;
     T Front() const;
     T Rear() const;
     LinkedListQueue<T>& EnQueue(const T& x);
@@ -59,9 +59,9 @@ bool LinkedListQueue<T>::IsFull() const
 }
 
 template<typename T>
-int LinkedListQueue<T>::GetLength() const
+int LinkedListQueue<T>::Length() const
 {
-    return Length();
+    return DoublyLinkedCircularList<T>::Length();
 }
 
 template<typename T>
@@ -72,7 +72,7 @@ T LinkedListQueue<T>::Front() const
     }
 
     T x;
-    Find(0, x);
+    DoublyLinkedCircularList<T>::Find(0, x);
     return x;
 }
 
@@ -84,21 +84,21 @@ T LinkedListQueue<T>::Rear() const
     }
 
     T x;
-    FindReversely(0, x);
+    DoublyLinkedCircularList<T>::FindReversely(0, x);
     return x;
 }
 
 template<typename T>
 LinkedListQueue<T>& LinkedListQueue<T>::EnQueue(const T& x)
 {
-    PushBack(x);
+    DoublyLinkedCircularList<T>::PushBack(x);
     return *this;
 }
 
 template<typename T>
 LinkedListQueue<T>& LinkedListQueue<T>::DeQueue(T& x)
 {
-    PopFront(x);
+    DoublyLinkedCircularList<T>::PopFront(x);
     return *this;
 }
 

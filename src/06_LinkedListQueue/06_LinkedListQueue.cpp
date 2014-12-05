@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     cout << "Queue empty? " << (q.IsEmpty() ? "Yes" : "No") << endl;
 
     //q.EnQueue('X');
-    n = q.GetLength();
+    n = q.Length();
 
     cout << q << endl;
     cout << "Front: " << q.Front() << ", Rear: " << q.Rear() << endl;
