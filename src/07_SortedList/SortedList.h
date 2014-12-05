@@ -1,6 +1,7 @@
 //
 // File: SortedList.h
-// Sorted linear list. [ Bin-Search: O(logN), Insert/Delete: O(n) ]
+// Sorted linear list (NO duplicate keys allowed).
+// [ Bin-Search: O(logN), Insert/Delete: O(n) ]
 // Shining Yang <y.s.n@live.com>, 2014-11-17
 //
 #pragma once
@@ -181,6 +182,11 @@ bool SortedList<E, K>::Search(const K& k, E& e) const
     return false;
 }
 
+//
+// Insert an element. The kEY was obtained from element implicitly
+// @Exceptions:
+//  ItemAlreadyExisted - item already exists (not allow duplicate)
+//
 template<typename E, typename K>
 SortedList<E, K>& SortedList<E, K>::Insert(const E& e)
 {
@@ -209,21 +215,22 @@ SortedList<E, K>& SortedList<E, K>::Insert(const E& e)
     return *this;
 }
 
+//
+// Delete item by KEY, and retrieve the item to be removed when success.
+// @Exceptions:
+//  ItemNotExisted - item with the specified key not exist
+//
 template<typename E, typename K>
 SortedList<E, K>& SortedList<E, K>::Delete(const K& k, E& e)
 {
-    if (IsEmpty()) {
-        throw new OutOfRange;
-    }
-
     int pos = _Locate(k);
-    if (elements[pos] == k) {
-        e = elements[pos];
-        _MoveShrive(pos);
-        length--;
-    } else {
+    if (pos == -1 || elements[pos] != k) {
         throw new ItemNotExisted();
     }
+
+    e = elements[pos];
+    _MoveShrive(pos);
+    length--;
 
     _TryToDeflate();
     return *this;
