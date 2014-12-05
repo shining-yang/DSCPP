@@ -9,7 +9,7 @@
 #include <iostream>
 using namespace std;
 
-#include "..\Utility\Exception.h"
+#include "../Utility/Exception.h"
 using namespace DSCPP::Utils;
 
 namespace DSCPP { namespace SortedLinearList {

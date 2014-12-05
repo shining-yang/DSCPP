@@ -4,7 +4,7 @@
 //
 #include <iostream>
 #include "SortedList.h"
-#include "..\PerformanceStatistics\HighResTimeCounter.h"
+#include "../PerformanceStatistics/HighResTimeCounter.h"
 #pragma comment(lib, "PerformanceStatistics")
 
 int main(int argc, char* argv[])
