@@ -41,8 +41,8 @@ public:
         return NO == k;
     }
     
-    template<class KT>
-    friend std::ostream& operator<<(std::ostream& os, const Employee<KT>& obj);
+    template<class T>
+    friend std::ostream& operator<<(std::ostream& os, const Employee<T>& obj);
 
 private:
     KT NO;
