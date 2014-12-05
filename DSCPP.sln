@@ -74,6 +74,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07_HashTableWithSortedChain
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "08_BinaryTree", "src\08_BinaryTree\08_BinaryTree.vcxproj", "{914D8AF0-11FE-4E67-8A6E-0D4E3ADF7776}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_PriorityQueue", "src\09_PriorityQueue\09_PriorityQueue.vcxproj", "{F599B212-BD84-413C-8E00-63E07D0ADA8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -208,6 +210,10 @@ Global
 		{914D8AF0-11FE-4E67-8A6E-0D4E3ADF7776}.Debug|Win32.Build.0 = Debug|Win32
 		{914D8AF0-11FE-4E67-8A6E-0D4E3ADF7776}.Release|Win32.ActiveCfg = Release|Win32
 		{914D8AF0-11FE-4E67-8A6E-0D4E3ADF7776}.Release|Win32.Build.0 = Release|Win32
+		{F599B212-BD84-413C-8E00-63E07D0ADA8A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F599B212-BD84-413C-8E00-63E07D0ADA8A}.Debug|Win32.Build.0 = Debug|Win32
+		{F599B212-BD84-413C-8E00-63E07D0ADA8A}.Release|Win32.ActiveCfg = Release|Win32
+		{F599B212-BD84-413C-8E00-63E07D0ADA8A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
