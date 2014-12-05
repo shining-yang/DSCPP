@@ -125,50 +125,6 @@ private:
 };
 
 template<typename T>
-bool BinaryTree<T>::Compare(const BinaryTree<T>& bt) const
-{
-    return _Compare(this->root, bt.root);
-}
-
-template<typename T>
-bool BinaryTree<T>::_Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const
-{
-    if (!s && !t) {
-        return true;
-    }
-
-    if (s && t) {
-        return _Compare(s->lchild, t->lchild) && _Compare(s->rchild, t->rchild);
-    }
-
-    return false;
-}
-
-template<typename T>
-void BinaryTree<T>::Clone(BinaryTree<T>& cp) const
-{
-    if (this == &cp) {
-        throw new InvalideArgument();
-    }
-
-    cp._Destroy();
-    cp.root = _Clone(this->root);
-}
-
-template<typename T>
-BinaryTreeNode<T>* BinaryTree<T>::_Clone(const BinaryTreeNode<T>* t) const
-{
-    if (!t) {
-        return NULL;
-    }
-
-    BinaryTreeNode<T>* r = new BinaryTreeNode<T>(t->data);
-    r->lchild = _Clone(t->lchild);
-    r->rchild = _Clone(t->rchild);
-    return r;
-}
-
-template<typename T>
 BinaryTree<T>::BinaryTree() : root(NULL)
 {
 }
@@ -449,6 +405,53 @@ template<typename T>
 void BinaryTree<T>::PrintVertically(int width) const
 {
     _PrintVert(this->root, 0, width);
+}
+
+template<typename T>
+bool BinaryTree<T>::Compare(const BinaryTree<T>& bt) const
+{
+    return _Compare(this->root, bt.root);
+}
+
+template<typename T>
+bool BinaryTree<T>::_Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const
+{
+    if (!s && !t) {
+        return true;
+    }
+
+    if (s && t) {
+        return
+            s->data == t->data &&
+            _Compare(s->lchild, t->lchild) &&
+            _Compare(s->rchild, t->rchild);
+    }
+
+    return false;
+}
+
+template<typename T>
+void BinaryTree<T>::Clone(BinaryTree<T>& cp) const
+{
+    if (this == &cp) {
+        throw new InvalideArgument();
+    }
+
+    cp._Destroy();
+    cp.root = _Clone(this->root);
+}
+
+template<typename T>
+BinaryTreeNode<T>* BinaryTree<T>::_Clone(const BinaryTreeNode<T>* t) const
+{
+    if (!t) {
+        return NULL;
+    }
+
+    BinaryTreeNode<T>* r = new BinaryTreeNode<T>(t->data);
+    r->lchild = _Clone(t->lchild);
+    r->rchild = _Clone(t->rchild);
+    return r;
 }
 
 }}
