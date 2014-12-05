@@ -36,7 +36,7 @@ private:
     T data;
     BinaryTreeNode<T>* lchild;
     BinaryTreeNode<T>* rchild;
-    template<typename T> friend class BinaryTree;
+    template<typename X> friend class BinaryTree;
 };
 
 template<typename T>
@@ -101,7 +101,6 @@ protected:
     void _PrintVert(BinaryTreeNode<T>* t, int level, int pos) const;
 
     // structure used to print binary tree vertically
-    template<typename T>
     struct BinaryTreeVerticalPrintInfo {
         BinaryTreeVerticalPrintInfo() {}
         BinaryTreeVerticalPrintInfo(BinaryTreeNode<T>* n, int l, int p)
@@ -111,7 +110,7 @@ protected:
         int pos;
     };
 
-    void _PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo<T> > & c) const;
+    void _PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo> & c) const;
     BinaryTreeNode<T>* _Clone(const BinaryTreeNode<T>* t) const;
     bool _Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const;
 
@@ -176,7 +175,7 @@ template<typename T>
 void BinaryTree<T>::BreakTree(T& e, BinaryTree<T>& l, BinaryTree<T>& r)
 {
     if (IsEmpty()) {
-        thro new ItemNotExisted(); // empty tree
+        throw new ItemNotExisted(); // empty tree
     }
 
     e = this->root->data;
@@ -330,24 +329,24 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
     int height = _CalcHeight(t);
 
     // an array of chains
-    Array<Chain<BinaryTreeVerticalPrintInfo<T> > > A(height);
+    Array<Chain<BinaryTreeVerticalPrintInfo> > A(height);
 
-    LinkedListQueue<BinaryTreeVerticalPrintInfo<T> > Q;
-    Q.EnQueue(BinaryTreeVerticalPrintInfo<T>(t, level, width / 2));
+    LinkedListQueue<BinaryTreeVerticalPrintInfo> Q;
+    Q.EnQueue(BinaryTreeVerticalPrintInfo(t, level, width / 2));
 
     while (!Q.IsEmpty()) {
-        BinaryTreeVerticalPrintInfo<T> p;
+        BinaryTreeVerticalPrintInfo p;
         Q.DeQueue(p);
 
         A[p.level].Insert(0, p); // save the print-info into linked-list
 
         if (p.node->lchild) {
-            Q.EnQueue(BinaryTreeVerticalPrintInfo<T>(
+            Q.EnQueue(BinaryTreeVerticalPrintInfo(
                 p.node->lchild, p.level + 1, p.pos - width / (1 << (p.level + 2))));
         }
 
         if (p.node->rchild) {
-            Q.EnQueue(BinaryTreeVerticalPrintInfo<T>(
+            Q.EnQueue(BinaryTreeVerticalPrintInfo(
                 p.node->rchild, p.level + 1, p.pos + width / (1 << (p.level + 2))));
         }
     }
@@ -360,10 +359,10 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
 }
 
 template<typename T>
-void BinaryTree<T>::_PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo<T> > & c) const
+void BinaryTree<T>::_PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo> & c) const
 {
     int maxpos = 0;
-    BinaryTreeVerticalPrintInfo<T> x;
+    BinaryTreeVerticalPrintInfo x;
 
     // - get the max
     for (int i = 0; i < c.Length(); i++) {
