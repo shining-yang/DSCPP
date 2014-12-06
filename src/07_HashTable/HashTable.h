@@ -6,7 +6,7 @@
 #pragma once
 
 #include <iostream>
-#include "..\Utility\Exception.h"
+#include "../Utility/Exception.h"
 using namespace std;
 using namespace DSCPP::Utils;
 
@@ -33,8 +33,8 @@ public:
     HashTable<E, K>& Insert(const E& e);
     HashTable<E, K>& Delete(const K& k, E& e);
     
-    template<typename E, typename K>
-    friend ostream& operator<<(ostream& os, const HashTable<E, K>& obj);
+    template<typename Et, typename Kt>
+    friend ostream& operator<<(ostream& os, const HashTable<Et, Kt>& obj);
 
 protected:
     int _SearchHelper(const K& k) const;
