@@ -4,6 +4,7 @@
 //
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include "PriorityQueue.h"
 using namespace std;
 using namespace DSCPP::Queue;
@@ -33,7 +34,10 @@ private:
 
 ostream& operator<<(ostream& os, const Motor& m)
 {
-    os << m.vendor << ", " << m.model << ", " << "$" << m.price << ", " << m.priority;
+    os << setiosflags(std::ios::left) << setw(8) << m.vendor << ", "
+        << resetiosflags(std::ios::left) << setw(4) << m.model << ", "
+        << "$" << setprecision(2) << setiosflags(std::ios::fixed) << m.price << ", "
+        << setw(10) << m.priority;
     return os;
 }
 
@@ -48,7 +52,7 @@ int main(int argc, char* argv[])
     pq.EnQueue(m2);
     pq.EnQueue(Motor("Audi", "A7", 230000.0, 4));
     pq.EnQueue(Motor("Porsche", "Macan", 180000.0, 5));
-    pq.EnQueue(Motor("Chevy", "Cemaro", 120000.0, 6));
+    pq.EnQueue(Motor("Chevy", "Camaro", 120000.0, 6));
     pq.EnQueue(Motor("Rolls Royce", "LV", 3000000.0, 1));
     pq.EnQueue(Motor("Cadillac", "CTS", 190000.0, 3));
 
