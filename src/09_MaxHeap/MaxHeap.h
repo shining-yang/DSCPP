@@ -35,6 +35,7 @@ public:
     MaxHeap<T>& Insert(const T& e);
     MaxHeap<T>& Delete(T& e);
     void Output(ostream& os) const;
+    void PrintTreeHorizontally(ostream& os, int width) const;
 
 private:
     int capacity;
@@ -139,6 +140,15 @@ ostream& operator<<(ostream& os, const MaxHeap<T>& obj)
 {
     obj.Output(os);
     return os;
+}
+
+template<typename T>
+void MaxHeap<T>::PrintTreeHorizontally(ostream& os, int width) const
+{
+    int level = 1 + (int)(log(length));
+    for (int i = 0; i < level; i++) {
+
+    }
 }
 
 }} // namespace
