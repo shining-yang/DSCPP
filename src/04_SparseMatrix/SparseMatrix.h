@@ -171,7 +171,7 @@ void SparseMatrix<T>::Output(ostream& os) const
 template<class T>
 void SparseMatrix<T>::Transpose(SparseMatrix<T>& dm) const
 {
-    if (capacity < dm.capacity) {
+    if (capacity > dm.capacity) {
         throw new OutOfMemory();
     }
 
@@ -210,7 +210,7 @@ template<class T>
 void SparseMatrix<T>::_Append(const Term<T>& e)
 {
     if (size >= capacity) {
-        throw new OutOfMemory();
+        throw new OutOfBounds();
     }
 
     elements[size++] = e;
