@@ -102,6 +102,11 @@ MaxHeap<T>& MaxHeap<T>::Delete(T& e)
     while (n < length) {
         int i;
         T maxelem;
+
+        if (2 * n > length) {
+            break;
+        }
+
         if (2 * n <= length) {
             maxelem = elements[2 * n];
             i = 2 * n;
@@ -124,13 +129,13 @@ template<typename T>
 void DSCPP::PriorityQueue::MaxHeap<T>::Output(ostream& os) const
 {
     os << "Max heap: ";
-    for (int i = 1; i <= lengh; i++) {
+    for (int i = 1; i <= length; i++) {
         os << elements[i] << ", ";
     }
 }
 
 template<typename T>
-friend ostream& operator<<(ostream& os, const MaxHeap<T>& obj)
+ostream& operator<<(ostream& os, const MaxHeap<T>& obj)
 {
     obj.Output(os);
     return os;
