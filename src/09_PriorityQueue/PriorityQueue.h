@@ -7,7 +7,7 @@
 
 #include "../03_LinearList/LinearList.h"
 
-namespace DSCPP { namespace Queue {
+namespace DSCPP { namespace PriorityQueue {
 
 template<typename T, typename P>
 class PriorityQueue {

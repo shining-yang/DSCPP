@@ -7,7 +7,7 @@
 #include <iomanip>
 #include "PriorityQueue.h"
 using namespace std;
-using namespace DSCPP::Queue;
+using namespace DSCPP::PriorityQueue;
 
 class Motor {
 public:
