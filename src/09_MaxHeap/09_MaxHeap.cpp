@@ -10,17 +10,21 @@ int main(int arg, char* argv[])
     int dummy;
     MaxHeap<int> mh;
 
-    mh.Insert(10).Insert(3).Insert(12).Insert(15).Insert(2).Insert(8).Insert(20);
+    mh.Insert(9).Insert(3).Insert(8).Insert(2).Insert(7).Insert(6).Insert(4).Insert(5).Insert(1);
     cout << mh << endl;
+    mh.PrintTreeHorizontally(cout, 60);
 
     mh.Delete(dummy);
     cout << mh << endl;
+    mh.PrintTreeHorizontally(cout, 60);
 
     mh.Delete(dummy);
     cout << mh << endl;
+    mh.PrintTreeHorizontally(cout, 40);
 
     mh.Delete(dummy);
     cout << mh << endl;
+    mh.PrintTreeHorizontally(cout, 40);
 
     return 0;
 }

@@ -37,6 +37,9 @@ public:
     void Output(ostream& os) const;
     void PrintTreeHorizontally(ostream& os, int width) const;
 
+protected:
+    void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const;
+
 private:
     int capacity;
     int length;
@@ -99,30 +102,26 @@ MaxHeap<T>& MaxHeap<T>::Delete(T& e)
 
     e = elements[1];
 
-    int n = 1;
-    while (n < length) {
-        int i;
-        T maxelem;
+    T x = elements[length--]; // the last element
 
-        if (2 * n > length) {
+    // Try to find a proper position for the last element
+    int n = 1; // root
+    int m = 2 * n; // left child
+    while (n <= length) {
+        if (m < length && elements[m] < elements[m + 1]) { // m was the bigger child
+            m++;
+        }
+
+        if (elements[m] <= x) {
             break;
         }
 
-        if (2 * n <= length) {
-            maxelem = elements[2 * n];
-            i = 2 * n;
-        }
-
-        if ((2 * n + 1 <= length) && (maxelem < elements[2 * n + 1])) {
-            maxelem = elements[2 * n + 1];
-            i = 2 * n + 1;
-        }
-
-        elements[n] = maxelem;
-        n = i;
+        elements[n] = elements[m]; // shift upwards
+        n = m;
+        m = 2 * n;
     }
 
-    length--;
+    elements[n] = x;
     return *this;
 }
 
@@ -145,10 +144,31 @@ ostream& operator<<(ostream& os, const MaxHeap<T>& obj)
 template<typename T>
 void MaxHeap<T>::PrintTreeHorizontally(ostream& os, int width) const
 {
-    int level = 1 + (int)(log(length));
-    for (int i = 0; i < level; i++) {
+    int nPrinted = 0;
+    int nTotalLevel = 1 + static_cast<int>(log(length) / log(2));
 
+    for (int nLevel = 0; nLevel < nTotalLevel; nLevel++) {
+        int nCountAtLevel = 1 << nLevel;
+        int nRemain = length - nPrinted;
+        int nCount = (nRemain < nCountAtLevel) ? nRemain : nCountAtLevel;
+
+        _PrintTreeAtLevel(os, elements + nPrinted + 1, nLevel, nCount, width);
+        nPrinted += nCount;
     }
+}
+
+template<typename T>
+void MaxHeap<T>::_PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const
+{
+    int nSegmentLen = nWidth / ((1 << nLevel) + 1);
+    int nBlanks = nSegmentLen - 1; // assume that ELEMENT occupies 1 character
+    for (int i = 0; i < nCount; i++) {
+        for (int j = 0; j < nBlanks; j++) {
+            os << " ";
+        }
+        os << *(pElement + i);
+    }
+    os << endl;
 }
 
 }} // namespace
