@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceStatistics", "src\PerformanceStatistics\PerformanceStatistics.vcxproj", "{C882E9C5-379E-4FEA-B0FB-535798FB6C66}"
 EndProject
@@ -75,6 +75,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "08_BinaryTree", "src\08_BinaryTree\08_BinaryTree.vcxproj", "{914D8AF0-11FE-4E67-8A6E-0D4E3ADF7776}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_PriorityQueue", "src\09_PriorityQueue\09_PriorityQueue.vcxproj", "{F599B212-BD84-413C-8E00-63E07D0ADA8A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_MaxHeap", "src\09_MaxHeap\09_MaxHeap.vcxproj", "{3B54D29A-57CC-4B19-92E0-35F96A27B860}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -214,6 +216,10 @@ Global
 		{F599B212-BD84-413C-8E00-63E07D0ADA8A}.Debug|Win32.Build.0 = Debug|Win32
 		{F599B212-BD84-413C-8E00-63E07D0ADA8A}.Release|Win32.ActiveCfg = Release|Win32
 		{F599B212-BD84-413C-8E00-63E07D0ADA8A}.Release|Win32.Build.0 = Release|Win32
+		{3B54D29A-57CC-4B19-92E0-35F96A27B860}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3B54D29A-57CC-4B19-92E0-35F96A27B860}.Debug|Win32.Build.0 = Debug|Win32
+		{3B54D29A-57CC-4B19-92E0-35F96A27B860}.Release|Win32.ActiveCfg = Release|Win32
+		{3B54D29A-57CC-4B19-92E0-35F96A27B860}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
