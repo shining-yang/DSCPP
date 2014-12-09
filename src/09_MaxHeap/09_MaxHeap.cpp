@@ -14,15 +14,15 @@ int main(int arg, char* argv[])
     cout << mh << endl;
     mh.PrintTreeHorizontally(cout, 60);
 
-    mh.Delete(dummy);
+    mh.DeleteMax(dummy);
     cout << mh << endl;
     mh.PrintTreeHorizontally(cout, 60);
 
-    mh.Delete(dummy);
+    mh.DeleteMax(dummy);
     cout << mh << endl;
     mh.PrintTreeHorizontally(cout, 40);
 
-    mh.Delete(dummy);
+    mh.DeleteMax(dummy);
     cout << mh << endl;
     mh.PrintTreeHorizontally(cout, 40);
 

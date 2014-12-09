@@ -33,7 +33,7 @@ public:
 
     T Max() const;
     MaxHeap<T>& Insert(const T& e);
-    MaxHeap<T>& Delete(T& e);
+    MaxHeap<T>& DeleteMax(T& e);
     void Output(ostream& os) const;
     void PrintTreeHorizontally(ostream& os, int width) const;
 
@@ -94,7 +94,7 @@ MaxHeap<T>& MaxHeap<T>::Insert(const T& e)
 // Delete the max element while still keeping as a complete binary tree.
 //
 template<typename T>
-MaxHeap<T>& MaxHeap<T>::Delete(T& e)
+MaxHeap<T>& MaxHeap<T>::DeleteMax(T& e)
 {
     if (IsEmpty()) {
         throw new OutOfBounds();
