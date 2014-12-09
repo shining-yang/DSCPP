@@ -127,7 +127,7 @@ LinearQueue<T>& LinearQueue<T>::DeQueue(T& x)
         throw new OutOfBounds();
     }
 
-    front++;
+    x = base[front++];
     front %= capacity;
     return *this;
 }

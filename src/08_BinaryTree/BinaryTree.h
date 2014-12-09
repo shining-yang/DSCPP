@@ -359,7 +359,7 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
 }
 
 template<typename T>
-void BinaryTree<T>::_PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo> & c) const
+void BinaryTree<T>::_PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo>& c) const
 {
     int maxpos = 0;
     BinaryTreeVerticalPrintInfo x;
