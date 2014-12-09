@@ -45,7 +45,7 @@ template<typename T>
 LinearQueue<T>::LinearQueue(int size /*= 16*/)
 {
     if (size < 0) {
-        throw new InvalideArgument();
+        throw new BadInitializer();
     }
 
     this->front = 0;
