@@ -35,7 +35,7 @@ public:
     MaxHeap<T>& Insert(const T& e);
     MaxHeap<T>& DeleteMax(T& e);
     void Output(ostream& os) const;
-    void PrintTreeHorizontally(ostream& os, int width) const;
+    void PrintTreeVertically(ostream& os, int width) const;
 
 protected:
     void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const;
@@ -142,7 +142,7 @@ ostream& operator<<(ostream& os, const MaxHeap<T>& obj)
 }
 
 template<typename T>
-void MaxHeap<T>::PrintTreeHorizontally(ostream& os, int width) const
+void MaxHeap<T>::PrintTreeVertically(ostream& os, int width) const
 {
     int nPrinted = 0;
     int nTotalLevel = 1 + static_cast<int>(log(length) / log(2));
