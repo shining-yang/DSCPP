@@ -24,6 +24,9 @@
 #include "../Utility/Exception.h"
 #include "../Utility/Misc.h"
 #include "../06_LinearQueue/LinearQueue.h"
+#include "../06_LinkedListQueue/LinkedListQueue.h"
+#include "../04_Array/Array.h"
+#include "../03_SinglyLinkedList/SinglyLinkedList.h"
 
 using namespace std;
 using namespace DSCPP::Utils;
@@ -70,10 +73,19 @@ public:
     void Clone(MaxHBLT<T>& obj) const;
     void PrintTreeVertically(ostream& os, int width) const;
 
-private:
+protected:
     void _Destroy(HBLTNode<T>* p);
     void _Merge(HBLTNode<T>*& dest, HBLTNode<T>* src);
     HBLTNode<T>* _Clone(const HBLTNode<T>* p) const;
+
+    struct VertPrintInfo {
+        VertPrintInfo() {}
+        VertPrintInfo(HBLTNode<T>* e, int l, int p) : node(e), level(l), pos(p) {}
+        HBLTNode<T>* node;
+        int level;
+        int pos;
+    };
+    void _PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) const;
 
 private:
     HBLTNode<T>* root;
@@ -227,7 +239,75 @@ HBLTNode<T>* MaxHBLT<T>::_Clone(const HBLTNode<T>* p) const
 template<typename T>
 void MaxHBLT<T>::PrintTreeVertically(ostream& os, int width) const
 {
+    if (!root) {
+        return;
+    }
 
+    Array<Chain<VertPrintInfo> > a(32); // large enough for brevity
+    LinkedListQueue<VertPrintInfo> q;
+    q.EnQueue(VertPrintInfo(root, 0, width / 2));
+
+    while (!q.IsEmpty()) {
+        VertPrintInfo t;
+        q.DeQueue(t);
+
+        a[t.level].Insert(0, t);
+
+        if (t.node->lchild) {
+            q.EnQueue(VertPrintInfo(t.node->lchild, t.level + 1,
+                t.pos - width / (1 << (t.level + 2))));
+        }
+
+        if (t.node->rchild) {
+            q.EnQueue(VertPrintInfo(t.node->rchild, t.level + 1,
+                t.pos + width / (1 << (t.level + 2))));
+        }
+    }
+
+    for (int i = 0; i < 32; i++) {
+        if (a[i].IsEmpty()) {
+            break;
+        }
+
+        _PrintVertByLevel(os, a[i]);
+        os << endl;
+    }
+}
+
+template<typename T>
+void MaxHBLT<T>::_PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) const
+{
+    int maxpos = 0;
+    VertPrintInfo x;
+
+    // - get the max
+    for (int i = 0; i < c.Length(); i++) {
+        c.Find(i, x);
+        if (maxpos < x.pos) {
+            maxpos = x.pos;
+        }
+    }
+
+    // - fill in valid items
+    Array<T*> A(maxpos + 1);
+    for (int i = 0; i <= maxpos; i++) {
+        A[i] = NULL;
+    }
+
+    for (int i = 0; i < c.Length(); i++) {
+        c.Find(i, x);
+        A[x.pos] = new T(x.node->data);
+    }
+
+    // - output
+    for (int i = 0; i <= maxpos; i++) {
+        if (A[i]) {
+            cout << *A[i];
+            delete A[i];
+        } else {
+            cout << " ";
+        }
+    }
 }
 
 }}
