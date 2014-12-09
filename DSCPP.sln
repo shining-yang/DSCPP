@@ -78,6 +78,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_PriorityQueue", "src\09_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_MaxHeap", "src\09_MaxHeap\09_MaxHeap.vcxproj", "{3B54D29A-57CC-4B19-92E0-35F96A27B860}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_HeightBiasedLeftistTree", "src\09_HeightBiasedLeftistTree\09_HeightBiasedLeftistTree.vcxproj", "{CFD2118E-EBEF-4788-89D2-560B45357586}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -220,6 +222,10 @@ Global
 		{3B54D29A-57CC-4B19-92E0-35F96A27B860}.Debug|Win32.Build.0 = Debug|Win32
 		{3B54D29A-57CC-4B19-92E0-35F96A27B860}.Release|Win32.ActiveCfg = Release|Win32
 		{3B54D29A-57CC-4B19-92E0-35F96A27B860}.Release|Win32.Build.0 = Release|Win32
+		{CFD2118E-EBEF-4788-89D2-560B45357586}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CFD2118E-EBEF-4788-89D2-560B45357586}.Debug|Win32.Build.0 = Debug|Win32
+		{CFD2118E-EBEF-4788-89D2-560B45357586}.Release|Win32.ActiveCfg = Release|Win32
+		{CFD2118E-EBEF-4788-89D2-560B45357586}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
