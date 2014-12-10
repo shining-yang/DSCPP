@@ -100,7 +100,7 @@ MaxHBLT<T>::MaxHBLT()
 template<typename T>
 MaxHBLT<T>::~MaxHBLT()
 {
-    _Destroy(root);
+    Clear();
 }
 
 template<typename T>
@@ -213,6 +213,7 @@ template<typename T>
 void MaxHBLT<T>::Clear()
 {
     _Destroy(root);
+    root = NULL;
 }
 
 template<typename T>
