@@ -373,21 +373,20 @@ void BinaryTree<T>::_PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo>& 
     }
 
     // - fill in valid items
-    Array<T*> A(maxpos + 1);
+    Array<BinaryTreeNode<T>*> A(maxpos + 1);
     for (int i = 0; i <= maxpos; i++) {
         A[i] = NULL;
     }
 
     for (int i = 0; i < c.Length(); i++) {
         c.Find(i, x);
-        A[x.pos] = new T(x.node->Data());
+        A[x.pos] = x.node;
     }
 
     // - output
     for (int i = 0; i <= maxpos; i++) {
         if (A[i]) {
-            cout << *A[i];
-            delete A[i];
+            cout << A[i]->data;
         } else {
             cout << " ";
         }

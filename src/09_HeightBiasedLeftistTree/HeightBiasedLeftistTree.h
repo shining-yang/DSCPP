@@ -243,7 +243,8 @@ void MaxHBLT<T>::PrintTreeVertically(ostream& os, int width) const
         return;
     }
 
-    Array<Chain<VertPrintInfo> > a(32); // large enough for brevity
+#define ASSUME_MAX_TREE_HEIGHT  32 // large enough for brevity
+    Array<Chain<VertPrintInfo> > a(ASSUME_MAX_TREE_HEIGHT);
     LinkedListQueue<VertPrintInfo> q;
     q.EnQueue(VertPrintInfo(root, 0, width / 2));
 
@@ -264,7 +265,7 @@ void MaxHBLT<T>::PrintTreeVertically(ostream& os, int width) const
         }
     }
 
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < ASSUME_MAX_TREE_HEIGHT; i++) {
         if (a[i].IsEmpty()) {
             break;
         }
@@ -289,21 +290,20 @@ void MaxHBLT<T>::_PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) c
     }
 
     // - fill in valid items
-    Array<T*> A(maxpos + 1);
+    Array<HBLTNode<T>*> A(maxpos + 1);
     for (int i = 0; i <= maxpos; i++) {
         A[i] = NULL;
     }
 
     for (int i = 0; i < c.Length(); i++) {
         c.Find(i, x);
-        A[x.pos] = new T(x.node->data);
+        A[x.pos] = x.node;
     }
 
     // - output
     for (int i = 0; i <= maxpos; i++) {
         if (A[i]) {
-            os << *A[i];
-            delete A[i];
+            os << A[i]->data;
         } else {
             os << " ";
         }
