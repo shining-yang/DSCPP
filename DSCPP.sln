@@ -80,6 +80,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_MaxHeap", "src\09_MaxHea
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_HeightBiasedLeftistTree", "src\09_HeightBiasedLeftistTree\09_HeightBiasedLeftistTree.vcxproj", "{CFD2118E-EBEF-4788-89D2-560B45357586}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_HuffmanTree", "src\09_HuffmanTree\09_HuffmanTree.vcxproj", "{9CC6C22B-8E83-469D-AC5D-80EC66C427BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -226,6 +228,10 @@ Global
 		{CFD2118E-EBEF-4788-89D2-560B45357586}.Debug|Win32.Build.0 = Debug|Win32
 		{CFD2118E-EBEF-4788-89D2-560B45357586}.Release|Win32.ActiveCfg = Release|Win32
 		{CFD2118E-EBEF-4788-89D2-560B45357586}.Release|Win32.Build.0 = Release|Win32
+		{9CC6C22B-8E83-469D-AC5D-80EC66C427BC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9CC6C22B-8E83-469D-AC5D-80EC66C427BC}.Debug|Win32.Build.0 = Debug|Win32
+		{9CC6C22B-8E83-469D-AC5D-80EC66C427BC}.Release|Win32.ActiveCfg = Release|Win32
+		{9CC6C22B-8E83-469D-AC5D-80EC66C427BC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
