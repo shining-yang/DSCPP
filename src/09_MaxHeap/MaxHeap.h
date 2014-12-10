@@ -107,7 +107,7 @@ MaxHeap<T>& MaxHeap<T>::DeleteMax(T& e)
     // Try to find a proper position for the last element
     int n = 1; // root
     int m = 2 * n; // left child
-    while (n <= length && m <= length) {
+    while (m <= length) {
         if (m < length && elements[m] < elements[m + 1]) { // m was the bigger child
             m++;
         }

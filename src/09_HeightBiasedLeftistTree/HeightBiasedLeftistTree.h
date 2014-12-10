@@ -302,10 +302,10 @@ void MaxHBLT<T>::_PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) c
     // - output
     for (int i = 0; i <= maxpos; i++) {
         if (A[i]) {
-            cout << *A[i];
+            os << *A[i];
             delete A[i];
         } else {
-            cout << " ";
+            os << " ";
         }
     }
 }
