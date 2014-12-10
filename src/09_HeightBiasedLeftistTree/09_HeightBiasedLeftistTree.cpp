@@ -28,5 +28,42 @@ int main(int argc, char* argv[])
     cout << "Print vertically: " << endl;
     mh2.PrintTreeVertically(cout, 64);
 
+    cout << "Dump all elements of the MinHBLT:" << endl;
+    while (!mh2.IsEmpty()) {
+        mh2.DeleteMax(dummy);
+        cout << dummy << ", ";
+    }
+    cout << endl << endl;
+
+    //
+    // - MinHBLT
+    //
+    MinHBLT<int> minHBLT, minHBLT2;
+    minHBLT.Initialize(a, sizeof(a) / sizeof(a[0]));
+    cout << "Print vertically: " << endl;
+    minHBLT.PrintTreeVertically(cout, 64);
+
+    minHBLT.Clone(minHBLT2);
+
+    minHBLT2.DeleteMin(dummy);
+    minHBLT2.DeleteMin(dummy);
+    cout << "Print vertically: " << endl;
+    minHBLT2.PrintTreeVertically(cout, 64);
+
+    minHBLT2.Insert(15).Insert(18);
+    cout << "Print vertically: " << endl;
+    minHBLT2.PrintTreeVertically(cout, 64);
+
+    minHBLT2.Merge(minHBLT);
+    cout << "Print vertically: " << endl;
+    minHBLT2.PrintTreeVertically(cout, 64);
+
+    cout << "Dump all elements of the MinHBLT:" << endl;
+    while (!minHBLT2.IsEmpty()) {
+        minHBLT2.DeleteMin(dummy);
+        cout << dummy << ", ";
+    }
+    cout << endl << endl;
+
     return 0;
 }

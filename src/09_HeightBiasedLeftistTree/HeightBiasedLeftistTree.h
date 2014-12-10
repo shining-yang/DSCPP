@@ -35,6 +35,7 @@ using namespace DSCPP::Queue;
 namespace DSCPP { namespace PriorityQueue {
 
 template<typename T> class MaxHBLT;
+template<typename T> class MinHBLT;
 
 template<typename T>
 class HBLTNode {
@@ -54,6 +55,7 @@ private:
     HBLTNode<T>* rchild;
 
     friend class MaxHBLT<T>;
+    friend class MinHBLT<T>;
 };
 
 template<typename T>
@@ -75,7 +77,7 @@ public:
 
 protected:
     void _Destroy(HBLTNode<T>* p);
-    void _Merge(HBLTNode<T>*& dest, HBLTNode<T>* src);
+    virtual void _Merge(HBLTNode<T>*& dest, HBLTNode<T>* src);
     HBLTNode<T>* _Clone(const HBLTNode<T>* p) const;
 
     struct VertPrintInfo {
@@ -101,6 +103,13 @@ template<typename T>
 MaxHBLT<T>::~MaxHBLT()
 {
     Clear();
+}
+
+template<typename T>
+void MaxHBLT<T>::Clear()
+{
+    _Destroy(root);
+    root = NULL;
 }
 
 template<typename T>
@@ -210,13 +219,6 @@ void MaxHBLT<T>::Initialize(const T arr[], int n)
 }
 
 template<typename T>
-void MaxHBLT<T>::Clear()
-{
-    _Destroy(root);
-    root = NULL;
-}
-
-template<typename T>
 void MaxHBLT<T>::Clone(MaxHBLT<T>& obj) const
 {
     if (this == &obj) {
@@ -308,6 +310,125 @@ void MaxHBLT<T>::_PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) c
         } else {
             os << " ";
         }
+    }
+}
+
+//----------------------- MinHBLT -----------------------------------
+// Simply derived rom MaxHBLT
+//-------------------------------------------------------------------
+
+template<typename T>
+class MinHBLT : private MaxHBLT<T> {
+public:
+    MinHBLT();
+    ~MinHBLT();
+
+public:
+    bool IsEmpty() const;
+    T Min() const;
+    MinHBLT<T>& Insert(const T& e);
+    MinHBLT<T>& DeleteMin(T& e);
+    MinHBLT<T>& Merge(MinHBLT<T>& obj);
+    void Initialize(const T arr[], int n);
+    void Clear();
+    void Clone(MinHBLT<T>& obj) const;
+    void PrintTreeVertically(ostream& os, int width) const;
+
+protected:
+    virtual void _Merge(HBLTNode<T>*& dest, HBLTNode<T>* src);
+};
+
+template<typename T>
+MinHBLT<T>::MinHBLT()
+{
+}
+
+template<typename T>
+MinHBLT<T>::~MinHBLT()
+{
+}
+
+template<typename T>
+bool MinHBLT<T>::IsEmpty() const
+{
+    return MaxHBLT<T>::IsEmpty();
+}
+
+template<typename T>
+T MinHBLT<T>::Min() const
+{
+    return MaxHBLT<T>::Max();
+}
+
+template<typename T>
+MinHBLT<T>& MinHBLT<T>::Insert(const T& e)
+{
+    return reinterpret_cast<MinHBLT<T>&>(MaxHBLT<T>::Insert(e));
+}
+
+template<typename T>
+MinHBLT<T>& MinHBLT<T>::DeleteMin(T& e)
+{
+    return reinterpret_cast<MinHBLT<T>&>(MaxHBLT<T>::DeleteMax(e));
+}
+
+template<typename T>
+MinHBLT<T>& MinHBLT<T>::Merge(MinHBLT<T>& obj)
+{
+    return reinterpret_cast<MinHBLT<T>&>(MaxHBLT<T>::Merge(obj));
+}
+
+template<typename T>
+void MinHBLT<T>::Initialize(const T arr[], int n)
+{
+    MaxHBLT<T>::Initialize(arr, n);
+}
+
+template<typename T>
+void MinHBLT<T>::Clear()
+{
+    MaxHBLT<T>::Clear();
+}
+
+template<typename T>
+void MinHBLT<T>::Clone(MinHBLT<T>& obj) const
+{
+    MaxHBLT<T>::Clone(obj);
+}
+
+template<typename T>
+void MinHBLT<T>::PrintTreeVertically(ostream& os, int width) const
+{
+    MaxHBLT<T>::PrintTreeVertically(os, width);
+}
+
+template<typename T>
+void MinHBLT<T>::_Merge(HBLTNode<T>*& dest, HBLTNode<T>* src)
+{
+    if (!src) {
+        return;
+    }
+
+    if (!dest) {
+        dest = src;
+        return;
+    }
+
+    if (dest->data > src->data) {
+        Swap(dest, src);
+    }
+
+    _Merge(dest->rchild, src);
+
+    if (!dest->lchild) {
+        dest->lchild = dest->rchild;
+        dest->rchild = NULL;
+        dest->s = 1;
+    } else {
+        if (dest->lchild->s < dest->rchild->s) {
+            Swap(dest->lchild, dest->rchild);
+        }
+        dest->s = dest->rchild->s + 1;
     }
 }
 
