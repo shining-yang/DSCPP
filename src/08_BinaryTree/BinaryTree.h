@@ -166,6 +166,7 @@ int BinaryTree<T>::GetCount() const
 template<typename T>
 void BinaryTree<T>::MakeTree(const T& e, BinaryTree<T>& l, BinaryTree<T>& r)
 {
+    _Destroy(); // first to release ourselves
     this->root = new BinaryTreeNode<T>(e, l.root, r.root);
     l.root = NULL;
     r.root = NULL;
