@@ -25,13 +25,16 @@ struct HuffmanTreeNode {
 template<typename T>
 ostream& operator<<(ostream& os, const HuffmanTreeNode<T>& node)
 {
+#if 0
     if (node.data) {
         os << node.data;
     } else {
         os << "*";
     }
+#else
+    os << node.data << ":" << node.weight;
+#endif
 
-    //os << node.data << ":" << node.weight;
     return os;
 }
 
@@ -150,7 +153,7 @@ void TestHuffmanTree()
         mh.Insert(z);
     }
 
-    x.PrintTree(96);
+    x.PrintTree(64);
 }
 
 int main(int argc, char* argv[])
