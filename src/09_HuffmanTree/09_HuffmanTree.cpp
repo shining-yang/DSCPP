@@ -1,5 +1,6 @@
 //
 // File: 09_HuffmanTree.cpp
+// Using Huffman algorithm to build a Huffman-tree.
 // Shining Yang <y.s.n@live.com>, 2014-12-10
 //
 #include <iostream>
@@ -25,16 +26,7 @@ struct HuffmanTreeNode {
 template<typename T>
 ostream& operator<<(ostream& os, const HuffmanTreeNode<T>& node)
 {
-#if 0
-    if (node.data) {
-        os << node.data;
-    } else {
-        os << "*";
-    }
-#else
     os << node.data << ":" << node.weight;
-#endif
-
     return os;
 }
 
@@ -54,60 +46,39 @@ public:
     }
 
     HuffmanTree<T>& operator=(const HuffmanTree<T>& obj) {
-        if (this == &obj) {
-            return *this;
+        if (this != &obj) {
+            obj.tree.Clone(tree);
         }
 
-        obj.tree.Clone(tree);
         return *this;
     }
 
     bool operator<(const HuffmanTree<T>& obj) const {
-        HuffmanTreeNode<T> x;
-        if (!tree.GetRoot(x)) {
-            throw new ItemNotExisted();
-        }
-
-        HuffmanTreeNode<T> y;
-        if (!obj.tree.GetRoot(y)) {
-            throw new ItemNotExisted();
-        }
-
-        return static_cast<int>(x) < static_cast<int>(y);
+        return GetWeight() < obj.GetWeight();
     }
 
     bool operator>(const HuffmanTree<T>& obj) const {
-        HuffmanTreeNode<T> x;
-        if (!tree.GetRoot(x)) {
-            throw new ItemNotExisted();
-        }
-
-        HuffmanTreeNode<T> y;
-        if (!obj.tree.GetRoot(y)) {
-            throw new ItemNotExisted();
-        }
-
-        return static_cast<int>(x) > static_cast<int>(y);
+        return GetWeight() > obj.GetWeight();
     }
 
     bool IsEmpty() {
         return tree.IsEmpty();
     }
 
-    int GetWeight() {
+    int GetWeight() const { // Retrieve the weight of Huffman Tree
         HuffmanTreeNode<T> x;
         if (!tree.GetRoot(x)) {
             throw new ItemNotExisted();
         }
 
-        return x.weight;
+        return static_cast<int>(x);
     }
 
     void PrintTree(int width) const {
         tree.PrintVertically(width);
     }
 
-    HuffmanTree<T>& Merge(HuffmanTree<T>& x, HuffmanTree<T>& y) {
+    HuffmanTree<T>& MakeTree(HuffmanTree<T>& x, HuffmanTree<T>& y) {
         if (x.IsEmpty() || y.IsEmpty()) {
             throw new InvalideArgument();
         }
@@ -135,22 +106,22 @@ void TestHuffmanTree()
 
     int sz = sizeof(inputs) / sizeof(inputs[0]);
 
-    MinHBLT<HT>  mh;
+    MinHBLT<HT>  minHBLT;
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); i++) {
-        mh.Insert(HT(inputs[i].data, inputs[i].weight));
+        minHBLT.Insert(HT(inputs[i].data, inputs[i].weight));
     }
 
     HT x, y, z;
     while (true) {
-        mh.DeleteMin(x);
-        if (mh.IsEmpty()) {
+        minHBLT.DeleteMin(x);
+        if (minHBLT.IsEmpty()) {
             break;
         }
 
-        mh.DeleteMin(y);
+        minHBLT.DeleteMin(y);
 
-        z.Merge(x, y);
-        mh.Insert(z);
+        z.MakeTree(x, y);
+        minHBLT.Insert(z);
     }
 
     x.PrintTree(64);
