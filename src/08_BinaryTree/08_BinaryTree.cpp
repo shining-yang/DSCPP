@@ -53,11 +53,14 @@ int main(int argc, char* argv[])
     BinaryTree<char> Y, Z;
     T.Clone(Y);
     cout << "X & Y: Equivalent? " << (X.Compare(Y) ? "Yes" : "No") << endl;
-    Z.MakeTree('Z', Y, x);
+    Z.MakeTree('Z', X, Y);
     cout << "X & Z: Equivalent? " << (X.Compare(Z) ? "Yes" : "No") << endl;
 
     cout << "Print Z vertically:" << endl;
     Z.PrintVertically(64);
     
+    cout << "Print Z vertically with lines:" << endl;
+    Z.PrintVerticallyWithLine(64);
+
     return 0;
 }

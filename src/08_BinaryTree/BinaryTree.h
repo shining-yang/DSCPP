@@ -87,6 +87,7 @@ public:
     // Print binary tree on console
     void PrintHorizontally(int indent) const;
     void PrintVertically(int width) const;
+    void PrintVerticallyWithLine(int width) const;
 
     void Clone(BinaryTree<T>& cp) const;
     bool Compare(const BinaryTree<T>& bt) const;
@@ -98,19 +99,28 @@ protected:
     void _LevelOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
     void _Destroy();
     void _PrintHorz(BinaryTreeNode<T>* t, int pos, int indent) const;
-    void _PrintVert(BinaryTreeNode<T>* t, int level, int pos) const;
+    void _PrintVert(BinaryTreeNode<T>* t, int level, int width) const;
+    void _PrintVertWithLine(BinaryTreeNode<T>* t, int level, int width) const;
 
     // structure used to print binary tree vertically
-    struct BinaryTreeVerticalPrintInfo {
-        BinaryTreeVerticalPrintInfo() {}
-        BinaryTreeVerticalPrintInfo(BinaryTreeNode<T>* n, int l, int p)
+    struct VerticalPrintInfo {
+        VerticalPrintInfo() {}
+        VerticalPrintInfo(BinaryTreeNode<T>* n, int l, int p)
             : node(n), level(l), pos(p) {}
         BinaryTreeNode<T>* node;
         int level;
         int pos;
     };
 
-    void _PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo> & c) const;
+    struct VerticalPrintInfoWithLine : public VerticalPrintInfo {
+        VerticalPrintInfoWithLine() {}
+        VerticalPrintInfoWithLine(BinaryTreeNode<T>* n, int l, int p, int prntpos) :
+            VerticalPrintInfo(n, l, p), parentpos(prntpos) {}
+        int parentpos;
+    };
+
+    void _PrintVertByLevel(const Chain<VerticalPrintInfo>& c) const;
+    void _PrintVertByLevelWithLine(const Chain<VerticalPrintInfoWithLine>& c, int width) const;
     BinaryTreeNode<T>* _Clone(const BinaryTreeNode<T>* t) const;
     bool _Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const;
 
@@ -323,31 +333,27 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
         return;
     }
 
-    if (level != 0) {
-        throw new InvalideArgument();
-    }
-
     int height = _CalcHeight(t);
 
     // an array of chains
-    Array<Chain<BinaryTreeVerticalPrintInfo> > A(height);
+    Array<Chain<VerticalPrintInfo> > A(height);
 
-    LinkedListQueue<BinaryTreeVerticalPrintInfo> Q;
-    Q.EnQueue(BinaryTreeVerticalPrintInfo(t, level, width / 2));
+    LinkedListQueue<VerticalPrintInfo> Q;
+    Q.EnQueue(VerticalPrintInfo(t, level, width / 2));
 
     while (!Q.IsEmpty()) {
-        BinaryTreeVerticalPrintInfo p;
+        VerticalPrintInfo p;
         Q.DeQueue(p);
 
         A[p.level].Insert(0, p); // save the print-info into linked-list
 
         if (p.node->lchild) {
-            Q.EnQueue(BinaryTreeVerticalPrintInfo(
+            Q.EnQueue(VerticalPrintInfo(
                 p.node->lchild, p.level + 1, p.pos - width / (1 << (p.level + 2))));
         }
 
         if (p.node->rchild) {
-            Q.EnQueue(BinaryTreeVerticalPrintInfo(
+            Q.EnQueue(VerticalPrintInfo(
                 p.node->rchild, p.level + 1, p.pos + width / (1 << (p.level + 2))));
         }
     }
@@ -360,10 +366,10 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
 }
 
 template<typename T>
-void BinaryTree<T>::_PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo>& c) const
+void BinaryTree<T>::_PrintVertByLevel(const Chain<VerticalPrintInfo>& c) const
 {
     int maxpos = 0;
-    BinaryTreeVerticalPrintInfo x;
+    VerticalPrintInfo x;
 
     // - get the max
     for (int i = 0; i < c.Length(); i++) {
@@ -395,6 +401,138 @@ void BinaryTree<T>::_PrintVertByLevel(const Chain<BinaryTreeVerticalPrintInfo>& 
 }
 
 template<typename T>
+void BinaryTree<T>::_PrintVertWithLine(BinaryTreeNode<T>* t, int level, int width) const
+{
+    if (!t) {
+        return;
+    }
+
+    int height = _CalcHeight(t);
+
+    // an array of chains
+    Array<Chain<VerticalPrintInfoWithLine> > A(height);
+
+    LinkedListQueue<VerticalPrintInfoWithLine> Q;
+    Q.EnQueue(VerticalPrintInfoWithLine(t, level, width / 2, -1));
+
+    while (!Q.IsEmpty()) {
+        VerticalPrintInfoWithLine p;
+        Q.DeQueue(p);
+
+        A[p.level].Insert(0, p); // save the print-info into linked-list
+
+        if (p.node->lchild) {
+            Q.EnQueue(VerticalPrintInfoWithLine(
+                p.node->lchild, p.level + 1, p.pos - width / (1 << (p.level + 2)), p.pos));
+        }
+
+        if (p.node->rchild) {
+            Q.EnQueue(VerticalPrintInfoWithLine(
+                p.node->rchild, p.level + 1, p.pos + width / (1 << (p.level + 2)), p.pos));
+        }
+    }
+
+    // ready to print
+    for (int i = 0; i < height; i++) {
+        _PrintVertByLevelWithLine(A[i], width);
+        cout << endl;
+    }
+}
+
+template<typename T>
+void BinaryTree<T>::_PrintVertByLevelWithLine(
+    const Chain<VerticalPrintInfoWithLine>& c, int width) const
+{
+    int maxpos = 0;
+    VerticalPrintInfoWithLine x;
+
+    // - get the max
+    for (int i = 0; i < c.Length(); i++) {
+        c.Find(i, x);
+        if (maxpos < x.pos) {
+            maxpos = x.pos;
+        }
+    }
+
+    // - fill in valid items
+    Array<VerticalPrintInfoWithLine*> A(maxpos + 1);
+    for (int i = 0; i <= maxpos; i++) {
+        A[i] = NULL;
+    }
+
+    for (int i = 0; i < c.Length(); i++) {
+        c.Find(i, x);
+        A[x.pos] = new VerticalPrintInfoWithLine(x.node, x.level, x.pos, x.parentpos);
+    }
+
+    // - draw lines
+    if (x.parentpos > 0) {
+        int dist = abs(x.parentpos - x.pos);
+        int COLUMNSIZE = width; // need the screen width to draw line properly
+        if (dist >= 4) { // distance rather long
+            char* arrayLines = new char[3 * COLUMNSIZE];
+            memset(arrayLines, ' ', 3 * COLUMNSIZE);
+            for (int i = 0; i <= maxpos; i++) {
+                if (A[i]) {
+                    if (A[i]->pos < A[i]->parentpos) {
+                        arrayLines[A[i]->parentpos] = '|';
+                        for (int j = A[i]->pos + 1; j < A[i]->parentpos; j++) {
+                            arrayLines[1 * COLUMNSIZE + j] = '-';
+                        }
+                        arrayLines[2 * COLUMNSIZE + A[i]->pos] = '|';
+                    } else {
+                        arrayLines[A[i]->parentpos] = '|';
+                        for (int j = A[i]->parentpos + 1; j < A[i]->pos; j++) {
+                            arrayLines[1 * COLUMNSIZE + j] = '-';
+                        }
+                        arrayLines[2 * COLUMNSIZE + A[i]->pos] = '|';
+                    }
+                }
+            }
+
+            for (int i = 0; i < 3 * COLUMNSIZE; i++) {
+                cout << arrayLines[i];
+                if ((i + 1) % COLUMNSIZE == 0) {
+                    cout << endl;
+                }
+            }
+
+            delete[] arrayLines;
+
+        } else {
+            char* arrayLines = new char[COLUMNSIZE];
+            memset(arrayLines, ' ', COLUMNSIZE);
+            for (int i = 0; i <= maxpos; i++) {
+                if (A[i]) {
+                    if (A[i]->pos < A[i]->parentpos) {
+                        arrayLines[A[i]->parentpos - 1] = '/';
+                    } else {
+                        arrayLines[A[i]->parentpos + 1] = '\\';
+                    }
+                }
+            }
+
+            for (int i = 0; i < COLUMNSIZE; i++) {
+                cout << arrayLines[i];
+            }
+            cout << endl;
+
+            delete[] arrayLines;
+        }
+    }
+
+    // - output
+    for (int i = 0; i <= maxpos; i++) {
+        if (A[i]) {
+            cout << A[i]->node->data;
+            delete A[i];
+        } else {
+            cout << " ";
+        }
+    }
+}
+
+template<typename T>
 void BinaryTree<T>::PrintHorizontally(int indent) const
 {
     _PrintHorz(this->root, 0, indent);
@@ -404,6 +542,12 @@ template<typename T>
 void BinaryTree<T>::PrintVertically(int width) const
 {
     _PrintVert(this->root, 0, width);
+}
+
+template<typename T>
+void BinaryTree<T>::PrintVerticallyWithLine(int width) const
+{
+    _PrintVertWithLine(this->root, 0, width);
 }
 
 template<typename T>
