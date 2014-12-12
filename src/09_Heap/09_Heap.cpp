@@ -14,8 +14,15 @@ int main(int argc, char* argv[])
     Heap<int> hp;
 
     hp.Insert(10).Insert(6).Insert(20).Insert(30).Insert(25).Insert(3).Insert(8);
-    cout << "Heap: " << hp << endl;
+    cout << "Heap elements: " << hp << endl;
     hp.PrintTreeVertically(cout, 64);
+
+    cout << endl << "Heap elements on delete: ";
+    while (!hp.IsEmpty()) {
+        hp.DeleteMin(dummy);
+        cout << dummy << ", ";
+    }
+    cout << endl;
 
     return 0;
 }

@@ -144,7 +144,6 @@ Heap<T>& Heap<T>::DeleteMin(T& e)
 template<typename T>
 void Heap<T>::Output(ostream& os) const
 {
-    os << "Heap elements: ";
     for (int i = 0; i < length; i++) {
         os << elements[i] << ", ";
     }
