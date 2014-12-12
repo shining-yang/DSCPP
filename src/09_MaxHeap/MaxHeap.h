@@ -36,6 +36,15 @@ public:
     MaxHeap<T>& DeleteMax(T& e);
     void Output(ostream& os) const;
     void PrintTreeVertically(ostream& os, int width) const;
+    
+    //
+    // Attach the MaxHeap to an elements set
+    //
+    // Requirements:
+    //  elems[0] - must leave not unused
+    //  len - total number of elements
+    //  cnt - 
+    void Attach(T* elems, int len, int cnt);
 
 protected:
     void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const;
