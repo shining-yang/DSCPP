@@ -84,6 +84,9 @@
   <ItemGroup>
     <ClInclude Include="Heap.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="09_Heap.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
