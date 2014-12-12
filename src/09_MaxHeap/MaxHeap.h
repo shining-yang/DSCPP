@@ -1,6 +1,7 @@
 //
 // File: MaxHeap.h
 // Max heap. (Max complete binary tree)
+// Described using linear list and the root node starts at index 1.
 // Shining Yang <y.s.n@live.com>, 2014-12-08
 //
 #pragma once
@@ -37,15 +38,6 @@ public:
     void Output(ostream& os) const;
     void PrintTreeVertically(ostream& os, int width) const;
     
-    //
-    // Attach the MaxHeap to an elements set
-    //
-    // Requirements:
-    //  elems[0] - must leave not unused
-    //  len - total number of elements
-    //  cnt - 
-    void Attach(T* elems, int len, int cnt);
-
 protected:
     void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const;
 
