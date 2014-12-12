@@ -506,9 +506,17 @@ void BinaryTree<T>::_PrintVertByLevelWithLine(
             for (int i = 0; i <= maxpos; i++) {
                 if (A[i]) {
                     if (A[i]->pos < A[i]->parentpos) {
-                        arrayLines[A[i]->parentpos - 1] = '/';
+                        int idx = A[i]->parentpos - 1;
+                        if (idx < 0) { // avoid array underflowing
+                            idx = 0;
+                        }
+                        arrayLines[idx] = '/';
                     } else {
-                        arrayLines[A[i]->parentpos + 1] = '\\';
+                        int idx = A[i]->parentpos + 1;
+                        if (idx >= COLUMNSIZE) { // avoid array overflowing
+                            idx = COLUMNSIZE - 1;
+                        }
+                        arrayLines[idx] = '\\';
                     }
                 }
             }
