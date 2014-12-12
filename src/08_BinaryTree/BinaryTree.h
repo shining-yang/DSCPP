@@ -28,6 +28,7 @@ public:
     T& Data() {
         return data;
     }
+
     const T& Data() const {
         return const_cast<BinaryTreeNode<T>*>(this)->Data();
     }
@@ -103,24 +104,24 @@ protected:
     void _PrintVertWithLine(BinaryTreeNode<T>* t, int level, int width) const;
 
     // structure used to print binary tree vertically
-    struct VerticalPrintInfo {
-        VerticalPrintInfo() {}
-        VerticalPrintInfo(BinaryTreeNode<T>* n, int l, int p)
+    struct VPrintInfo {
+        VPrintInfo() {}
+        VPrintInfo(BinaryTreeNode<T>* n, int l, int p)
             : node(n), level(l), pos(p) {}
         BinaryTreeNode<T>* node;
         int level;
         int pos;
     };
 
-    struct VerticalPrintInfoWithLine : public VerticalPrintInfo {
-        VerticalPrintInfoWithLine() {}
-        VerticalPrintInfoWithLine(BinaryTreeNode<T>* n, int l, int p, int prntpos) :
-            VerticalPrintInfo(n, l, p), parentpos(prntpos) {}
+    struct VPrintInfoWithLine : public VPrintInfo {
+        VPrintInfoWithLine() {}
+        VPrintInfoWithLine(BinaryTreeNode<T>* n, int l, int p, int prntpos) :
+            VPrintInfo(n, l, p), parentpos(prntpos) {}
         int parentpos;
     };
 
-    void _PrintVertByLevel(const Chain<VerticalPrintInfo>& c) const;
-    void _PrintVertByLevelWithLine(const Chain<VerticalPrintInfoWithLine>& c, int width) const;
+    void _PrintVertByLevel(const Chain<VPrintInfo>& c) const;
+    void _PrintVertByLevelWithLine(const Chain<VPrintInfoWithLine>& c, int width) const;
     BinaryTreeNode<T>* _Clone(const BinaryTreeNode<T>* t) const;
     bool _Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const;
 
@@ -336,24 +337,24 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
     int height = _CalcHeight(t);
 
     // an array of chains
-    Array<Chain<VerticalPrintInfo> > A(height);
+    Array<Chain<VPrintInfo> > A(height);
 
-    LinkedListQueue<VerticalPrintInfo> Q;
-    Q.EnQueue(VerticalPrintInfo(t, level, width / 2));
+    LinkedListQueue<VPrintInfo> Q;
+    Q.EnQueue(VPrintInfo(t, level, width / 2));
 
     while (!Q.IsEmpty()) {
-        VerticalPrintInfo p;
+        VPrintInfo p;
         Q.DeQueue(p);
 
         A[p.level].Insert(0, p); // save the print-info into linked-list
 
         if (p.node->lchild) {
-            Q.EnQueue(VerticalPrintInfo(
+            Q.EnQueue(VPrintInfo(
                 p.node->lchild, p.level + 1, p.pos - width / (1 << (p.level + 2))));
         }
 
         if (p.node->rchild) {
-            Q.EnQueue(VerticalPrintInfo(
+            Q.EnQueue(VPrintInfo(
                 p.node->rchild, p.level + 1, p.pos + width / (1 << (p.level + 2))));
         }
     }
@@ -366,12 +367,12 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
 }
 
 template<typename T>
-void BinaryTree<T>::_PrintVertByLevel(const Chain<VerticalPrintInfo>& c) const
+void BinaryTree<T>::_PrintVertByLevel(const Chain<VPrintInfo>& c) const
 {
     int maxpos = 0;
-    VerticalPrintInfo x;
+    VPrintInfo x;
 
-    // - get the max
+    // - get the max (the most right side node)
     for (int i = 0; i < c.Length(); i++) {
         c.Find(i, x);
         if (maxpos < x.pos) {
@@ -379,7 +380,7 @@ void BinaryTree<T>::_PrintVertByLevel(const Chain<VerticalPrintInfo>& c) const
         }
     }
 
-    // - fill in valid items
+    // - init and fill in valid items
     Array<BinaryTreeNode<T>*> A(maxpos + 1);
     for (int i = 0; i <= maxpos; i++) {
         A[i] = NULL;
@@ -410,24 +411,24 @@ void BinaryTree<T>::_PrintVertWithLine(BinaryTreeNode<T>* t, int level, int widt
     int height = _CalcHeight(t);
 
     // an array of chains
-    Array<Chain<VerticalPrintInfoWithLine> > A(height);
+    Array<Chain<VPrintInfoWithLine> > A(height);
 
-    LinkedListQueue<VerticalPrintInfoWithLine> Q;
-    Q.EnQueue(VerticalPrintInfoWithLine(t, level, width / 2, -1));
+    LinkedListQueue<VPrintInfoWithLine> Q;
+    Q.EnQueue(VPrintInfoWithLine(t, level, width / 2, -1)); // -1 indicates ROOT
 
     while (!Q.IsEmpty()) {
-        VerticalPrintInfoWithLine p;
+        VPrintInfoWithLine p;
         Q.DeQueue(p);
 
         A[p.level].Insert(0, p); // save the print-info into linked-list
 
         if (p.node->lchild) {
-            Q.EnQueue(VerticalPrintInfoWithLine(
+            Q.EnQueue(VPrintInfoWithLine(
                 p.node->lchild, p.level + 1, p.pos - width / (1 << (p.level + 2)), p.pos));
         }
 
         if (p.node->rchild) {
-            Q.EnQueue(VerticalPrintInfoWithLine(
+            Q.EnQueue(VPrintInfoWithLine(
                 p.node->rchild, p.level + 1, p.pos + width / (1 << (p.level + 2)), p.pos));
         }
     }
@@ -441,12 +442,12 @@ void BinaryTree<T>::_PrintVertWithLine(BinaryTreeNode<T>* t, int level, int widt
 
 template<typename T>
 void BinaryTree<T>::_PrintVertByLevelWithLine(
-    const Chain<VerticalPrintInfoWithLine>& c, int width) const
+    const Chain<VPrintInfoWithLine>& c, int width) const
 {
     int maxpos = 0;
-    VerticalPrintInfoWithLine x;
+    VPrintInfoWithLine x;
 
-    // - get the max
+    // - get the max (the most right side node)
     for (int i = 0; i < c.Length(); i++) {
         c.Find(i, x);
         if (maxpos < x.pos) {
@@ -454,22 +455,22 @@ void BinaryTree<T>::_PrintVertByLevelWithLine(
         }
     }
 
-    // - fill in valid items
-    Array<VerticalPrintInfoWithLine*> A(maxpos + 1);
+    // - init and fill in valid items
+    Array<VPrintInfoWithLine*> A(maxpos + 1);
     for (int i = 0; i <= maxpos; i++) {
         A[i] = NULL;
     }
 
     for (int i = 0; i < c.Length(); i++) {
         c.Find(i, x);
-        A[x.pos] = new VerticalPrintInfoWithLine(x.node, x.level, x.pos, x.parentpos);
+        A[x.pos] = new VPrintInfoWithLine(x.node, x.level, x.pos, x.parentpos);
     }
 
     // - draw lines
-    if (x.parentpos > 0) {
-        int dist = abs(x.parentpos - x.pos);
+    if (x.parentpos > 0) { // only apply on child node while skip on ROOT
+        int distance = abs(x.parentpos - x.pos);
         int COLUMNSIZE = width; // need the screen width to draw line properly
-        if (dist >= 4) { // distance rather long
+        if (distance >= 4) { // distance rather long
             char* arrayLines = new char[3 * COLUMNSIZE];
             memset(arrayLines, ' ', 3 * COLUMNSIZE);
             for (int i = 0; i <= maxpos; i++) {
