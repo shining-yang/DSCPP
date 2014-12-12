@@ -11,19 +11,19 @@ int main(int arg, char* argv[])
     MaxHeap<int> mh;
 
     mh.Insert(9).Insert(3).Insert(8).Insert(2).Insert(7).Insert(6).Insert(4).Insert(5).Insert(1);
-    cout << mh << endl;
+    cout << "MaxHeap elements by level: " << mh << endl;
     mh.PrintTreeVertically(cout, 60);
 
     mh.DeleteMax(dummy);
-    cout << mh << endl;
+    cout << "MaxHeap elements by level: " << mh << endl;
     mh.PrintTreeVertically(cout, 60);
 
     mh.DeleteMax(dummy);
-    cout << mh << endl;
+    cout << "MaxHeap elements by level: " << mh << endl;
     mh.PrintTreeVertically(cout, 40);
 
     mh.DeleteMax(dummy);
-    cout << mh << endl;
+    cout << "MaxHeap elements by level: " << mh << endl;
     mh.PrintTreeVertically(cout, 40);
 
     return 0;

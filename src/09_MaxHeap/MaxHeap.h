@@ -129,7 +129,6 @@ MaxHeap<T>& MaxHeap<T>::DeleteMax(T& e)
 template<typename T>
 void DSCPP::PriorityQueue::MaxHeap<T>::Output(ostream& os) const
 {
-    os << "Max heap: ";
     for (int i = 1; i <= length; i++) {
         os << elements[i] << ", ";
     }
