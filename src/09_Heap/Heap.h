@@ -49,6 +49,9 @@ private:
     T* elements;
 };
 
+//
+// Heap-sort. (Sort using a heap)
+//
 template<typename T>
 void Heap<T>::Sort(T a[], int len)
 {
@@ -62,6 +65,9 @@ void Heap<T>::Sort(T a[], int len)
     hp.Detach();
 }
 
+//
+// Associate with a specific memory block and build a heap on it.
+//
 template<typename T>
 void Heap<T>::Attach(T pArray[], int nArrayLength, int nElementCount)
 {
