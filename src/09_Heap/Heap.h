@@ -31,17 +31,17 @@ public:
     T GetMin() const;
     Heap<T>& Insert(const T& e);
     Heap<T>& DeleteMin(T& e);
-
     void Output(ostream& os) const;
     void PrintTreeVertically(ostream& os, int width) const;
 
-    void Attach(T pArray[], int nArrayLength, int nElementCount);
-    void Detach();
-
-    static void Sort(T a[], int len);
+public:
+    static void Sort(T a[], int n);
 
 protected:
-    void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const;
+    void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel,
+        int nCount, int nWidth) const;
+    void _Attach(T pArray[], int nArrayLength, int nElementCount);
+    void _Detach();
 
 private:
     int capacity;
@@ -53,23 +53,23 @@ private:
 // Heap-sort. (Sort using a heap)
 //
 template<typename T>
-void Heap<T>::Sort(T a[], int len)
+void Heap<T>::Sort(T a[], int n)
 {
-    Heap<T> hp(len);
-    hp.Attach(a, len, len);
-    while (len > 0) {
-        T x;
+    T x;
+    Heap<T> hp(n);
+    hp._Attach(a, n, n);
+    while (n > 0) {
         hp.DeleteMin(x);
-        hp.elements[--len] = x;
+        hp.elements[--n] = x;
     }
-    hp.Detach();
+    hp._Detach();
 }
 
 //
 // Associate with a specific memory block and build a heap on it.
 //
 template<typename T>
-void Heap<T>::Attach(T pArray[], int nArrayLength, int nElementCount)
+void Heap<T>::_Attach(T pArray[], int nArrayLength, int nElementCount)
 {
     if (!pArray || (nElementCount < 0) || (nArrayLength < nElementCount)) {
         throw new InvalideArgument();
@@ -108,7 +108,7 @@ void Heap<T>::Attach(T pArray[], int nArrayLength, int nElementCount)
 // Detach the associated working memory.
 //
 template<typename T>
-void Heap<T>::Detach()
+void Heap<T>::_Detach()
 {
     this->capacity = 0;
     this->length = 0;
@@ -244,7 +244,8 @@ void Heap<T>::PrintTreeVertically(ostream& os, int width) const
 }
 
 template<typename T>
-void Heap<T>::_PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const
+void Heap<T>::_PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel,
+    int nCount, int nWidth) const
 {
     // 按行均分，即N个结点将区域划分为 N+1 等份
     int nSegmentLen = nWidth / ((1 << nLevel) + 1);
