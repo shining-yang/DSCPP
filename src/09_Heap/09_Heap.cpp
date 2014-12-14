@@ -1,5 +1,6 @@
 //
 // File: 09_Heap.cpp
+// Test heap (min-heap), Heap-sorting.
 // Shining Yang <y.s.n@live.com>, 2014-12-12
 //
 #include <iostream>
@@ -37,7 +38,7 @@ int main(int argc, char* argv[])
     // In this mechanism/implementation, note that:
     // Descending sort by using Min-Heap, while ascending sort should use Max-Heap
     Heap<int>::Sort(a, ELEM_COUNT(a));
-    cout << "Sort array descendingly: ";
+    cout << "Sort array descending: ";
     for (int i = 0; i < ELEM_COUNT(a); i++) {
         cout << a[i] << ", ";
     }
