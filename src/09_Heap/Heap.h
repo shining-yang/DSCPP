@@ -35,15 +35,64 @@ public:
     void Output(ostream& os) const;
     void PrintTreeVertically(ostream& os, int width) const;
 
+    void Attach(T pArray[], int nArrayLength, int nElementCount);
+    void Detach();
+
 protected:
     void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const;
-
 
 private:
     int capacity;
     int length;
     T* elements;
 };
+
+template<typename T>
+void Heap<T>::Attach(T pArray[], int nArrayLength, int nElementCount)
+{
+    if (!pArray || (nElementCount < 0) || (nArrayLength < nElementCount)) {
+        throw new InvalideArgument();
+    }
+
+    if (elements) {
+        delete[] elements;
+    }
+
+    length = nElementCount;
+    capacity = nArrayLength;
+    elements = pArray;
+
+    for (int n = (length - 1) / 2; n >= 0; n--) {
+        T x = elements[n];
+        int cn = n * 2 + 1; // left child
+        while (cn <= length) {
+            if ((cn < length) && (elements[cn] > elements[cn + 1])) {
+                cn++;
+            }
+
+            if (x < elements[cn]) {
+                break;
+            }
+
+            elements[n] = elements[cn];
+            n = cn;
+            cn = n * 2 + 1;
+        }
+
+        elements[n] = x;
+    }    
+}
+
+//
+// Detach the associated working memory.
+//
+template<typename T>
+void Heap<T>::Detach()
+{
+    this->capacity = 0;
+    this->length = 0;
+    this->elements = NULL;
+}
 
 template<typename T>
 Heap<T>::Heap(int capacity /* = 16*/)
@@ -176,6 +225,7 @@ void Heap<T>::PrintTreeVertically(ostream& os, int width) const
 template<typename T>
 void Heap<T>::_PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const
 {
+    // 按行均分，即N个结点将区域划分为 N+1 等份
     int nSegmentLen = nWidth / ((1 << nLevel) + 1);
     int nBlanks = nSegmentLen - 1; // assume that ELEMENT occupies 1 character
     for (int i = 0; i < nCount; i++) {

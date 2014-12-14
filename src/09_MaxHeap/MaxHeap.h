@@ -160,6 +160,7 @@ void MaxHeap<T>::PrintTreeVertically(ostream& os, int width) const
 template<typename T>
 void MaxHeap<T>::_PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const
 {
+    // 按行均分，即N个结点将区域划分为 N+1 等份
     int nSegmentLen = nWidth / ((1 << nLevel) + 1);
     int nBlanks = nSegmentLen - 1; // assume that ELEMENT occupies 1 character
     for (int i = 0; i < nCount; i++) {
