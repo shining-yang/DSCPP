@@ -33,5 +33,15 @@ int main(int argc, char* argv[])
     hp.PrintTreeVertically(cout, 80);
     hp.Detach();
 
+    // Heap sort
+    // In this mechanism/implementation, note that:
+    // Descending sort by using Min-Heap, while ascending sort should use Max-Heap
+    Heap<int>::Sort(a, ELEM_COUNT(a));
+    cout << "Sort array descendingly: ";
+    for (int i = 0; i < ELEM_COUNT(a); i++) {
+        cout << a[i] << ", ";
+    }
+    cout << endl;
+
     return 0;
 }

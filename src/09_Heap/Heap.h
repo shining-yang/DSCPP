@@ -38,6 +38,8 @@ public:
     void Attach(T pArray[], int nArrayLength, int nElementCount);
     void Detach();
 
+    static void Sort(T a[], int len);
+
 protected:
     void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const;
 
@@ -46,6 +48,19 @@ private:
     int length;
     T* elements;
 };
+
+template<typename T>
+void Heap<T>::Sort(T a[], int len)
+{
+    Heap<T> hp(len);
+    hp.Attach(a, len, len);
+    while (len > 0) {
+        T x;
+        hp.DeleteMin(x);
+        hp.elements[--len] = x;
+    }
+    hp.Detach();
+}
 
 template<typename T>
 void Heap<T>::Attach(T pArray[], int nArrayLength, int nElementCount)
