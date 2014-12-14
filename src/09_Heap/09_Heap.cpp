@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     cout << endl;
 
 
-    int a[] = { 1, 3, 4, 2, 5, 9, 3, 6, 7, 9, 3, 3, 4, 8 };
+    int a[] = { 1, 3, 4, 2, 5, 9, 3, 6, 7, 9, 4, 8 };
 #define ELEM_COUNT(a)   (sizeof(a) / sizeof(a[0]))
 
     hp.Attach(a, ELEM_COUNT(a), ELEM_COUNT(a));

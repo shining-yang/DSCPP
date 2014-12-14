@@ -64,19 +64,19 @@ void Heap<T>::Attach(T pArray[], int nArrayLength, int nElementCount)
 
     for (int n = (length - 1) / 2; n >= 0; n--) {
         T x = elements[n];
-        int cn = n * 2 + 1; // left child
-        while (cn <= length) {
-            if ((cn < length) && (elements[cn] > elements[cn + 1])) {
-                cn++;
+        int m = n * 2 + 1; // left child
+        while (m < length) {
+            if ((m < length - 1) && (elements[m] > elements[m + 1])) {
+                m++;
             }
 
-            if (x < elements[cn]) {
+            if (x <= elements[m]) {
                 break;
             }
 
-            elements[n] = elements[cn];
-            n = cn;
-            cn = n * 2 + 1;
+            elements[n] = elements[m];
+            n = m;
+            m = n * 2 + 1;
         }
 
         elements[n] = x;
