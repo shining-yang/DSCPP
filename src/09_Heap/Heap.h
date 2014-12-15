@@ -193,11 +193,11 @@ Heap<T>& Heap<T>::DeleteMin(T& e)
     int n = 0; // root
     int m = n * 2 + 1; // left child
     while (m < length) {
-        if (elements[m] > elements[m + 1]) {
+        if ((m < length - 1) && (elements[m] > elements[m + 1])) {
             m++; // always point to the little one
         }
 
-        if (elements[m] >= x) {
+        if (x <= elements[m]) {
             break;
         }
 
