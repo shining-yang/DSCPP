@@ -95,12 +95,11 @@ void Heap<T>::_Attach(T pArray[], int nArrayLength, int nElementCount)
                 break;
             }
 
-            elements[n] = elements[m];
-            n = m;
-            m = n * 2 + 1;
+            elements[(m - 1) / 2] = elements[m];
+            m = m * 2 + 1;
         }
 
-        elements[n] = x;
+        elements[(m - 1) / 2] = x;
     }    
 }
 
