@@ -130,6 +130,11 @@ private:
     int _CalcCount(const BinaryTreeNode<T>* t) const;
     int _CalcHeight(const BinaryTreeNode<T>* t) const;
 
+protected:
+    // For convenience of derived class to access the tree-node pointer.
+    BinaryTreeNode<T>*& Root() { return root; }
+    const BinaryTreeNode<T>*& Root() const { return root; }
+
 private:
     BinaryTreeNode<T>* root;
 };
