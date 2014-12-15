@@ -84,7 +84,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_HuffmanTree", "src\09_Hu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_Heap", "src\09_Heap\09_Heap.vcxproj", "{FF3CB6C1-8B52-4DD5-93E7-0D885A9D4615}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_WinnerTree", "10_WinnerTree\10_WinnerTree.vcxproj", "{0A92552F-0DA3-4CCE-A630-6F21BC40D7AE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_WinnerTree", "src\10_WinnerTree\10_WinnerTree.vcxproj", "{0A92552F-0DA3-4CCE-A630-6F21BC40D7AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
