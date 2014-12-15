@@ -15,7 +15,7 @@
 using namespace std;
 using namespace DSCPP::Utils;
 
-namespace DSCPP { namespace Heap {
+namespace DSCPP { namespace PriorityQueue {
 
 template<typename T>
 class Heap {

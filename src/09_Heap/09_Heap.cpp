@@ -7,7 +7,7 @@
 #include "Heap.h"
 
 using namespace std;
-using namespace DSCPP::Heap;
+using namespace DSCPP::PriorityQueue;
 
 int main(int argc, char* argv[])
 {
