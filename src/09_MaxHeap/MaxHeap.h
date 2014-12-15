@@ -38,14 +38,84 @@ public:
     void Output(ostream& os) const;
     void PrintTreeVertically(ostream& os, int width) const;
     
+public:
+    static void Sort(T a[], int n);
+
 protected:
     void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const;
+    void _Attach(T pArray[], int nArrayLength, int nElementCount);
+    void _Detach();
 
 private:
     int capacity;
     int length;
     T* elements;
 };
+
+template<typename T>
+void MaxHeap<T>::Sort(T a[], int n)
+{
+    T x;
+    MaxHeap mh(n);
+
+    //
+    // This is a TRICK:
+    // Passing <a-1> as elements data pointer to MaxHeap since its
+    // implementation starts from index 1.
+    //
+    // NOTE: we must call _Detach() immediately when finish sorting to avoid
+    // invalid memory access that might caused later.
+    //
+    mh._Attach(a - 1, n, n);
+    while (n > 0) {
+        mh.DeleteMax(x);
+        mh.elements[n--] = x;
+    }
+    mh._Detach();
+}
+
+template<typename T>
+void MaxHeap<T>::_Attach(T pArray[], int nArrayLength, int nElementCount)
+{
+    if (!pArray || (nElementCount < 0) || (nArrayLength < nElementCount)) {
+        throw new InvalideArgument();
+    }
+
+    if (elements) {
+        delete[] elements;
+    }
+
+    length = nElementCount;
+    capacity = nArrayLength;
+    elements = pArray;
+
+    for (int n = length / 2; n > 0; n--) {
+        T x = elements[n];
+        int m = n * 2; // left child
+        while (m <= length) {
+            if ((m < length) && (elements[m] < elements[m + 1])) {
+                m++;
+            }
+
+            if (x >= elements[m]) {
+                break;
+            }
+
+            elements[m / 2] = elements[m]; // move upwards
+            m *= 2;
+        }
+
+        elements[m / 2] = x;
+    }
+}
+
+template<typename T>
+void MaxHeap<T>::_Detach()
+{
+    this->length = 0;
+    this->capacity = 0;
+    this->elements = NULL;
+}
 
 template<typename T>
 MaxHeap<T>::MaxHeap(int capacity /*= 16*/)
@@ -113,7 +183,7 @@ MaxHeap<T>& MaxHeap<T>::DeleteMax(T& e)
             m++;
         }
 
-        if (elements[m] <= x) {
+        if (x >= elements[m]) {
             break;
         }
 
@@ -127,7 +197,7 @@ MaxHeap<T>& MaxHeap<T>::DeleteMax(T& e)
 }
 
 template<typename T>
-void DSCPP::PriorityQueue::MaxHeap<T>::Output(ostream& os) const
+void MaxHeap<T>::Output(ostream& os) const
 {
     for (int i = 1; i <= length; i++) {
         os << elements[i] << ", ";
