@@ -86,6 +86,54 @@ BSTree<E, K>& BSTree<E, K>::Insert(const E& e)
 template<typename E, typename K>
 BSTree<E, K>& BSTree<E, K>::Delete(const K& k, E& e)
 {
+    BinaryTreeNode<E>* p = Root();
+    BinaryTreeNode<E>* pp = NULL; // parent
+
+    while (p && (k != p->data)) {
+        pp = p;
+        if (k < p->data) {
+            p = p->lchild;
+        } else {
+            p = p->rchild;
+        }
+    }
+
+    if (!p) {
+        throw new ItemNotExisted();
+    }
+
+    e = p->data;
+
+    if (p->lchild && p->rchild) { // p has both left and right child
+        BinaryTreeNode<E>* lp = p->lchild; // left child
+        BinaryTreeNode<E>* lpp = p; // left child's parent
+        while (lp->rchild) { // try to get the max node in the left child
+            lpp = lp;
+            lp = lp->rchild;
+        }
+
+        p->data = lp->data;
+        p = lp;
+        pp = lpp;
+    }
+
+    // Now, p has 1 child at most
+    BinaryTreeNode<E>* c;
+    if (p->lchild) {
+        c = p->lchild;
+    } else {
+        c = p->rchild;
+    }
+
+    if (!pp) { // it's root
+        Root() = c;
+    } else if (pp->lchild == p) {
+        pp->lchild = c;
+    } else {
+        pp->rchild = c;
+    }
+
+    delete p;
     return *this;
 }
 
