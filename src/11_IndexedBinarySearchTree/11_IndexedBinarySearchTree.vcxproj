@@ -84,6 +84,9 @@
   <ItemGroup>
     <ClInclude Include="IndexedBinarySearchTree.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="11_IndexedBinarySearchTree.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

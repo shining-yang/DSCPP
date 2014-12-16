@@ -15,54 +15,61 @@ using namespace DSCPP::BinaryTree;
 
 namespace DSCPP { namespace SearchTree {
 
-template<typename T>
+template<typename E, typename K>
 class IndexedBSTreeNodeInfo {
 public:
     IndexedBSTreeNodeInfo() {}
-    IndexedBSTreeNodeInfo(const T& data, int sz) : d(data), s(sz) {}
+    IndexedBSTreeNodeInfo(const E& data, int sz) : d(data), s(sz) {}
 
-    bool operator==(const IndexedBSTreeNodeInfo<T>& obj) const {
+    operator K() const {
+        return operator K(E);
+    }
+
+    bool operator==(const IndexedBSTreeNodeInfo<E, K>& obj) const {
         return d == obj.d;
     }
 
-    bool operator!=(const IndexedBSTreeNodeInfo<T>& obj) const {
+    bool operator!=(const IndexedBSTreeNodeInfo<E, K>& obj) const {
         return !operator==(obj);
     }
 
-    bool operator<(const IndexedBSTreeNodeInfo<T>& obj) const {
+    bool operator<(const IndexedBSTreeNodeInfo<E, K>& obj) const {
         return d < obj.d;
     }
 
-    bool operator>(const IndexedBSTreeNodeInfo<T>& obj) const {
+    bool operator>(const IndexedBSTreeNodeInfo<E, K>& obj) const {
         return d > obj.d;
     }
 
-    bool operator<=(const IndexedBSTreeNodeInfo<T>& obj) const {
+    bool operator<=(const IndexedBSTreeNodeInfo<E, K>& obj) const {
         return !operator>(obj);
     }
 
-    bool operator>=(const IndexedBSTreeNodeInfo<T>& obj) const {
+    bool operator>=(const IndexedBSTreeNodeInfo<E, K>& obj) const {
         return !operator<(obj);
     }
 
-    template<typename E, typename K> friend class IndexedBSTree;
-    friend ostream& operator<<(ostream& os, const IndexedBSTreeNodeInfo<T>& obj);
+    template<typename Et, typename Kt>
+    friend class IndexedBSTree;
+
+    template<typename Et, typename Kt>
+    friend ostream& operator<<(ostream& os, const IndexedBSTreeNodeInfo<Et, Kt>& obj);
 
 private:
-    T d;    // actual data member
+    E d;    // actual data member
     int s;  // left size (number of left tree nodes + 1)
 };
 
-template<typename T>
-ostream& operator<<(ostream& os, const IndexedBSTreeNodeInfo<T>& obj)
+template<typename E, typename K>
+ostream& operator<<(ostream& os, const IndexedBSTreeNodeInfo<E, K>& obj)
 {
-    os << s << ":" << d;
+    os << obj.s << ":" << obj.d;
     return os;
 }
 
 template<typename E, typename K>
 class IndexedBSTree :
-    public DSCPP::BinaryTree::BinaryTree<IndexedBSTreeNodeInfo<E> > {
+    public DSCPP::BinaryTree::BinaryTree<IndexedBSTreeNodeInfo<E, K> > {
 
 public:
     IndexedBSTree() {}
@@ -82,11 +89,11 @@ public:
 template<typename E, typename K>
 bool DSCPP::SearchTree::IndexedBSTree<E, K>::Search(const K& k, E& e) const
 {
-    BinaryTreeNode<IndexedBSTreeNodeInfo<E> >* p = Root();
+    const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
     while (p) {
-        if (k < p->lchild) {
+        if (k < p->data.d) {
             p = p->lchild;
-        } else if (k > p->data) {
+        } else if (k > p->data.d) {
             p = p->rchild;
         } else {
             e = p->data.d;

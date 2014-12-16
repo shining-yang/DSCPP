@@ -19,6 +19,7 @@ using namespace DSCPP::Queue;
 namespace DSCPP { namespace SearchTree {
     template<typename E, typename K> class BSTree;
     template<typename E, typename K> class DupBSTree;
+    template<typename E, typename K> class IndexedBSTree;
 }}
 
 namespace DSCPP { namespace BinaryTree {
@@ -47,6 +48,7 @@ private:
     template<typename X> friend class BinaryTree;
     template<typename E, typename K> friend class DSCPP::SearchTree::BSTree;
     template<typename E, typename K> friend class DSCPP::SearchTree::DupBSTree;
+    template<typename E, typename K> friend class DSCPP::SearchTree::IndexedBSTree;
 };
 
 template<typename T>
@@ -497,7 +499,7 @@ void BinaryTree<T>::_PrintVertByLevelWithLine(
                         arrayLines[2 * COLUMNSIZE + A[i]->pos] = '|';
                     } else {
                         arrayLines[A[i]->parentpos] = '|';
-                        for (int j = A[i]->parentpos + 1; j < A[i]->pos; j++) {
+                        for (int j = A[i]->parentpos + 1; j <= A[i]->pos; j++) {
                             arrayLines[1 * COLUMNSIZE + j] = '-';
                         }
                         arrayLines[2 * COLUMNSIZE + A[i]->pos] = '|';
