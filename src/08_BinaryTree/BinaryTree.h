@@ -18,6 +18,7 @@ using namespace DSCPP::Queue;
 // while we wanna declare it as a friend of BinaryTreeNode
 namespace DSCPP { namespace SearchTree {
     template<typename E, typename K> class BSTree;
+    template<typename E, typename K> class DupBSTree;
 }}
 
 namespace DSCPP { namespace BinaryTree {
@@ -45,6 +46,7 @@ private:
     BinaryTreeNode<T>* rchild;
     template<typename X> friend class BinaryTree;
     template<typename E, typename K> friend class DSCPP::SearchTree::BSTree;
+    template<typename E, typename K> friend class DSCPP::SearchTree::DupBSTree;
 };
 
 template<typename T>

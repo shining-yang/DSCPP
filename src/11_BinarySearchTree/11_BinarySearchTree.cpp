@@ -7,7 +7,6 @@ using namespace DSCPP::SearchTree;
 int main(int argc, char* argv[])
 {
     int dummy;
-    BSTree<int, int> x;
     BSTree<int, int> T;
     T.Insert(4).Insert(9).Insert(2).Insert(7).Insert(8).Insert(1)
         .Insert(3).Insert(6).Insert(0);
@@ -34,5 +33,18 @@ int main(int argc, char* argv[])
     T2.PrintVerticallyWithLine(76);
     T2.OutputAscending();
     cout << endl;
+
+    // DupBSTree
+    DupBSTree<int, int> TT;
+    TT.Insert(5).Insert(4).Insert(9).Insert(2).Insert(8).Insert(2).Insert(5);
+    TT.PrintVerticallyWithLine(64);
+    TT.OutputAscending();
+    cout << endl;
+
+    TT.Delete(2, dummy).Delete(8, dummy).Insert(7).Delete(5, dummy).Insert(7);
+    TT.PrintVerticallyWithLine(64);
+    TT.OutputAscending();
+    cout << endl;
+
     return 0;
 }
