@@ -21,5 +21,7 @@ int main(int argc, char* argv[])
     cout << "Another binary search tree:" << endl;
     T2.Insert('A').Insert('B').Insert('C').Insert('D').Insert('E');
     T2.PrintVerticallyWithLine(76);
+    T2.OutputAscending();
+
     return 0;
 }

@@ -23,8 +23,15 @@ public:
     bool Search(const K& k, E& e) const;
     BSTree<E, K>& Insert(const E& e);
     BSTree<E, K>& Delete(const K& k, E& e);
+    
+    void OutputAscending() const {
+        InOrder(_PrintNode);
+    }
 
-private:
+protected:
+    static void _PrintNode(const BinaryTreeNode<E>* p) {
+        cout << p->data << ", ";
+    }
 };
 
 template<typename E, typename K>
