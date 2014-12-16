@@ -14,6 +14,12 @@ using namespace std;
 using namespace DSCPP::Utils;
 using namespace DSCPP::Queue;
 
+// Declare BSTree with namespace since it's defined in "BinarySearchTree.h"
+// while we wanna declare it as a friend of BinaryTreeNode
+namespace DSCPP { namespace SearchTree {
+    template<typename E, typename K> class BSTree;
+}}
+
 namespace DSCPP { namespace BinaryTree {
 
 // Binary tree node
@@ -38,6 +44,7 @@ private:
     BinaryTreeNode<T>* lchild;
     BinaryTreeNode<T>* rchild;
     template<typename X> friend class BinaryTree;
+    template<typename E, typename K> friend class DSCPP::SearchTree::BSTree;
 };
 
 template<typename T>
@@ -132,8 +139,8 @@ private:
 
 protected:
     // For convenience of derived class to access the tree-node pointer.
-    BinaryTreeNode<T>*& Root() { return root; }
-    const BinaryTreeNode<T>*& Root() const { return root; }
+    BinaryTreeNode<T>* & Root() { return root; }
+    const BinaryTreeNode<T>* const & Root() const { return root; }
 
 private:
     BinaryTreeNode<T>* root;
@@ -510,14 +517,19 @@ void BinaryTree<T>::_PrintVertByLevelWithLine(
             memset(arrayLines, ' ', COLUMNSIZE);
             for (int i = 0; i <= maxpos; i++) {
                 if (A[i]) {
-                    if (A[i]->pos < A[i]->parentpos) {
-                        int idx = A[i]->parentpos - 1;
+                    int idx;
+                    if (A[i]->pos == A[i]->parentpos) {
+                        // too crowded, cannot determine whether left or right, use '|' directly
+                        idx = A[i]->parentpos;
+                        arrayLines[idx] = '|';
+                    } else if (A[i]->pos < A[i]->parentpos) {
+                        idx = A[i]->parentpos - 1;
                         if (idx < 0) { // avoid array underflowing
                             idx = 0;
                         }
                         arrayLines[idx] = '/';
                     } else {
-                        int idx = A[i]->parentpos + 1;
+                        idx = A[i]->parentpos + 1;
                         if (idx >= COLUMNSIZE) { // avoid array overflowing
                             idx = COLUMNSIZE - 1;
                         }
