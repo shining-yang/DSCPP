@@ -8,19 +8,18 @@ int main(int argc, char* argv[])
 {
     int dummy;
     BSTree<int, int> x;
-    BSTree<int, int> T, A, B, C, D, E, F, G;
-    A.MakeTree(5, x, x);
-    B.MakeTree(6, x, x);
-    C.MakeTree(7, x, x);
-    D.MakeTree(8, A, x);
-    E.MakeTree(9, B, C);
-    F.MakeTree(1, D, E);
-    G.MakeTree(2, x, x);
+    BSTree<int, int> T;
+    T.Insert(4).Insert(9).Insert(2).Insert(7).Insert(8).Insert(1).Insert(3)
+        .Insert(6).Insert(0);
 
-    T.MakeTree(0, F, G);
-    T.PrintVerticallyWithLine(64);
+    cout << "Found: " << (T.Search(4, dummy) ? "Yes" : "No") << endl;
+    cout << "Found: " << (T.Search(5, dummy) ? "Yes" : "No") << endl;
+    cout << "Print out the tree:" << endl;
+    T.PrintVerticallyWithLine(76);
 
-    bool found = T.Search(4, dummy);
-    cout << "Found: " << (found ? "Yes" : "No") << endl;
+    BSTree<char, int> T2;
+    cout << "Another binary search tree:" << endl;
+    T2.Insert('A').Insert('B').Insert('C').Insert('D').Insert('E');
+    T2.PrintVerticallyWithLine(76);
     return 0;
 }
