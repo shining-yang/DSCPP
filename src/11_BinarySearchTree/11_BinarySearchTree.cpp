@@ -46,5 +46,23 @@ int main(int argc, char* argv[])
     TT.OutputAscending();
     cout << endl;
 
+    cout << "Remove max elements:" << endl;
+    TT.DeleteMax(dummy);
+    cout << dummy << endl;
+    TT.DeleteMax(dummy);
+    cout << dummy << endl;
+    TT.DeleteMax(dummy);
+    cout << dummy << endl;
+    TT.OutputAscending();
+    cout << endl;
+
+    cout << "Remove min elements:" << endl;
+    TT.DeleteMin(dummy);
+    cout << dummy << endl;
+    TT.DeleteMin(dummy);
+    cout << dummy << endl;
+    TT.OutputAscending();
+    cout << endl;
+
     return 0;
 }

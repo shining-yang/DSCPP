@@ -24,6 +24,9 @@ public:
     virtual BSTree<E, K>& Insert(const E& e);
     BSTree<E, K>& Delete(const K& k, E& e);
     
+    BSTree<E, K>& DeleteMax(E& e);
+    BSTree<E, K>& DeleteMin(E& e);
+
     void OutputAscending() const {
         InOrder(_PrintNode);
     }
@@ -137,6 +140,57 @@ BSTree<E, K>& BSTree<E, K>::Delete(const K& k, E& e)
     return *this;
 }
 
+template<typename E, typename K>
+BSTree<E, K>& BSTree<E, K>::DeleteMax(E& e)
+{
+    BinaryTreeNode<E>* p = Root();
+    BinaryTreeNode<E>* pp = NULL;
+
+    if (!p) {
+        throw new ItemUnderFlow();
+    }
+
+    while (p->rchild) {
+        pp = p;
+        p = p->rchild;
+    }
+
+    if (!pp) { // it's the root node
+        Root() = p->lchild;
+    } else {
+        pp->rchild = p->lchild;
+    }
+
+    e = p->data;
+    delete p;
+    return *this;
+}
+
+template<typename E, typename K>
+BSTree<E, K>& BSTree<E, K>::DeleteMin(E& e)
+{
+    BinaryTreeNode<E>* p = Root();
+    BinaryTreeNode<E>* pp = NULL;
+
+    if (!p) {
+        throw new ItemUnderFlow();
+    }
+
+    while (p->lchild) {
+        pp = p;
+        p = p->lchild;
+    }
+
+    if (!pp) {
+        Root() = p->rchild;
+    } else {
+        pp->lchild = p->rchild;
+    }
+
+    e = p->data;
+    delete p;
+    return *this;
+}
 
 //
 // DupBSTree
