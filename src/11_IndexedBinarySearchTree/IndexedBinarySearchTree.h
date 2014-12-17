@@ -21,12 +21,6 @@ public:
     IndexedBSTreeNodeInfo() {}
     IndexedBSTreeNodeInfo(const E& data, int sz) : d(data), s(sz) {}
 
-    // Make a conversion so that we can compare K and
-    // IndexedBSTreeNodeInfo<E,K> directly
-    operator K() const {
-        return K(d);
-    }
-
     bool operator==(const IndexedBSTreeNodeInfo<E, K>& obj) const {
         return d == obj.d;
     }
@@ -113,12 +107,12 @@ bool IndexedBSTree<E, K>::Search(const K& k, E& e) const
 {
     const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
     while (p) {
-        if (k < p->data) {
+        if (k < p->data.d) {
             p = p->lchild;
-        } else if (k > p->data) {
+        } else if (k > p->data.d) {
             p = p->rchild;
         } else {
-            e = p->data;
+            e = p->data.d;
             return true;
         }
     }
@@ -135,9 +129,9 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::Insert(const E& e)
 
     while (p) {
         pp = p;
-        if (k < p->data) {
+        if (k < p->data.d) {
             p = p->lchild;
-        } else if (k > p->data) {
+        } else if (k > p->data.d) {
             p = p->rchild;
         } else {
             throw new ItemAlreadyExisted();
@@ -148,7 +142,7 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::Insert(const E& e)
         new BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >(IndexedBSTreeNodeInfo<E, K>(e, 1));
     if (!pp) { // empty tree
         Root() = r;
-    } else if (k < pp->data) {
+    } else if (k < pp->data.d) {
         pp->lchild = r;
     } else {
         pp->rchild = r;
@@ -164,9 +158,9 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::Delete(const K& k, E& e)
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* pp = NULL;
 
-    while (p && (k != p->data)) {
+    while (p && (k != p->data.d)) {
         pp = p;
-        if (k < p->data) {
+        if (k < p->data.d) {
             p = p->lchild;
         } else {
             p = p->rchild;
@@ -177,7 +171,7 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::Delete(const K& k, E& e)
         throw new ItemNotExisted();
     }
 
-    e = p->data;
+    e = p->data.d;
 
     if (p->lchild && p->rchild) { // p has both left and right child
         //
@@ -191,7 +185,7 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::Delete(const K& k, E& e)
             rp = rp->lchild;
         }
 
-        p->data = rp->data;
+        p->data.d = rp->data.d; // replace only data, leave `left-size' alone
         pp = rpp;
         p = rp;
     }
@@ -199,7 +193,7 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::Delete(const K& k, E& e)
     // Update the `left-size' field from ROOT to the node that will be deleted.
     // Do this operation before the target `p' been deleted.
     do {
-        K key = p->data; // auto-conversion
+        K key = p->data.d; // auto-conversion
         _UpdateOnDelete(key);
     } while (0);
 
@@ -254,11 +248,11 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::IndexDelete(int i, E& e)
     }
 
     if (!p) {
-        throw new ItemNotExisted();
+        throw new OutOfBounds();
     }
 
     // Now, p is the node to be deleted, pp is the parent of p if not NULL;
-    e = p->data;
+    e = p->data.d;
 
     if (p->lchild && p->rchild) { // p has both left child and right child
         // use the MINIMUM element in right children to replace `p'
@@ -269,12 +263,12 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::IndexDelete(int i, E& e)
             rp = rp->lchild;
         }
 
-        p->data = rp->data;
+        p->data.d = rp->data.d; // Only replace the `d', keep `s' unchanged
         pp = rpp;
         p = rp;
     }
 
-    K key = p->data;
+    K key = p->data.d;
     _UpdateOnDelete(key);
 
     // Now, p has 1 child at most, pp is the parent of p if not NULL
@@ -299,8 +293,8 @@ template<typename E, typename K>
 void IndexedBSTree<E, K>::_UpdateOnInsert(const K& k)
 {
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
-    while (p && (k != p->data)) {
-        if (k < p->data) {
+    while (p && (k != p->data.d)) {
+        if (k < p->data.d) {
             p->data.s++;
             p = p->lchild;
         } else {
@@ -313,8 +307,8 @@ template<typename E, typename K>
 void IndexedBSTree<E, K>::_UpdateOnDelete(const K& k)
 {
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
-    while (p && (k != p->data)) {
-        if (k < p->data) {
+    while (p && (k != p->data.d)) {
+        if (k < p->data.d) {
             p->data.s--;
             p = p->lchild;
         } else {

@@ -73,14 +73,39 @@ int main(int argc, char* argv[])
     phones.OutputAscending();
     cout << endl;
 
+    SmartPhone dummyPhone;
+
     //--
     cout << endl << "Test IndexSearch():" << endl;
-    SmartPhone dummyPhone;
     for (int idx = 0; idx < 100; idx++) {
         if (phones.IndexSearch(idx, dummyPhone)) {
             cout << "Index " << idx << ": " << dummyPhone << endl;
         }
     }
 
+    cout << endl;
+
+    //--
+    try {
+        phones.Delete(4599, dummyPhone);
+        cout << "Deleted by key: " << dummyPhone << endl;
+    } catch (ItemNotExisted* e) {
+        delete e;
+        cout << "Item not found." << endl;
+    }
+    phones.PrintVerticallyWithLine(76);
+
+    //--
+    try {
+        phones.IndexDelete(2, dummyPhone);
+        cout << "Deleted by index: " << dummyPhone << endl;
+    } catch (OutOfBounds* e) {
+        delete e;
+        cout << "The specified index is out of bounds." << endl;
+    }
+    phones.OutputAscending();
+
+    cout << endl;
+    cout << "Number of phones left: " << phones.GetCount() << endl;
     return 0;
 }

@@ -44,7 +44,7 @@ namespace DSCPP {
         };
 
         // @Description:
-        //  There is no such item when searching.
+        //  Target item does not exist when try to perform operation on it.
         class ItemNotExisted {
         };
 
