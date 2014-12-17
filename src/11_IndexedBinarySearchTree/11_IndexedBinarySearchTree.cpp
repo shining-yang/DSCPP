@@ -94,7 +94,12 @@ int main(int argc, char* argv[])
         cout << "Item not exists." << endl;
     }
 
+    phones.Delete(2199, dummyPhone);
+    cout << "Deleted by key: " << dummyPhone << endl;
+
     phones.PrintVerticallyWithLine(76);
+    cout << endl;
+    phones.OutputAscending();
 
     //--
     try {
@@ -105,6 +110,11 @@ int main(int argc, char* argv[])
         cout << "Item with specified index cannot been found." << endl;
     }
 
+    phones.IndexDelete(1, dummyPhone);
+    cout << "Deleted by index: " << dummyPhone << endl;
+
+    phones.PrintVerticallyWithLine(76);
+    cout << endl;
     phones.OutputAscending();
 
     cout << endl;
