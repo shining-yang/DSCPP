@@ -155,6 +155,8 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::Insert(const E& e)
 template<typename E, typename K>
 IndexedBSTree<E, K>& IndexedBSTree<E, K>::Delete(const K& k, E& e)
 {
+    bool updated = false; // flag to indicate whether updated `s' or not
+
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* pp = NULL;
 
@@ -185,17 +187,20 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::Delete(const K& k, E& e)
             rp = rp->lchild;
         }
 
+        // Update the `left-size' field from ROOT to the node that will be deleted.
+        // Do this operation before the following REPLACEMENT.
+        _UpdateOnDelete(rp->data.d);
+        updated = true;
+
         p->data.d = rp->data.d; // replace only data, leave `left-size' alone
         pp = rpp;
         p = rp;
     }
 
-    // Update the `left-size' field from ROOT to the node that will be deleted.
-    // Do this operation before the target `p' been deleted.
-    do {
-        K key = p->data.d; // auto-conversion
-        _UpdateOnDelete(key);
-    } while (0);
+    if (!updated) {
+        _UpdateOnDelete(p->data.d);
+        updated = true;
+    }
 
     // Now, `p' has 1 child at most, `pp' is the parent of `p' if not NULL
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* c = p->lchild;
@@ -230,6 +235,7 @@ bool IndexedBSTree<E, K>::IndexSearch(int i, E& e) const
 template<typename E, typename K>
 IndexedBSTree<E, K>& IndexedBSTree<E, K>::IndexDelete(int i, E& e)
 {
+    bool updated = false;
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* pp = NULL;
 
@@ -242,8 +248,8 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::IndexDelete(int i, E& e)
         if (i < p->data.s) {
             p = p->lchild;
         } else {
-            p = p->rchild;
             i = i - p->data.s;
+            p = p->rchild;
         }
     }
 
@@ -251,7 +257,6 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::IndexDelete(int i, E& e)
         throw new ItemNotExisted();
     }
 
-    // Now, p is the node to be deleted, pp is the parent of p if not NULL;
     e = p->data.d;
 
     if (p->lchild && p->rchild) { // p has both left child and right child
@@ -263,13 +268,20 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::IndexDelete(int i, E& e)
             rp = rp->lchild;
         }
 
+        // Update the `left-size' field from ROOT to the node that will be deleted.
+        // Do this operation before the following REPLACEMENT.
+        _UpdateOnDelete(rp->data.d);
+        updated = true;
+
         p->data.d = rp->data.d; // Only replace the `d', keep `s' unchanged
         pp = rpp;
         p = rp;
     }
 
-    K key = p->data.d;
-    _UpdateOnDelete(key);
+    if (!updated) {
+        _UpdateOnDelete(p->data.d);
+        updated = true;
+    }
 
     // Now, p has 1 child at most, pp is the parent of p if not NULL
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* c = p->lchild;
