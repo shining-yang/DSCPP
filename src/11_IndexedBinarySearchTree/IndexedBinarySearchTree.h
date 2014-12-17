@@ -51,6 +51,7 @@ public:
         return !operator<(obj);
     }
 
+    // use Et & Kt instead, to avoid complaints from g++
     template<typename Et, typename Kt> friend class IndexedBSTree;
     template<typename Et, typename Kt>
     friend ostream& operator<<(ostream& os, const IndexedBSTreeNodeInfo<Et, Kt>& obj);
@@ -79,11 +80,17 @@ public:
 public:
     // Search for element by key. Return true on success, false otherwise
     bool Search(const K& k, E& e) const;
+
+    // Insert a new element. Throw exception when already existed
     IndexedBSTree<E, K>& Insert(const E& e);
+
+    // Delete an element by specified key. Throw exception when not found
     IndexedBSTree<E, K>& Delete(const K& k, E& e);
+
     // Search for the i-th element.
     bool IndexSearch(int i, E& e) const;
-    // Delete the i-th element.
+
+    // Delete the i-th element. Throw exception when not found
     IndexedBSTree<E, K>& IndexDelete(int i, E& e);
 
     void OutputAscending() const {
@@ -95,7 +102,6 @@ protected:
         cout << p->data << ", ";
     }
 
-protected:
     void _UpdateOnInsert(const K& k);
     void _UpdateOnDelete(const K& k);
     const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* _Find(

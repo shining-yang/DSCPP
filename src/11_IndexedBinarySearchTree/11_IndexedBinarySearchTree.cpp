@@ -32,7 +32,7 @@ private:
 
 ostream& operator<<(ostream& os, const SmartPhone& ph)
 {
-    os << ph.model << ":" << ph.price;
+    os << ph.model << " $" << ph.price;
     return os;
 }
 
