@@ -51,8 +51,8 @@ public:
     friend ostream& operator<<(ostream& os, const IndexedBSTreeNodeInfo<Et, Kt>& obj);
 
 private:
-    E d;    // actual data member
-    int s;  // left size (number of left tree nodes + 1)
+    E   d; // actual data member
+    int s; // left size (number of left tree nodes + 1)
 };
 
 template<typename E, typename K>
@@ -156,7 +156,6 @@ template<typename E, typename K>
 IndexedBSTree<E, K>& IndexedBSTree<E, K>::Delete(const K& k, E& e)
 {
     bool updated = false; // flag to indicate whether updated `s' or not
-
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
     BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* pp = NULL;
 

@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 
     //--
     try {
-        phones.Delete(4599, dummyPhone);
+        phones.Delete(10000, dummyPhone);
         cout << "Deleted by key: " << dummyPhone << endl;
     } catch (ItemNotExisted* e) {
         delete e;
