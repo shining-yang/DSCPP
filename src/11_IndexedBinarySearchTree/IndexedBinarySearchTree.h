@@ -248,7 +248,7 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::IndexDelete(int i, E& e)
     }
 
     if (!p) {
-        throw new OutOfBounds();
+        throw new ItemNotExisted();
     }
 
     // Now, p is the node to be deleted, pp is the parent of p if not NULL;

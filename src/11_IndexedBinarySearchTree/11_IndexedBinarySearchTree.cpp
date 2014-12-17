@@ -91,18 +91,20 @@ int main(int argc, char* argv[])
         cout << "Deleted by key: " << dummyPhone << endl;
     } catch (ItemNotExisted* e) {
         delete e;
-        cout << "Item not found." << endl;
+        cout << "Item not exists." << endl;
     }
+
     phones.PrintVerticallyWithLine(76);
 
     //--
     try {
         phones.IndexDelete(2, dummyPhone);
         cout << "Deleted by index: " << dummyPhone << endl;
-    } catch (OutOfBounds* e) {
+    } catch (ItemNotExisted* e) {
         delete e;
-        cout << "The specified index is out of bounds." << endl;
+        cout << "Item with specified index cannot been found." << endl;
     }
+
     phones.OutputAscending();
 
     cout << endl;
