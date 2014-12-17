@@ -87,10 +87,10 @@ public:
     // Delete an element by specified key. Throw exception when not found
     IndexedBSTree<E, K>& Delete(const K& k, E& e);
 
-    // Search for the i-th element.
+    // Search for the i-th [1..count] element.
     bool IndexSearch(int i, E& e) const;
 
-    // Delete the i-th element. Throw exception when not found
+    // Delete the i-th [1..count] element. Throw exception when not found
     IndexedBSTree<E, K>& IndexDelete(int i, E& e);
 
     void OutputAscending() const {
@@ -107,23 +107,6 @@ protected:
     const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* _Find(
         const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p, int i) const;
 };
-
-template<typename E, typename K>
-const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* IndexedBSTree<E, K>::_Find(
-    const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p, int i) const
-{
-    if (!p) {
-        return NULL;
-    }
-    
-    if (i == p->data.s) {
-        return p;
-    } else if (i < p->data.s) {
-        return _Find(p->lchild, i);
-    } else {
-        return _Find(p->rchild, i - p->data.s);
-    }
-}
 
 template<typename E, typename K>
 bool IndexedBSTree<E, K>::Search(const K& k, E& e) const
@@ -178,7 +161,64 @@ IndexedBSTree<E, K>& IndexedBSTree<E, K>::Insert(const E& e)
 template<typename E, typename K>
 IndexedBSTree<E, K>& IndexedBSTree<E, K>::Delete(const K& k, E& e)
 {
+    BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
+    BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* pp = NULL;
 
+    while (p && (k != p->data)) {
+        pp = p;
+        if (k < p->data) {
+            p = p->lchild;
+        } else {
+            p = p->rchild;
+        }
+    }
+
+    if (!p) {
+        throw new ItemNotExisted();
+    }
+
+    e = p->data;
+
+    if (p->lchild && p->rchild) { // p has both left and right child
+        //
+        // We'd try to find the smallest element in the right child sub-tree.
+        // Then assign it to the one which will be deleted. And then delete it.
+        //
+        BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* rpp = p;
+        BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* rp = p->rchild;
+        while (rp->lchild) {
+            rpp = rp;
+            rp = rp->lchild;
+        }
+
+        p->data = rp->data;
+        pp = rpp;
+        p = rp;
+    }
+
+    // Update the `left-size' field from ROOT to the node that will be deleted.
+    // Do this operation before the target `p' been deleted.
+    do {
+        K key = p->data; // auto-conversion
+        _UpdateOnDelete(key);
+    } while (0);
+
+    // Now, `p' has 1 child at most, `pp' is the parent of `p' if not NULL
+    BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* c = p->lchild;
+    if (!c) {
+        c = p->rchild;
+    }
+
+    if (!pp) {
+        Root() = c;
+    } else if (pp->lchild == p) {
+        pp->lchild = c;
+    } else {
+        pp->rchild = c;
+    }
+
+    delete p;
+    return *this;
 }
 
 template<typename E, typename K>
@@ -217,7 +257,32 @@ void IndexedBSTree<E, K>::_UpdateOnInsert(const K& k)
 template<typename E, typename K>
 void IndexedBSTree<E, K>::_UpdateOnDelete(const K& k)
 {
+    BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
+    while (p && (k != p->data)) {
+        if (k < p->data) {
+            p->data.s--;
+            p = p->lchild;
+        } else {
+            p = p->rchild;
+        }
+    }
+}
 
+template<typename E, typename K>
+const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* IndexedBSTree<E, K>::_Find(
+    const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p, int i) const
+{
+    if (!p) {
+        return NULL;
+    }
+    
+    if (i == p->data.s) {
+        return p;
+    } else if (i < p->data.s) {
+        return _Find(p->lchild, i);
+    } else {
+        return _Find(p->rchild, i - p->data.s);
+    }
 }
 
 }}

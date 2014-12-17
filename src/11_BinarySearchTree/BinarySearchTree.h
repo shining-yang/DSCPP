@@ -121,10 +121,8 @@ BSTree<E, K>& BSTree<E, K>::Delete(const K& k, E& e)
     }
 
     // Now, p has 1 child at most
-    BinaryTreeNode<E>* c;
-    if (p->lchild) {
-        c = p->lchild;
-    } else {
+    BinaryTreeNode<E>* c = p->lchild;
+    if (!c) {
         c = p->rchild;
     }
 
