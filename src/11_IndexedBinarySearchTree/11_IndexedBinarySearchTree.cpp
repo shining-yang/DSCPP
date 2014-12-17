@@ -102,6 +102,7 @@ int main(int argc, char* argv[])
     phones.OutputAscending();
 
     //--
+    cout << endl;
     try {
         phones.IndexDelete(2, dummyPhone);
         cout << "Deleted by index: " << dummyPhone << endl;

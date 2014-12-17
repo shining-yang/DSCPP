@@ -499,7 +499,7 @@ void BinaryTree<T>::_PrintVertByLevelWithLine(
                         arrayLines[2 * COLUMNSIZE + A[i]->pos] = '|';
                     } else {
                         arrayLines[A[i]->parentpos] = '|';
-                        for (int j = A[i]->parentpos + 1; j <= A[i]->pos; j++) {
+                        for (int j = A[i]->parentpos + 1; j < A[i]->pos; j++) {
                             arrayLines[1 * COLUMNSIZE + j] = '-';
                         }
                         arrayLines[2 * COLUMNSIZE + A[i]->pos] = '|';
