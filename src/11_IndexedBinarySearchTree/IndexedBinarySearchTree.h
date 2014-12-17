@@ -21,8 +21,10 @@ public:
     IndexedBSTreeNodeInfo() {}
     IndexedBSTreeNodeInfo(const E& data, int sz) : d(data), s(sz) {}
 
+    // Make a conversion so that we can compare K and
+    // IndexedBSTreeNodeInfo<E,K> directly
     operator K() const {
-        return operator K(E);
+        return K(d);
     }
 
     bool operator==(const IndexedBSTreeNodeInfo<E, K>& obj) const {
@@ -49,9 +51,7 @@ public:
         return !operator<(obj);
     }
 
-    template<typename Et, typename Kt>
-    friend class IndexedBSTree;
-
+    template<typename Et, typename Kt> friend class IndexedBSTree;
     template<typename Et, typename Kt>
     friend ostream& operator<<(ostream& os, const IndexedBSTreeNodeInfo<Et, Kt>& obj);
 
@@ -66,6 +66,7 @@ ostream& operator<<(ostream& os, const IndexedBSTreeNodeInfo<E, K>& obj)
     os << obj.s << ":" << obj.d;
     return os;
 }
+
 
 template<typename E, typename K>
 class IndexedBSTree :
@@ -84,19 +85,51 @@ public:
     bool IndexSearch(int i, E& e) const;
     // Delete the i-th element.
     IndexedBSTree<E, K>& IndexDelete(int i, E& e);
+
+    void OutputAscending() const {
+        InOrder(_PrintNode);
+    }
+
+protected:
+    static void _PrintNode(const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p) {
+        cout << p->data << ", ";
+    }
+
+protected:
+    void _UpdateOnInsert(const K& k);
+    void _UpdateOnDelete(const K& k);
+    const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* _Find(
+        const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p, int i) const;
 };
 
 template<typename E, typename K>
-bool DSCPP::SearchTree::IndexedBSTree<E, K>::Search(const K& k, E& e) const
+const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* IndexedBSTree<E, K>::_Find(
+    const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p, int i) const
+{
+    if (!p) {
+        return NULL;
+    }
+    
+    if (i == p->data.s) {
+        return p;
+    } else if (i < p->data.s) {
+        return _Find(p->lchild, i);
+    } else {
+        return _Find(p->rchild, i - p->data.s);
+    }
+}
+
+template<typename E, typename K>
+bool IndexedBSTree<E, K>::Search(const K& k, E& e) const
 {
     const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
     while (p) {
-        if (k < p->data.d) {
+        if (k < p->data) {
             p = p->lchild;
-        } else if (k > p->data.d) {
+        } else if (k > p->data) {
             p = p->rchild;
         } else {
-            e = p->data.d;
+            e = p->data;
             return true;
         }
     }
@@ -105,25 +138,78 @@ bool DSCPP::SearchTree::IndexedBSTree<E, K>::Search(const K& k, E& e) const
 }
 
 template<typename E, typename K>
-IndexedBSTree<E, K>& DSCPP::SearchTree::IndexedBSTree<E, K>::Insert(const E& e)
+IndexedBSTree<E, K>& IndexedBSTree<E, K>::Insert(const E& e)
+{
+    K k = e; // make a conversion
+    BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
+    BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* pp = NULL;
+
+    while (p) {
+        pp = p;
+        if (k < p->data) {
+            p = p->lchild;
+        } else if (k > p->data) {
+            p = p->rchild;
+        } else {
+            throw new ItemAlreadyExisted();
+        }
+    }
+
+    BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* r =
+        new BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >(IndexedBSTreeNodeInfo<E, K>(e, 1));
+    if (!pp) { // empty tree
+        Root() = r;
+    } else if (k < pp->data) {
+        pp->lchild = r;
+    } else {
+        pp->rchild = r;
+    }
+
+    _UpdateOnInsert(k);
+    return *this;
+}
+
+template<typename E, typename K>
+IndexedBSTree<E, K>& IndexedBSTree<E, K>::Delete(const K& k, E& e)
 {
 
 }
 
 template<typename E, typename K>
-IndexedBSTree<E, K>& DSCPP::SearchTree::IndexedBSTree<E, K>::Delete(const K& k, E& e)
+bool IndexedBSTree<E, K>::IndexSearch(int i, E& e) const
+{
+    const BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = _Find(Root(), i);
+    if (!p) {
+        //throw new ItemNotExisted();
+        return false;
+    }
+
+    e = p->data.d;
+    return true;
+}
+
+template<typename E, typename K>
+IndexedBSTree<E, K>& IndexedBSTree<E, K>::IndexDelete(int i, E& e)
 {
 
 }
 
 template<typename E, typename K>
-bool DSCPP::SearchTree::IndexedBSTree<E, K>::IndexSearch(int i, E& e) const
+void IndexedBSTree<E, K>::_UpdateOnInsert(const K& k)
 {
-
+    BinaryTreeNode<IndexedBSTreeNodeInfo<E, K> >* p = Root();
+    while (p && (k != p->data)) {
+        if (k < p->data) {
+            p->data.s++;
+            p = p->lchild;
+        } else {
+            p = p->rchild;
+        }
+    }
 }
 
 template<typename E, typename K>
-IndexedBSTree<E, K>& DSCPP::SearchTree::IndexedBSTree<E, K>::IndexDelete(int i, E& e)
+void IndexedBSTree<E, K>::_UpdateOnDelete(const K& k)
 {
 
 }
