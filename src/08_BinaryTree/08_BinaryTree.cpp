@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     Z.PrintVerticallyWithLine(64);
 
     cout << "Zig-Zag level order: " << endl;
-    Z.ZigzagOrder(PrintNode);
+    T.ZigzagOrder(PrintNode);
     cout << endl;
 
     return 0;

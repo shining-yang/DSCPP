@@ -304,7 +304,7 @@ template<typename T>
 void BinaryTree<T>::_ZigzagOrder(BTVisitor v, BinaryTreeNode<T>* t) const
 {
     if (t) {
-        bool ltr = false; // left to right
+        bool ltr = true; // left to right
         LinearStack<BinaryTreeNode<T>* > S1, S2;
         S1.Push(t);
         while (!S1.IsEmpty()) {
