@@ -95,27 +95,27 @@ T LinearStack<T>::Top() const
 }
 
 //==============================================================================
-//= Stack2
+//= LinearStack2
 //= not derived from linear list
 //==============================================================================
 template<typename T>
-class Stack2 {
+class LinearStack2 {
 public:
     enum {
         DEFAULT_STACK_SIZE = 20
     };
 
-    Stack2(int c = DEFAULT_STACK_SIZE) : capacity(c), top(-1) {
+    LinearStack2(int c = DEFAULT_STACK_SIZE) : capacity(c), top(-1) {
         elements = new T[c];
     }
 
-    ~Stack2() {
+    ~LinearStack2() {
         delete[] elements;
     }
 
 protected:
-    Stack2(const Stack2<T>& s);
-    Stack2<T>& operator=(const Stack2<T>& s);
+    LinearStack2(const LinearStack2<T>& s);
+    LinearStack2<T>& operator=(const LinearStack2<T>& s);
 
 public:
     bool IsEmpty() const {
@@ -126,7 +126,7 @@ public:
         return top >= capacity - 1;
     }
 
-    Stack2<T>& Push(const T& x) {
+    LinearStack2<T>& Push(const T& x) {
         if (IsFull()) {
             throw new OutOfBounds();
         }
@@ -135,7 +135,7 @@ public:
         return *this;
     }
 
-    Stack2<T>& Pop(T& x) {
+    LinearStack2<T>& Pop(T& x) {
         if (IsEmpty()) {
             throw new OutOfBounds();
         }

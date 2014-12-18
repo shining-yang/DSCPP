@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 #if 0
     typedef DSCPP::Stack::Stack<char>   CharStack;
 #else
-    typedef DSCPP::Stack::Stack2<char>  CharStack;
+    typedef DSCPP::Stack::LinearStack2<char>  CharStack;
 #endif
 
     char c;
@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 #if 0
     typedef DSCPP::Stack::Stack<DSCPP::Stack::Stack<char> > CharStackStack;
 #else
-    typedef DSCPP::Stack::Stack2<DSCPP::Stack::Stack2<char> > CharStackStack;
+    typedef DSCPP::Stack::LinearStack2<DSCPP::Stack::LinearStack2<char> > CharStackStack;
 #endif
     CharStackStack css;
     cout << (css.IsFull() ? "Y" : "N") << endl;

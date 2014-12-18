@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
     //----
     CHighResTimeCounter tc4;
     tc4.Begin();
-    Hanoi<Stack2<HanoiPara> > h4('A', 'B', 'C', n);
+    Hanoi<LinearStack2<HanoiPara> > h4('A', 'B', 'C', n);
     h4.Perform();
     tc4.End();
 
