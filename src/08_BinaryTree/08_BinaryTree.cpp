@@ -62,5 +62,9 @@ int main(int argc, char* argv[])
     cout << "Print Z vertically with lines:" << endl;
     Z.PrintVerticallyWithLine(64);
 
+    cout << "Zig-Zag level order: " << endl;
+    Z.ZigzagOrder(PrintNode);
+    cout << endl;
+
     return 0;
 }

@@ -9,10 +9,12 @@
 #include "../06_LinkedListQueue/LinkedListQueue.h"
 #include "../04_Array/Array.h"
 #include "../03_SinglyLinkedList/SinglyLinkedList.h"
+#include "../05_StackLinearList/StackLinearList.h"
 
 using namespace std;
 using namespace DSCPP::Utils;
 using namespace DSCPP::Queue;
+using namespace DSCPP::Stack;
 
 // Declare BSTree with namespace since it's defined in "BinarySearchTree.h"
 // while we wanna declare it as a friend of BinaryTreeNode
@@ -95,6 +97,7 @@ public:
     void PreOrder(BTVisitor v) const;
     void PostOrder(BTVisitor v) const;
     void LevelOrder(BTVisitor v) const;
+    void ZigzagOrder(BTVisitor v) const;
 
     // Print binary tree on console
     void PrintHorizontally(int indent) const;
@@ -109,6 +112,7 @@ protected:
     void _PreOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
     void _PostOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
     void _LevelOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
+    void _ZigzagOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
     void _Destroy();
     void _PrintHorz(BinaryTreeNode<T>* t, int pos, int indent) const;
     void _PrintVert(BinaryTreeNode<T>* t, int level, int width) const;
@@ -238,6 +242,12 @@ void BinaryTree<T>::LevelOrder(BTVisitor v) const
 }
 
 template<typename T>
+void BinaryTree<T>::ZigzagOrder(BTVisitor v) const
+{
+    _ZigzagOrder(v, root);
+}
+
+template<typename T>
 void BinaryTree<T>::_InOrder(BTVisitor v, BinaryTreeNode<T>* t) const
 {
     if (t) {
@@ -286,6 +296,39 @@ void BinaryTree<T>::_LevelOrder(BTVisitor v, BinaryTreeNode<T>* t) const
             if (p->rchild) {
                 q.EnQueue(p->rchild);
             }
+        }
+    }
+}
+
+template<typename T>
+void BinaryTree<T>::_ZigzagOrder(BTVisitor v, BinaryTreeNode<T>* t) const
+{
+    if (t) {
+        bool ltr = false; // left to right
+        LinearStack<BinaryTreeNode<T>* > S1, S2;
+        S1.Push(t);
+        while (!S1.IsEmpty()) {
+            while (!S1.IsEmpty()) {
+                BinaryTreeNode<T>* p;
+                S1.Pop(p);
+                v(p);
+
+                if (ltr) {
+                    if (p->lchild)
+                        S2.Push(p->lchild);
+                    if (p->rchild)
+                        S2.Push(p->rchild);
+                } else {
+                    if (p->rchild)
+                        S2.Push(p->rchild);
+                    if (p->lchild)
+                        S2.Push(p->lchild);
+                }
+            }
+
+            cout << endl;
+            ltr = !ltr;
+            Swap(S1, S2);
         }
     }
 }
