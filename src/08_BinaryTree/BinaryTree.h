@@ -43,7 +43,7 @@ public:
         return const_cast<BinaryTreeNode<T>*>(this)->Data();
     }
 
-private:
+// private:
     T data;
     BinaryTreeNode<T>* lchild;
     BinaryTreeNode<T>* rchild;
@@ -150,7 +150,8 @@ protected:
     BinaryTreeNode<T>* & Root() { return root; }
     const BinaryTreeNode<T>* const & Root() const { return root; }
 
-private:
+// private:
+public:
     BinaryTreeNode<T>* root;
 };
 
