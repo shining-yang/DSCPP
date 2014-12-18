@@ -71,6 +71,8 @@ Matrix<T>& Matrix<T>::operator=(const Matrix<T>& m)
     for (int i = 0; i < row * column; i++) {
         elements[i] = m.elements[i];
     }
+
+    return *this;
 }
 
 template<class T>
