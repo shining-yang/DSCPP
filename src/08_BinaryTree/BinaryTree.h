@@ -43,7 +43,7 @@ public:
         return const_cast<BinaryTreeNode<T>*>(this)->Data();
     }
 
-// private:
+private:
     T data;
     BinaryTreeNode<T>* lchild;
     BinaryTreeNode<T>* rchild;
@@ -104,9 +104,11 @@ public:
     void PrintVertically(int width) const;
     void PrintVerticallyWithLine(int width) const;
 
+    // Utility methods
     void Clone(BinaryTree<T>& cp) const;
     bool Compare(const BinaryTree<T>& bt) const;
-
+    void BuildCompleteBinaryTree(const T a[], int n);
+    
 protected:
     void _InOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
     void _PreOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
@@ -139,19 +141,17 @@ protected:
     void _PrintVertByLevelWithLine(const Chain<VPrintInfoWithLine>& c, int width) const;
     BinaryTreeNode<T>* _Clone(const BinaryTreeNode<T>* t) const;
     bool _Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const;
-
-private:
-    static void _DestroyVisitor(const BinaryTreeNode<T>* t);
     int _CalcCount(const BinaryTreeNode<T>* t) const;
     int _CalcHeight(const BinaryTreeNode<T>* t) const;
+    void _BuildCompleteBinaryTree(BinaryTreeNode<T>*& p, int i, const T a[], int n);
 
 protected:
+    static void _DestroyVisitor(const BinaryTreeNode<T>* t);
     // For convenience of derived class to access the tree-node pointer.
     BinaryTreeNode<T>* & Root() { return root; }
     const BinaryTreeNode<T>* const & Root() const { return root; }
 
-// private:
-public:
+private:
     BinaryTreeNode<T>* root;
 };
 
@@ -669,6 +669,25 @@ BinaryTreeNode<T>* BinaryTree<T>::_Clone(const BinaryTreeNode<T>* t) const
     r->lchild = _Clone(t->lchild);
     r->rchild = _Clone(t->rchild);
     return r;
+}
+
+template<typename T>
+void BinaryTree<T>::_BuildCompleteBinaryTree(BinaryTreeNode<T>*& p, int i, const T a[], int n)
+{
+    if (i >= n) {
+        p = NULL;
+    } else {
+        p = new BinaryTreeNode<T>(a[i]);
+        _BuildCompleteBinaryTree(p->lchild, 2 * i + 1, a, n);
+        _BuildCompleteBinaryTree(p->rchild, 2 * i + 2, a, n);
+    }
+}
+
+template<typename T>
+void BinaryTree<T>::BuildCompleteBinaryTree(const T a[], int n)
+{
+    _Destroy();
+    _BuildCompleteBinaryTree(root, 0, a, n);
 }
 
 }}

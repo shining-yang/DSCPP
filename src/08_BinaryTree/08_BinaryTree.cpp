@@ -14,23 +14,6 @@ void PrintNode(const BinaryTreeNode<T>* n)
     cout << n->Data() << " ";
 }
 
-void BuildTree(BinaryTreeNode<char>*& p, char c)
-{
-    if (c < 'A' || c > 'G') {
-        p = NULL;
-        return;
-    }
-
-    p = new BinaryTreeNode<char>(c);
-    BuildTree(p->lchild, c - 1);
-    BuildTree(p->rchild, c + 1);
-}
-
-void BuildASimpleCompleteBinaryTree(BinaryTree<char>& t)
-{
-    BuildTree(t.root, 'D');
-}
-
 int main(int argc, char* argv[])
 {
     BinaryTree<char> bt;
@@ -83,9 +66,15 @@ int main(int argc, char* argv[])
     T.ZigzagOrder(PrintNode);
     cout << endl;
 
-    //--
+    //-- Build a complete binary tree
+    char chArray[63];
+    char ch = '0';
+    for (int i = 0; i < sizeof(chArray) / sizeof(chArray[0]); i++) {
+        chArray[i] = ch++;
+    }
+
     BinaryTree<char> ST;
-    BuildASimpleCompleteBinaryTree(ST);
+    ST.BuildCompleteBinaryTree(chArray, sizeof(chArray) / sizeof(chArray[0]));
     ST.PrintVerticallyWithLine(78);
     return 0;
 }
