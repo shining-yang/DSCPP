@@ -21,7 +21,7 @@ public:
         ChainNode<T>* p = new ChainNode<T>();
         if (p != NULL) {
             delete p;
-            return true;
+            return false;
         } else {
             return true;
         }

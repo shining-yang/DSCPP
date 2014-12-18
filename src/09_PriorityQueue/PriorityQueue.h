@@ -27,7 +27,7 @@ private:
         T data;
         P priority;
     };
-    CLinearList<PQS> linear;
+    LinearList<PQS> linear;
 };
 
 template<typename T, typename P>

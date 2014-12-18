@@ -10,19 +10,21 @@ using namespace std;
 using namespace DSCPP::Utils;
 
 template<class T>
-class CLinearList
+class LinearList
 {
 public:
-    CLinearList(int nMaxSize);
-    ~CLinearList();
+    LinearList(int nMaxSize = 16);
+    virtual ~LinearList();
+    LinearList(const LinearList<T>& obj);
+    LinearList<T>& operator=(const LinearList<T>& obj);
 
 public:
     bool IsEmpty() const;
     int Length() const;
     bool Find(int k, T& x) const; // Get the number k element
     int Search(const T& x) const; // Get position of x
-    CLinearList<T>& Delete(int k, T& x);
-    CLinearList<T>& Insert(int k, const T& x);
+    LinearList<T>& Delete(int k, T& x);
+    LinearList<T>& Insert(int k, const T& x);
     void Output(std::ostream& os) const;
     
 protected:
@@ -35,7 +37,7 @@ private:
 };
 
 template<class T>
-CLinearList<T>::CLinearList(int nMaxSize)
+LinearList<T>::LinearList(int nMaxSize/* = 16*/)
 {
     m_nLength = 0;
     m_nMaxSize = nMaxSize;
@@ -43,25 +45,57 @@ CLinearList<T>::CLinearList(int nMaxSize)
 }
 
 template<class T>
-CLinearList<T>::~CLinearList()
+LinearList<T>::~LinearList()
 {
     delete[] m_element;
 }
 
 template<class T>
-bool CLinearList<T>::IsEmpty() const
+LinearList<T>::LinearList(const LinearList<T>& obj)
+{
+    m_nLength = obj.m_nLength;
+    m_nMaxSize = obj.m_nMaxSize;
+    m_element = new T[obj.m_nMaxSize];
+
+    for (int i = 0; i < m_nLength; i++) {
+        m_element[i] = obj.m_element[i];
+    }
+}
+
+template<class T>
+LinearList<T>& LinearList<T>::operator=(const LinearList<T>& obj)
+{
+    if (this == &obj) {
+        return *this;
+    }
+
+    delete[] m_element;
+
+    m_nLength = obj.m_nLength;
+    m_nMaxSize = obj.m_nMaxSize;
+    m_element = new T[obj.m_nMaxSize];
+
+    for (int i = 0; i < m_nLength; i++) {
+        m_element[i] = obj.m_element[i];
+    }
+
+    return *this;
+}
+
+template<class T>
+bool LinearList<T>::IsEmpty() const
 {
     return m_nLength == 0;
 }
 
 template<class T>
-int CLinearList<T>::Length() const
+int LinearList<T>::Length() const
 {
     return m_nLength;
 }
 
 template<class T>
-bool CLinearList<T>::Find(int k, T& x) const
+bool LinearList<T>::Find(int k, T& x) const
 {
     if (k >= 0 && k < m_nLength) {
         x = m_element[k];
@@ -72,7 +106,7 @@ bool CLinearList<T>::Find(int k, T& x) const
 }
 
 template<class T>
-int CLinearList<T>::Search(const T& x) const
+int LinearList<T>::Search(const T& x) const
 {
     for (int i = 0; i < m_nLength; i++) {
         if (m_element[i] == x) {
@@ -84,7 +118,7 @@ int CLinearList<T>::Search(const T& x) const
 }
 
 template<class T>
-CLinearList<T>& CLinearList<T>::Delete(int k, T& x)
+LinearList<T>& LinearList<T>::Delete(int k, T& x)
 {
     if (!Find(k, x)) {
         throw OutOfBounds();
@@ -99,7 +133,7 @@ CLinearList<T>& CLinearList<T>::Delete(int k, T& x)
 }
 
 template<class T>
-CLinearList<T>& CLinearList<T>::Insert(int k, const T& x)
+LinearList<T>& LinearList<T>::Insert(int k, const T& x)
 {
     if (k < 0 || k > m_nLength) {
         throw OutOfBounds();
@@ -119,7 +153,7 @@ CLinearList<T>& CLinearList<T>::Insert(int k, const T& x)
 }
 
 template<class T>
-void CLinearList<T>::Output(std::ostream& os) const
+void LinearList<T>::Output(std::ostream& os) const
 {
     for (int i = 0; i < m_nLength; i++) {
         os << m_element[i] << " ";

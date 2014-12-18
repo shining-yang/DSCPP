@@ -124,28 +124,28 @@ int main(int argc, char* argv[])
     //----
     CHighResTimeCounter tc3;
     tc3.Begin();
-    Hanoi<DSCPP::Stack::Stack<HanoiPara> > h3('A', 'B', 'C', n);
+    Hanoi<LinearStack<HanoiPara> > h3('A', 'B', 'C', n);
     h3.Perform();
     tc3.End();
 
     //----
     CHighResTimeCounter tc4;
     tc4.Begin();
-    Hanoi<DSCPP::Stack::Stack2<HanoiPara> > h4('A', 'B', 'C', n);
+    Hanoi<Stack2<HanoiPara> > h4('A', 'B', 'C', n);
     h4.Perform();
     tc4.End();
 
     //----
     CHighResTimeCounter tc5;
     tc5.Begin();
-    Hanoi<DSCPP::Stack::StackLinkedList<HanoiPara> > h5('A', 'B', 'C', n);
+    Hanoi<StackLinkedList<HanoiPara> > h5('A', 'B', 'C', n);
     h5.Perform();
     tc5.End();
 
     //----
     CHighResTimeCounter tc6;
     tc6.Begin();
-    Hanoi<DSCPP::Stack::StackLinkedListCustomized<HanoiPara> > h6('A', 'B', 'C', n);
+    Hanoi<StackLinkedListCustomized<HanoiPara> > h6('A', 'B', 'C', n);
     h6.Perform();
     tc6.End();
 

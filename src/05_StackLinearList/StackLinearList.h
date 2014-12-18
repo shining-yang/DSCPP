@@ -29,65 +29,61 @@ using namespace DSCPP::Utils;
 namespace DSCPP { namespace Stack {
 
 template<typename T>
-class Stack : private CLinearList<T> {
+class LinearStack : private LinearList<T> {
 public:
     enum {
         DEFAULT_STACK_SIZE = 20
     };
 
-    Stack(int c = DEFAULT_STACK_SIZE);
-    ~Stack();
-
-protected:
-    Stack(const Stack<T>& s);
-    Stack<T>& operator=(const Stack<T>& s);
+    LinearStack(int c = DEFAULT_STACK_SIZE);
+    ~LinearStack();
 
 public:
     bool IsEmpty();
     bool IsFull();
-    Stack<T>& Push(const T& e);
-    Stack<T>& Pop(T& e);
+    LinearStack<T>& Push(const T& e);
+    LinearStack<T>& Pop(T& e);
     T Top() const;
 };
 
 template<typename T>
-DSCPP::Stack::Stack<T>::Stack(int c) : CLinearList<T>(c)
+LinearStack<T>::LinearStack(int c) : LinearList<T>(c)
 {
 }
 
 template<typename T>
-DSCPP::Stack::Stack<T>::~Stack()
+LinearStack<T>::~LinearStack()
 {
 }
 
 template<typename T>
-bool Stack<T>::IsEmpty()
+bool LinearStack<T>::IsEmpty()
 {
-    return CLinearList<T>::IsEmpty();
+    return LinearList<T>::IsEmpty();
 }
 
 template<typename T>
-bool Stack<T>::IsFull()
+bool LinearStack<T>::IsFull()
 {
     return GetMaxSize() == Length();
 }
 
 template<typename T>
-Stack<T>& Stack<T>::Push(const T& e)
+LinearStack<T>& LinearStack<T>::Push(const T& e)
 {
     Insert(Length(), e);
     return *this;
 }
 
 template<typename T>
-Stack<T>& Stack<T>::Pop(T& e)
+LinearStack<T>& LinearStack<T>::Pop(T& e)
 {
     Delete(Length() - 1, e);
     return *this;
 }
 
 template<typename T>
-T Stack<T>::Top() const
+T LinearStack<T>::Top() const
 {
     if (IsEmpty()) {
         throw new OutOfBounds();
