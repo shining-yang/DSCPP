@@ -66,5 +66,12 @@ int main(int argc, char* argv[])
     T.ZigzagOrder(PrintNode);
     cout << endl;
 
+    //--
+    BinaryTree<char> ST;
+    BuildASimpleCompleteBinaryTree(ST);
     return 0;
+}
+
+void BuildASimpleCompleteBinaryTree(BinaryTree<char>& t)
+{
 }
