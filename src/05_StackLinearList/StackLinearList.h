@@ -65,20 +65,20 @@ bool LinearStack<T>::IsEmpty()
 template<typename T>
 bool LinearStack<T>::IsFull()
 {
-    return GetMaxSize() == Length();
+    return LinearList<T>::GetMaxSize() == LinearList<T>::Length();
 }
 
 template<typename T>
 LinearStack<T>& LinearStack<T>::Push(const T& e)
 {
-    Insert(Length(), e);
+    LinearList<T>::Insert(LinearList<T>::Length(), e);
     return *this;
 }
 
 template<typename T>
 LinearStack<T>& LinearStack<T>::Pop(T& e)
 {
-    Delete(Length() - 1, e);
+    LinearList<T>::Delete(LinearList<T>::Length() - 1, e);
     return *this;
 }
 
@@ -90,7 +90,7 @@ T LinearStack<T>::Top() const
     }
 
     T x;
-    Find(Length() - 1, x);
+    LinearList<T>::Find(LinearList<T>::Length() - 1, x);
     return x;
 }
 

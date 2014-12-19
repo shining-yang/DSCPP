@@ -5,6 +5,8 @@
 //
 #pragma once
 #include <iostream>
+#include <cmath>
+#include <string.h>
 #include "../Utility/Exception.h"
 #include "../06_LinkedListQueue/LinkedListQueue.h"
 #include "../04_Array/Array.h"
