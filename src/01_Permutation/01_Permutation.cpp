@@ -19,14 +19,14 @@ using namespace DSCPP::Utils;
 template<typename T>
 void Permutate(T a[], int k, int m)
 {
-    if (k == m) {
+    if (k == m - 1) {
         static int _counter = 0;
         cout << ++_counter << ":  ";
-        for (int i = 0; i <= m; i++)
+        for (int i = 0; i < m; i++)
             cout << a[i] << ' ';
         cout << endl;
     } else {
-        for (int i = k; i <= m; i++) {
+        for (int i = k; i < m; i++) {
             Swap(a[i], a[k]);
             Permutate(a, k + 1, m);
             Swap(a[i], a[k]);
@@ -38,7 +38,7 @@ void Permutate(T a[], int k, int m)
 int main(int argc, char* argv[])
 {
     char a[] = { 'A', 'B', 'C', 'D', 'E' };
-    Permutate<char>(a, 0, sizeof(a) / sizeof(a[0]) - 1);
+    Permutate<char>(a, 0, sizeof(a) / sizeof(a[0]));
 	return 0;
 }
 
