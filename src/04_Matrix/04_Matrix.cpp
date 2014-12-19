@@ -31,8 +31,9 @@ void OutputAtSubscriptSum(const Matrix<T>& m, int n, bool ascending)
     }
 }
 
+// 锯齿形遍历矩阵
 template<typename T>
-void ZigzagOutput(const Matrix<T>& m)
+void ZigzagTraverse(const Matrix<T>& m)
 {
     int total = m.Rows() - 1 + m.Columns() - 1;
     bool ascending = false;
@@ -42,8 +43,9 @@ void ZigzagOutput(const Matrix<T>& m)
     }
 }
 
+// 水平来回扫描式遍历矩阵
 template<typename T>
-void BackAndForthByRowOutput(const Matrix<T>& m)
+void HorizontallyTraverse(const Matrix<T>& m)
 {
     bool ltr = true; // left to right
     for (int i = 0; i < m.Rows(); i++) {
@@ -61,8 +63,9 @@ void BackAndForthByRowOutput(const Matrix<T>& m)
     }
 }
 
+// 垂直来回扫描式遍历矩阵
 template<typename T>
-void BackAndForthByColumnOutput(const Matrix<T>& m)
+void VerticallyTraverse(const Matrix<T>& m)
 {
     bool utd = true; // up to down
     for (int j = 0; j < m.Columns(); j++) {
@@ -80,34 +83,39 @@ void BackAndForthByColumnOutput(const Matrix<T>& m)
     }
 }
 
+// 螺旋式遍历矩阵
 template<typename T>
-void SurroundOutput(const Matrix<T>& m)
+void SpiralTraverse(const Matrix<T>& m)
 {
     int r0 = 0;
     int c0 = 0;
-    int r1 = m.Rows();
-    int c1 = m.Columns();
+    int r1 = m.Rows() - 1;
+    int c1 = m.Columns() - 1;
     int i, j;
 
-    while (r0 <= r1) {
-        for (i = r0, j = c0; j < c1; j++)
-            OutputMatrixElement(m, i, j);
-
-        for (j = c1 - 1, i = r0 + 1; i < r1 && j >= 0; i++)
-            OutputMatrixElement(m, i, j);
-
-        for (i = r1 - 1, j = c1 - 1 - 1; j >= c0 && i >= 0; j--)
-            OutputMatrixElement(m, i, j);
-
-        for (j = c0, i = r1 - 1 - 1; i > r0 && j < c1 - 1; i--)
-            OutputMatrixElement(m, i, j);
+    while ((r0 <= r1) && (c0 <= c1)) {
+        if (r0 == r1) {
+            for (int j = c0; j <= c1; j++)
+                OutputMatrixElement(m, r0, j);
+        } else if (c0 == c1) {
+            for (int i = r0; i <= r1; i++)
+                OutputMatrixElement(m, i, c0);
+        } else {
+            for (i = r0, j = c0; j <= c1; j++)
+                OutputMatrixElement(m, i, j);
+            for (j = c1, i = r0 + 1; i <= r1 && j > c0; i++)
+                OutputMatrixElement(m, i, j);
+            for (i = r1, j = c1 - 1; j >= c0 && i > r0; j--)
+                OutputMatrixElement(m, i, j);
+            for (j = c0, i = r1 - 1; i > r0; i--)
+                OutputMatrixElement(m, i, j);
+        }
 
         r0++;
         c0++;
         r1--;
         c1--;
     }
-
 }
 
 int main(int argc, char* argv[])
@@ -139,9 +147,10 @@ int main(int argc, char* argv[])
 
     //---- Zigzag output
     char k = 'A';
-    Matrix<char> mc(5, 2);
-    for (int i = 1; i <= 5; i++) {
-        for (int j = 1; j <= 2; j++) {
+    int row = 4, column = 4;
+    Matrix<char> mc(row,column);
+    for (int i = 1; i <= row; i++) {
+        for (int j = 1; j <= column; j++) {
             mc(i, j) = k++;
         }
     }
@@ -149,20 +158,23 @@ int main(int argc, char* argv[])
 
     //-- zigzag
     cout << "Zigzag output: " << endl;
-    ZigzagOutput(mc);
+    ZigzagTraverse(mc);
     cout << endl;
 
-    //-- back and forth
+    //-- horizontally
     cout << "Back and forth by row: " << endl;
-    BackAndForthByRowOutput(mc);
+    HorizontallyTraverse(mc);
     cout << endl;
 
+    //-- vertically
     cout << "Back and forth by column: " << endl;
-    BackAndForthByColumnOutput(mc);
+    VerticallyTraverse(mc);
     cout << endl;
 
-    cout << "Surround: " << endl;
-    SurroundOutput(mc);
+    //-- spirally
+    cout << "Spirally: " << endl;
+    SpiralTraverse(mc);
     cout << endl;
+
     return 0;
 }
