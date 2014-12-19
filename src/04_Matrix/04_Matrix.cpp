@@ -42,6 +42,74 @@ void ZigzagOutput(const Matrix<T>& m)
     }
 }
 
+template<typename T>
+void BackAndForthByRowOutput(const Matrix<T>& m)
+{
+    bool ltr = true; // left to right
+    for (int i = 0; i < m.Rows(); i++) {
+        if (ltr) {
+            for (int j = 0; j < m.Columns(); j++) {
+                OutputMatrixElement(m, i, j);
+            }
+        } else {
+            for (int j = m.Columns() - 1; j >= 0; j--) {
+                OutputMatrixElement(m, i, j);
+            }
+        }
+
+        ltr = !ltr;
+    }
+}
+
+template<typename T>
+void BackAndForthByColumnOutput(const Matrix<T>& m)
+{
+    bool utd = true; // up to down
+    for (int j = 0; j < m.Columns(); j++) {
+        if (utd) {
+            for (int i = 0; i < m.Rows(); i++) {
+                OutputMatrixElement(m, i, j);
+            }
+        } else {
+            for (int i = m.Rows() - 1; i >= 0; i--) {
+                OutputMatrixElement(m, i, j);
+            }
+        }
+
+        utd = !utd;
+    }
+}
+
+template<typename T>
+void SurroundOutput(const Matrix<T>& m)
+{
+    int r0 = 0;
+    int c0 = 0;
+    int r1 = m.Rows();
+    int c1 = m.Columns();
+    int i, j;
+
+    while (r0 <= r1) {
+        for (i = r0, j = c0; j < c1; j++)
+            OutputMatrixElement(m, i, j);
+
+        for (j = c1 - 1, i = r0 + 1; i < r1 && j >= 0; i++)
+            OutputMatrixElement(m, i, j);
+
+        for (i = r1 - 1, j = c1 - 1 - 1; j >= c0 && i >= 0; j--)
+            OutputMatrixElement(m, i, j);
+
+        for (j = c0, i = r1 - 1 - 1; i > r0 && j < c1 - 1; i--)
+            OutputMatrixElement(m, i, j);
+
+        r0++;
+        c0++;
+        r1--;
+        c1--;
+    }
+
+}
+
 int main(int argc, char* argv[])
 {
     Matrix<int> m1(2, 3);
@@ -71,16 +139,30 @@ int main(int argc, char* argv[])
 
     //---- Zigzag output
     char k = 'A';
-    Matrix<char> mc(5, 5);
+    Matrix<char> mc(5, 2);
     for (int i = 1; i <= 5; i++) {
-        for (int j = 1; j <= 5; j++) {
+        for (int j = 1; j <= 2; j++) {
             mc(i, j) = k++;
         }
     }
     cout << mc << endl;
 
-    cout << "Zigzag output: ";
+    //-- zigzag
+    cout << "Zigzag output: " << endl;
     ZigzagOutput(mc);
+    cout << endl;
+
+    //-- back and forth
+    cout << "Back and forth by row: " << endl;
+    BackAndForthByRowOutput(mc);
+    cout << endl;
+
+    cout << "Back and forth by column: " << endl;
+    BackAndForthByColumnOutput(mc);
+    cout << endl;
+
+    cout << "Surround: " << endl;
+    SurroundOutput(mc);
     cout << endl;
     return 0;
 }
