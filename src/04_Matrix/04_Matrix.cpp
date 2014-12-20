@@ -95,10 +95,10 @@ void SpiralTraverse(const Matrix<T>& m)
 
     while ((r0 <= r1) && (c0 <= c1)) {
         if (r0 == r1) {
-            for (int j = c0; j <= c1; j++)
+            for (j = c0; j <= c1; j++)
                 OutputMatrixElement(m, r0, j);
         } else if (c0 == c1) {
-            for (int i = r0; i <= r1; i++)
+            for (i = r0; i <= r1; i++)
                 OutputMatrixElement(m, i, c0);
         } else {
             for (i = r0, j = c0; j <= c1; j++)

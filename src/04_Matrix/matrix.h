@@ -230,3 +230,23 @@ T& Matrix<T>::operator()(int i, int j)
 {
     return const_cast<T&>(static_cast<const Matrix<T>&>(*this)(i, j));
 }
+
+
+//
+// Class SquareMatrix
+//
+class SquareMatrix : public Matrix<double> {
+public:
+    SquareMatrix(int n = 0) : Matrix<double>(n, n) {}
+    ~SquareMatrix();
+
+public:
+    // 求行列式（Determinant）的值
+    double CalcDeterminant();
+    // 求代数余子式
+    double CalcCofactor(int i, int j);
+    // 求伴随矩阵（Adjoint matrix）
+    SquareMatrix<double> BuildAdjointMatrix() const;
+    // 求逆矩阵（Inverse matrix）
+    SquareMatrix<double> BuildInverseMatrix() const;
+};
