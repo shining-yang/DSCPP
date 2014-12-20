@@ -250,3 +250,23 @@ public:
     // ÇóÄæ¾ØÕó£¨Inverse matrix£©
     SquareMatrix<double> BuildInverseMatrix() const;
 };
+
+SquareMatrix<double> SquareMatrix::BuildInverseMatrix() const
+{
+
+}
+
+SquareMatrix<double> SquareMatrix::BuildAdjointMatrix() const
+{
+
+}
+
+double SquareMatrix::CalcCofactor(int i, int j)
+{
+
+}
+
+double SquareMatrix::CalcDeterminant()
+{
+
+}
