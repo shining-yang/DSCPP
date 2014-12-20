@@ -239,7 +239,7 @@ T& Matrix<T>::operator()(int i, int j)
 class SquareMatrix : public Matrix<double> {
 public:
     SquareMatrix(int n = 0) : Matrix<double>(n, n), determinant(0.0) {}
-    ~SquareMatrix();
+    ~SquareMatrix() {}
 
 public:
     // 求行列式（Determinant）的值
@@ -247,9 +247,9 @@ public:
     // 求代数余子式
     double CalcCofactor(int i, int j);
     // 求伴随矩阵（Adjoint matrix）
-    SquareMatrix<double> BuildAdjointMatrix() const;
+    SquareMatrix BuildAdjointMatrix() const;
     // 求逆矩阵（Inverse matrix）
-    SquareMatrix<double> BuildInverseMatrix() const;
+    SquareMatrix BuildInverseMatrix() const;
 
 protected:
     int _CalcReverseOrderCount(int index[], int n);
@@ -260,24 +260,32 @@ private:
     double determinant;
 };
 
-SquareMatrix<double> SquareMatrix::BuildInverseMatrix() const
+SquareMatrix SquareMatrix::BuildInverseMatrix() const
 {
+    SquareMatrix sm;
 
+    return sm;
 }
 
-SquareMatrix<double> SquareMatrix::BuildAdjointMatrix() const
+SquareMatrix SquareMatrix::BuildAdjointMatrix() const
 {
+    SquareMatrix sm;
 
+    return sm;
 }
 
 double SquareMatrix::CalcCofactor(int i, int j)
 {
+    double cofactor = 0.0;
 
+    return cofactor;
 }
 
 double SquareMatrix::CalcDeterminant()
 {
+    double d = 0.0;
 
+    return d;
 }
 
 void SquareMatrix::_PermuteVisit(int index[], int n, int k, void (*v)(SquareMatrix&, int*, int))
