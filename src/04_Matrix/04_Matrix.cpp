@@ -176,5 +176,27 @@ int main(int argc, char* argv[])
     SpiralTraverse(mc);
     cout << endl;
 
+
+    //-- Square matrix operations
+    SquareMatrix sm(4);
+    sm(1, 1) = 8;
+    sm(1, 2) = 1;
+    sm(1, 3) = -5;
+    sm(1, 4) = 1;
+    sm(2, 1) = 9;
+    sm(2, 2) = -3;
+    sm(2, 3) = 0;
+    sm(2, 4) = -6;
+    sm(3, 1) = -5;
+    sm(3, 2) = 2;
+    sm(3, 3) = -1;
+    sm(3, 4) = 2;
+    sm(4, 1) = 0;
+    sm(4, 2) = 4;
+    sm(4, 3) = -7;
+    sm(4, 4) = 6;
+
+
+    double det = sm.CalcDeterminant();
     return 0;
 }

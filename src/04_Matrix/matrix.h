@@ -248,6 +248,8 @@ public:
     double CalcCofactor(int i, int j);
     // 求伴随矩阵（Adjoint matrix）
     SquareMatrix BuildAdjointMatrix() const;
+    // 生成余子式矩阵
+    SquareMatrix SquareMatrix::BuildCofactorMatrix(int i, int j) const;
     // 求逆矩阵（Inverse matrix）
     SquareMatrix BuildInverseMatrix() const;
 
@@ -274,6 +276,12 @@ SquareMatrix SquareMatrix::BuildAdjointMatrix() const
     return sm;
 }
 
+SquareMatrix SquareMatrix::BuildCofactorMatrix(int i, int j) const
+{
+    SquareMatrix sm;
+    return sm;
+}
+
 double SquareMatrix::CalcCofactor(int i, int j)
 {
     double cofactor = 0.0;
@@ -283,9 +291,15 @@ double SquareMatrix::CalcCofactor(int i, int j)
 
 double SquareMatrix::CalcDeterminant()
 {
-    double d = 0.0;
+    int n = Rows();
+    int* index = new int[n];
+    for (int i = 0; i < n; i++) {
+        index[i] = i + 1; // matrix indices start from 1
+    }
 
-    return d;
+    determinant = 0.0; // reset before calculate
+    _PermuteVisit(index, n, 0, _PermuteVisitor); // calculate in permute recursion
+    return determinant;
 }
 
 void SquareMatrix::_PermuteVisit(int index[], int n, int k, void (*v)(SquareMatrix&, int*, int))
@@ -325,6 +339,11 @@ int SquareMatrix::_CalcReverseOrderCount(int index[], int n)
             }
         }
     }
+
+//     for (int i = 0; i < n; i++) {
+//         cout << index[i] << " ";
+//     }
+//     cout << ": " << count << endl;
 
     return count;
 }
