@@ -9,6 +9,7 @@
 #include <ostream>
 using namespace std;
 #include "../Utility/Exception.h"
+#include "../Utility/Misc.h"
 using namespace DSCPP::Utils;
 
 template<class T>
@@ -237,7 +238,7 @@ T& Matrix<T>::operator()(int i, int j)
 //
 class SquareMatrix : public Matrix<double> {
 public:
-    SquareMatrix(int n = 0) : Matrix<double>(n, n) {}
+    SquareMatrix(int n = 0) : Matrix<double>(n, n), determinant(0.0) {}
     ~SquareMatrix();
 
 public:
@@ -249,6 +250,14 @@ public:
     SquareMatrix<double> BuildAdjointMatrix() const;
     // ÇóÄæ¾ØÕó£¨Inverse matrix£©
     SquareMatrix<double> BuildInverseMatrix() const;
+
+protected:
+    int _CalcReverseOrderCount(int index[], int n);
+    void _PermuteVisit(int index[], int n, int k, void (*v)(SquareMatrix&, int*, int));
+    static void _PermuteVisitor(SquareMatrix& m, int index[], int n);
+
+private:
+    double determinant;
 };
 
 SquareMatrix<double> SquareMatrix::BuildInverseMatrix() const
@@ -269,4 +278,45 @@ double SquareMatrix::CalcCofactor(int i, int j)
 double SquareMatrix::CalcDeterminant()
 {
 
+}
+
+void SquareMatrix::_PermuteVisit(int index[], int n, int k, void (*v)(SquareMatrix&, int*, int))
+{
+    if (k == n - 1) {
+        v(*this, index, n);
+    } else {
+        for (int i = k; i < n; i++) {
+            Swap(index[k], index[i]);
+            _PermuteVisit(index, n, k + 1, v);
+            Swap(index[k], index[i]);
+        }
+    }
+}
+
+void SquareMatrix::_PermuteVisitor(SquareMatrix& m, int index[], int n)
+{
+    double result = 1.0;
+    for (int i = 1; i <= n; i++) {
+        result *= m(i, index[i - 1]);
+    }
+
+    if (m._CalcReverseOrderCount(index, n) % 2 == 0) {
+        m.determinant += result;
+    } else {
+        m.determinant -= result;
+    }
+}
+
+int SquareMatrix::_CalcReverseOrderCount(int index[], int n)
+{
+    int count = 0; // reversed indices order counter
+    for (int i = n - 1; i > 0; i--) {
+        for (int j = i - 1; j >= 0; j--) {
+            if (index[j] > index[i]) {
+                count++;
+            }
+        }
+    }
+
+    return count;
 }
