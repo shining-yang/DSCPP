@@ -3,6 +3,7 @@
 //
 // Simple operations on matrix. Indices on rows or columns are started from 1.
 // Shining Yang <y.s.n@live.com>, 2014-09-30
+// Shining Yang <y.s.n@live.com>, 2014-12-21, Add SquareMatrix and solve inverse matrix
 //
 #pragma once
 
@@ -313,6 +314,7 @@ SquareMatrix SquareMatrix::operator*(double ceof) const
     return sm;
 }
 
+// 生成逆矩阵
 SquareMatrix SquareMatrix::BuildInverseMatrix()
 {
     double det = CalcDeterminant();
@@ -323,6 +325,7 @@ SquareMatrix SquareMatrix::BuildInverseMatrix()
     return BuildAdjointMatrix() * (1 / det);
 }
 
+// 生成伴随矩阵
 SquareMatrix SquareMatrix::BuildAdjointMatrix()
 {
     int n = Rows();
@@ -369,6 +372,7 @@ double SquareMatrix::CalcCofactor(int i, int j)
     }
 }
 
+// 计算行列式的值
 double SquareMatrix::CalcDeterminant()
 {
     int n = Rows();
@@ -379,6 +383,7 @@ double SquareMatrix::CalcDeterminant()
 
     determinant = 0.0; // reset before calculate
     _PermuteVisit(index, n, 0, _PermuteVisitor); // calculate in permute recursion
+    delete[] index;
     return determinant;
 }
 
@@ -409,6 +414,7 @@ void SquareMatrix::_PermuteVisitor(SquareMatrix& m, int index[], int n)
     }
 }
 
+// 全排列的逆序计数
 int SquareMatrix::_CalcReverseOrderCount(int index[], int n)
 {
     int count = 0; // reversed indices order counter
@@ -419,11 +425,6 @@ int SquareMatrix::_CalcReverseOrderCount(int index[], int n)
             }
         }
     }
-
-//     for (int i = 0; i < n; i++) {
-//         cout << index[i] << " ";
-//     }
-//     cout << ": " << count << endl;
 
     return count;
 }
