@@ -178,25 +178,30 @@ int main(int argc, char* argv[])
 
 
     //-- Square matrix operations
-    SquareMatrix sm(4);
-    sm(1, 1) = 8;
-    sm(1, 2) = 1;
-    sm(1, 3) = -5;
-    sm(1, 4) = 1;
-    sm(2, 1) = 9;
-    sm(2, 2) = -3;
-    sm(2, 3) = 0;
-    sm(2, 4) = -6;
-    sm(3, 1) = -5;
-    sm(3, 2) = 2;
-    sm(3, 3) = -1;
-    sm(3, 4) = 2;
-    sm(4, 1) = 0;
-    sm(4, 2) = 4;
-    sm(4, 3) = -7;
-    sm(4, 4) = 6;
-
+    SquareMatrix sm(3);
+    sm(1, 1) = 1;
+    sm(1, 2) = 2;
+    sm(1, 3) = -1;
+    sm(2, 1) = 3;
+    sm(2, 2) = 4;
+    sm(2, 3) = -2;
+    sm(3, 1) = 5;
+    sm(3, 2) = -4;
+    sm(3, 3) = 1;
 
     double det = sm.CalcDeterminant();
+
+    cout << "Matrix:" << endl;
+    cout << sm << endl;
+
+    cout << "Adjoint matrix:" << endl;
+    cout << sm.BuildAdjointMatrix() << endl;
+
+    cout << "Inverse matrix:" << endl;
+    cout << sm.BuildInverseMatrix() << endl;
+
+    cout << "cross product matrix and its inverse matrix:" << endl;
+    cout << sm * (sm.BuildInverseMatrix()) << endl;
+
     return 0;
 }

@@ -35,6 +35,7 @@ public:
     Matrix<T> operator+(const Matrix<T>& m) const;
     Matrix<T> operator-(const Matrix<T>& m) const;
     Matrix<T> operator*(const Matrix<T>& m) const;
+    Matrix<T> operator*(double coef) const;
 
 protected:
     int row;
@@ -163,6 +164,17 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T>& m) const
 }
 
 template<class T>
+Matrix<T> Matrix<T>::operator*(double coef) const
+{
+    Matrix<T> w(row, column);
+    for (int i = 0; i < row * column; i++) {
+        w.elements[i] = elements[i] * coef;
+    }
+
+    return w;
+}
+
+template<class T>
 ostream& operator<<(ostream& os, const Matrix<T>& m)
 {
     m.Output(os);
@@ -239,16 +251,20 @@ T& Matrix<T>::operator()(int i, int j)
 class SquareMatrix : public Matrix<double> {
 public:
     SquareMatrix(int n = 0) : Matrix<double>(n, n), determinant(0.0) {}
-    SquareMatrix(const SquareMatrix& sm) {
+    SquareMatrix(const SquareMatrix& sm) : Matrix<double>(sm) {
         determinant = sm.determinant;
     }
     SquareMatrix& operator=(const SquareMatrix& sm) {
         if (this != &sm) {
+            Matrix<double>::operator=(sm);
             determinant = sm.determinant;
         }
         return *this;
     }
     ~SquareMatrix() {}
+
+    SquareMatrix operator*(const SquareMatrix& sm) const;
+    SquareMatrix operator*(double coef) const;
 
 public:
     // 求行列式（Determinant）的值
@@ -271,11 +287,40 @@ protected:
     double determinant;
 };
 
-SquareMatrix SquareMatrix::BuildInverseMatrix()
+SquareMatrix SquareMatrix::operator*(const SquareMatrix& sm) const
 {
-    SquareMatrix sm;
+    int n = Rows();
+    if (n != sm.Rows()) {
+        throw new SizeNotMatch();
+    }
+
+    SquareMatrix obj;
+    /* THIS IS TRICKY INDEED */
+    reinterpret_cast<Matrix<double>& >(obj) =
+        reinterpret_cast<const Matrix<double>&>(sm) * (*this);
+
+    return obj;
+}
+
+SquareMatrix SquareMatrix::operator*(double ceof) const
+{
+    int n = Rows();
+    SquareMatrix sm(n);
+    for (int i = 0; i < n * n; i++) {
+        sm.elements[i] = elements[i] * ceof;
+    }
 
     return sm;
+}
+
+SquareMatrix SquareMatrix::BuildInverseMatrix()
+{
+    double det = CalcDeterminant();
+    if (det == 0.0) {
+        throw new InvalideArgument();
+    }
+
+    return BuildAdjointMatrix() * (1 / det);
 }
 
 SquareMatrix SquareMatrix::BuildAdjointMatrix()
@@ -284,7 +329,7 @@ SquareMatrix SquareMatrix::BuildAdjointMatrix()
     SquareMatrix sm(n);
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
-            sm(i, j) = CalcCofactor(i, j);
+            sm(i, j) = CalcCofactor(j, i);
         }
     }
     
@@ -295,17 +340,18 @@ SquareMatrix SquareMatrix::BuildAdjointMatrix()
 SquareMatrix SquareMatrix::BuildCofactorMatrix(int I, int J)
 {
     int n = Rows() - 1;
-    if (n <= 0) {
+    if (n < 1) {
         throw new InvalideArgument();
     }
 
-    int k = 0;
     SquareMatrix sm(n);
+
+    int k = 0;
     for (int i = 1; i <= Rows(); i++) {
         if (i == I) { continue; }
         for (int j = 1; j <= Columns(); j++) {
             if (j == J) { continue; }
-            elements[k++] = sm(i, j);
+            sm.elements[k++] = this->operator()(i, j);
         }
     }
 
@@ -315,11 +361,11 @@ SquareMatrix SquareMatrix::BuildCofactorMatrix(int I, int J)
 // 代数余子式（行列式值）
 double SquareMatrix::CalcCofactor(int i, int j)
 {
-    SquareMatrix cm = BuildCofactorMatrix(i, j);
+    double det = BuildCofactorMatrix(i, j).CalcDeterminant();
     if ((i + j) % 2 == 0) {
-        return cm.CalcDeterminant();
+        return det;
     } else {
-        return -cm.CalcDeterminant();
+        return -det;
     }
 }
 
