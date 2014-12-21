@@ -36,7 +36,7 @@ public:
     Matrix<T> operator-(const Matrix<T>& m) const;
     Matrix<T> operator*(const Matrix<T>& m) const;
 
-private:
+protected:
     int row;
     int column;
     T* elements;
@@ -239,6 +239,15 @@ T& Matrix<T>::operator()(int i, int j)
 class SquareMatrix : public Matrix<double> {
 public:
     SquareMatrix(int n = 0) : Matrix<double>(n, n), determinant(0.0) {}
+    SquareMatrix(const SquareMatrix& sm) {
+        determinant = sm.determinant;
+    }
+    SquareMatrix& operator=(const SquareMatrix& sm) {
+        if (this != &sm) {
+            determinant = sm.determinant;
+        }
+        return *this;
+    }
     ~SquareMatrix() {}
 
 public:
@@ -247,46 +256,71 @@ public:
     // 求代数余子式
     double CalcCofactor(int i, int j);
     // 求伴随矩阵（Adjoint matrix）
-    SquareMatrix BuildAdjointMatrix() const;
+    SquareMatrix BuildAdjointMatrix();
     // 生成余子式矩阵
-    SquareMatrix SquareMatrix::BuildCofactorMatrix(int i, int j) const;
+    SquareMatrix SquareMatrix::BuildCofactorMatrix(int i, int j);
     // 求逆矩阵（Inverse matrix）
-    SquareMatrix BuildInverseMatrix() const;
+    SquareMatrix BuildInverseMatrix();
 
 protected:
     int _CalcReverseOrderCount(int index[], int n);
     void _PermuteVisit(int index[], int n, int k, void (*v)(SquareMatrix&, int*, int));
     static void _PermuteVisitor(SquareMatrix& m, int index[], int n);
 
-private:
+protected:
     double determinant;
 };
 
-SquareMatrix SquareMatrix::BuildInverseMatrix() const
+SquareMatrix SquareMatrix::BuildInverseMatrix()
 {
     SquareMatrix sm;
 
     return sm;
 }
 
-SquareMatrix SquareMatrix::BuildAdjointMatrix() const
+SquareMatrix SquareMatrix::BuildAdjointMatrix()
 {
-    SquareMatrix sm;
+    int n = Rows();
+    SquareMatrix sm(n);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            sm(i, j) = CalcCofactor(i, j);
+        }
+    }
+    
+    return sm;
+}
+
+// 余子式（矩阵）
+SquareMatrix SquareMatrix::BuildCofactorMatrix(int I, int J)
+{
+    int n = Rows() - 1;
+    if (n <= 0) {
+        throw new InvalideArgument();
+    }
+
+    int k = 0;
+    SquareMatrix sm(n);
+    for (int i = 1; i <= Rows(); i++) {
+        if (i == I) { continue; }
+        for (int j = 1; j <= Columns(); j++) {
+            if (j == J) { continue; }
+            elements[k++] = sm(i, j);
+        }
+    }
 
     return sm;
 }
 
-SquareMatrix SquareMatrix::BuildCofactorMatrix(int i, int j) const
-{
-    SquareMatrix sm;
-    return sm;
-}
-
+// 代数余子式（行列式值）
 double SquareMatrix::CalcCofactor(int i, int j)
 {
-    double cofactor = 0.0;
-
-    return cofactor;
+    SquareMatrix cm = BuildCofactorMatrix(i, j);
+    if ((i + j) % 2 == 0) {
+        return cm.CalcDeterminant();
+    } else {
+        return -cm.CalcDeterminant();
+    }
 }
 
 double SquareMatrix::CalcDeterminant()
@@ -294,7 +328,7 @@ double SquareMatrix::CalcDeterminant()
     int n = Rows();
     int* index = new int[n];
     for (int i = 0; i < n; i++) {
-        index[i] = i + 1; // matrix indices start from 1
+        index[i] = i + 1; // matrix's indices start from 1
     }
 
     determinant = 0.0; // reset before calculate
@@ -318,8 +352,8 @@ void SquareMatrix::_PermuteVisit(int index[], int n, int k, void (*v)(SquareMatr
 void SquareMatrix::_PermuteVisitor(SquareMatrix& m, int index[], int n)
 {
     double result = 1.0;
-    for (int i = 1; i <= n; i++) {
-        result *= m(i, index[i - 1]);
+    for (int i = 0; i < n; i++) {
+        result *= m(i + 1, index[i]); // matrix's indices start from 1
     }
 
     if (m._CalcReverseOrderCount(index, n) % 2 == 0) {
