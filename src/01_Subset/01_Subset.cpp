@@ -6,6 +6,7 @@
 // 2014/8/25, Shining Yang <y.s.n@live.com>
 //
 #include <iostream>
+#include <string>
 using namespace std;
 
 template<class T>
@@ -46,9 +47,21 @@ void TestPrintSubset()
     PrintSubset<char>(a, sizeof(a) / sizeof(a[0]));
 }
 
+void printsubset(string sofar, string rest)
+{
+    if (rest.empty()) {
+        cout << sofar << endl;
+    } else {
+        printsubset(sofar + rest[0], rest.substr(1));
+        printsubset(sofar, rest.substr(1));
+    }
+}
+
 int main(int argc, char* argv[])
 {
     TestPrintSubset();
+
+    printsubset("", "abcd");
 	return 0;
 }
 
