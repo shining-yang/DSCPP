@@ -127,6 +127,29 @@ void test_shift_operations()
     }
 }
 
+int remove_special_char(char* s)
+{
+    int n = 0;
+
+    if (s) {
+        while (*s) {
+            if ((*s == '\t') || (*s == '\r') || (*s == '\n')) {
+                n++;
+            } else {
+                if (n > 0) {
+                    *(s - n) = *s;
+                }
+            }
+
+            s++;
+        }
+
+        *(s - n) = '\0';
+    }
+
+    return n;
+}
+
 int main(int argc, char* argv[])
 {
     int ret = -1;
@@ -170,6 +193,10 @@ int main(int argc, char* argv[])
 #endif
 
     test_case_find_max();
+
+    char ss[] = "123\tyes\rabc\n\t{}109DHL.qbc\r\tAAA\n";
+    printf("removed length: %d\n", remove_special_char(ss));
+    printf("data: %s\n", ss);
     return 0;
 }
 
