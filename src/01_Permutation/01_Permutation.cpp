@@ -5,6 +5,7 @@
 // 2014/8/23, Shining Yang <y.s.n@live.com>
 //
 #include <iostream>
+#include <string>
 using namespace std;
 
 #include "../Utility/Misc.h"
@@ -34,11 +35,25 @@ void Permutate(T a[], int k, int m)
     }
 }
 
+// Add another permute, 2014-12-22
+void permute(string sofar, string rest)
+{
+    if (rest.empty()) {
+        cout << sofar << endl;
+    } else {
+        for (unsigned int i = 0; i < rest.length(); i++) {
+            permute(sofar + rest[i], rest.substr(0, i) + rest.substr(i + 1));
+        }
+    }
+}
 
 int main(int argc, char* argv[])
 {
     char a[] = { 'A', 'B', 'C', 'D', 'E' };
     Permutate<char>(a, 0, sizeof(a) / sizeof(a[0]));
+
+    string s = "abcd";
+    permute("", s);
 	return 0;
 }
 
