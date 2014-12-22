@@ -61,9 +61,8 @@ protected:
                 if (!_ConflictVertically(row, j) && !_ConflictDiagonally(row, j)) {
                     placements[row * num + j] = true;
                     TryPlace(row + 1);
+                    placements[row * num + j] = false;
                 }
-
-                placements[row * num + j] = false;
             }
         }
     }
