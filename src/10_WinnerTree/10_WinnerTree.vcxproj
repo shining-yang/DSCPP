@@ -84,6 +84,9 @@
   <ItemGroup>
     <ClInclude Include="WinnerTree.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="10_WinnerTree.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
