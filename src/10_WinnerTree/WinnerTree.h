@@ -11,6 +11,12 @@
 //
 // Tournament tree is also called Winner tree.
 //
+// Implementation notes:
+// For processing convenience, internal array indices are 1-based.
+// But we provide normal usage for caller, which means array are 0-based.
+// Therefore, user can directly call `Initialize(a[], #a, _Cmp)' to attach an
+// array and `Winner()' to get index of the winner.
+//
 #pragma once
 #include "../Utility/Exception.h"
 using namespace DSCPP::Utils;
@@ -25,10 +31,7 @@ public:
 
     void Initialize(T a[], int size, int (*winner)(T a[], int b, int c));
     void Replay(int i, int (*winner)(T a[], int b, int c));
-
-    // Assume caller's indices start from 0, while ours start from 1
     int Winner() const { return n ? (t[1] - 1) : 0; }
-    int Winner(int i) const { return (i < n) ? t[i] : 0; }
 
 protected:
     void _Play(int p, int lc, int rc, int (*winner)(T a[], int b, int c));
@@ -45,7 +48,7 @@ private:
 template<typename T>
 void WinnerTree<T>::Replay(int i, int (*winner)(T a[], int b, int c))
 {
-    i++;
+    i++; // Our array starts from 1
 
     if (i <= 0 || i > n) {
         throw new OutOfBounds();
