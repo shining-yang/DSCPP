@@ -31,7 +31,7 @@ public:
 
     void Initialize(T a[], int size, int (*winner)(T a[], int b, int c));
     void Replay(int i, int (*winner)(T a[], int b, int c));
-    int Winner() const { return n ? (t[1] - 1) : 0; }
+    int Winner() const;
 
 protected:
     void _Play(int p, int lc, int rc, int (*winner)(T a[], int b, int c));
@@ -99,6 +99,13 @@ void WinnerTree<T>::_Play(int p, int lc, int rc, int (*winner)(T a[], int b, int
         t[p / 2] = winner(e, t[p - 1], t[p]);
         p /= 2; //µ½¸¸½Úµã
     }
+}
+
+// Return the index of final winner. -1 means error.
+template<typename T>
+int WinnerTree<T>::Winner() const
+{
+    return n ? (t[1] - 1) : -1;
 }
 
 template<typename T>
