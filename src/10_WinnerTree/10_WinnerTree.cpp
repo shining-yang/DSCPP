@@ -18,8 +18,8 @@ int main(int argc, char* argv[])
 {
     WinnerTree<int> wt;
     int a[] = { 1, 4, 5, 6, 9, 2, 3, 7, 8 };
-    wt.Initialize(a - 1, sizeof(a) / sizeof(a[0]) + 1, Win);
-
+    wt.Initialize(a, sizeof(a) / sizeof(a[0]), Win);
+    
     cout << "The winner is: " << a[wt.Winner()] << endl;
     return 0;
 }

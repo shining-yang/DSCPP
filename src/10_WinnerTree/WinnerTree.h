@@ -24,7 +24,9 @@ public:
     virtual ~WinnerTree();
 
     void Initialize(T a[], int size, int (*winner)(T a[], int b, int c));
-    int Winner() const { return n ? t[1] : 0; }
+
+    // Assume caller's indices start from 0, while ours start from 1
+    int Winner() const { return n ? (t[1] - 1) : 0; }
     int Winner(int i) const { return (i < n) ? t[i] : 0; }
 
 protected:
@@ -61,7 +63,11 @@ void WinnerTree<T>::Initialize(T a[], int size, int (*winner)(T a[], int b, int 
     }
 
     n = size;
-    e = a;
+
+    // TRICK:
+    // Internal process using index [1...size], so we do a little trick here.
+    // Actually, we will never touch [0]
+    e = a - 1;
 
     // 计算 s = 2 ^ log(n - 1)
     // 小于等于(n - 1)的最大2次方数
