@@ -24,6 +24,7 @@ public:
     virtual ~WinnerTree();
 
     void Initialize(T a[], int size, int (*winner)(T a[], int b, int c));
+    void Replay(int i, int (*winner)(T a[], int b, int c));
 
     // Assume caller's indices start from 0, while ours start from 1
     int Winner() const { return n ? (t[1] - 1) : 0; }
@@ -40,6 +41,48 @@ private:
     int *t; //赢者树数组
     T   *e; //元素数组
 };
+
+template<typename T>
+void WinnerTree<T>::Replay(int i, int (*winner)(T a[], int b, int c))
+{
+    i++;
+
+    if (i <= 0 || i > n) {
+        throw new OutOfBounds();
+    }
+
+    int p,  // 比赛节点
+        lc, // p的左孩子
+        rc; // p的右孩子
+
+    // 找到第一个比赛节点及其子女
+    if (i <= LowExt) {//从最底层开始
+        p = (offset + i) / 2;
+        lc = 2 * p - offset; // p的左孩子
+        rc = lc + 1;
+    } else {
+        p = (i - LowExt + n - 1) / 2;
+        if (2 * p == n - 1) {
+            lc = t[2 * p];
+            rc = i;
+        } else {
+            lc = 2 * p - n + 1 + LowExt;
+            rc = lc + 1;
+        }
+    }
+
+    t[p] = winner(e, lc, rc);
+
+    // 剩余节点的比赛
+    p /= 2; //移到父节点处
+    for (; p >= 1; p /= 2) {
+        if (2 * p >= n - 1) {
+            t[p] = winner(e, t[2 * p], LowExt + 1);
+        } else {
+            t[p] = winner(e, t[2 * p], t[2 * p + 1]);
+        }
+    }
+}
 
 // 在t[p]处开始比赛
 template<typename T>
