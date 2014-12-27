@@ -24,32 +24,29 @@ public:
     }
 
 protected:
-    bool _ConflictVertically(int i, int j) const {
-        for (int n = 0; n < i; n++) {
-            if (placements[n * num + j]) { // [n, j]
+    bool _ConflictVertically(int r, int c) const {
+        for (int i = 0; i < r; i++) {
+            if (placements[i * num + c]) {
                 return true;
             }
         }
+
         return false;
     }
 
-    bool _ConflictDiagonally(int i, int j) const {
-        for (int n = 1; n < j; n++) {
-            if ((i - n >= 0) && (j - n >= 0)) {
-                if (placements[(i - n) * num + j - n]) { // [i-n, j-n]
-                    return true;
-                }
+    bool _ConflictDiagonally(int r, int c) const {
+        for (int i = r - 1, j = c - 1; i >= 0 && j >= 0; i--, j--) {
+            if (placements[i * num + j]) {
+                return true;
             }
         }
 
-        for (int m = 1; m < num - j; m++) {
-            if ((i - m >= 0) && (j + m < num)) {
-                if (placements[(i - m) * num + j + m]) { // [i-m, j+m]
-                    return true;
-                }
+        for (int i = r - 1, j = c + 1; i >= 0 && j < num; i--, j++) {
+            if (placements[i * num + j]) {
+                return true;
             }
         }
-
+        
         return false;
     }
 
@@ -69,7 +66,7 @@ protected:
 
     void Output() const {
         static int _count = 0;
-        cout << ++_count << ": " << endl;
+        cout << "Solution " << ++_count << ": " << endl;
         for (int i = 0; i < num; i++) {
             for (int j = 0; j < num; j++) {
                 cout << (placements[i * num + j] ? "Q" : ".");
