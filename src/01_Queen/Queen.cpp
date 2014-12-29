@@ -85,9 +85,14 @@ private:
 };
 
 
-
-void main()
+int main(int argc, char* argv[])
 {
-    Queens q(8);
+    int n = 8; // default to 8
+    if (argc > 1) {
+        n = atoi(argv[1]);
+    }
+
+    Queens q(n);
     q.Place();
+    return 0;
 }
