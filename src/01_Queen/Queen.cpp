@@ -3,6 +3,7 @@
 // Place queen properly so that they won't threaten each other.
 // Shining Yang <y.s.n@live.com>, 2014-12-22
 //
+#include <stdlib.h>
 #include <iostream>
 using namespace std;
 
