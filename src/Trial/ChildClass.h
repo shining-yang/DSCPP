@@ -3,6 +3,7 @@
 //
 #pragma once
 #include "VirtualClass.h"
+
 class CDerived : public Calculator {
 public:
     operator int() const;
