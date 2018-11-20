@@ -16,36 +16,36 @@ using namespace DSCPP::Utils;
 // 1 + 2 + 3 + ⋯ + n-1 = (n-1)n/2
 //
 template<class T>
-void Rank(T a[], int n, int r[])
-{ //计算a[0 : n - 1]中n个元素的排名
-    for (int i = 0; i < n; i++)
-        r[i] = 0; //初始化
-    //逐对比较所有的元素
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (a[j] <= a[i]) {
-                r[i]++;
-            } else {
-                r[j]++;
-            }
-        }
+void Rank(T a[], int n, int r[]) {
+  //计算a[0 : n - 1]中n个元素的排名
+  for (int i = 0; i < n; i++)
+    r[i] = 0; //初始化
+  //逐对比较所有的元素
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+      if (a[j] <= a[i]) {
+        r[i]++;
+      } else {
+        r[j]++;
+      }
     }
+  }
 }
 
 //
 // 元素移动次数为2n (需要借助额外的存储空间完成排序)
 //
 template<class T>
-void Rearrange(T a[], int n, int r[])
-{ //按序重排数组a中的元素，使用附加数组u
-    T *u = new T[n];
-    //在u中移动到正确的位置
-    for (int i = 0; i < n; i++)
-        u[r[i]] = a[i];
-    //移回到a中
-    for (int i = 0; i < n; i++)
-        a[i] = u[i];
-    delete[] u;
+void Rearrange(T a[], int n, int r[]) {
+  //按序重排数组a中的元素，使用附加数组u
+  T *u = new T[n];
+  //在u中移动到正确的位置
+  for (int i = 0; i < n; i++)
+    u[r[i]] = a[i];
+  //移回到a中
+  for (int i = 0; i < n; i++)
+    a[i] = u[i];
+  delete[] u;
 }
 
 //
@@ -57,46 +57,43 @@ void Rearrange(T a[], int n, int r[])
 //
 //{{ 原地重排数组元素
 template<class T>
-void RearrangeWithoutImageArray(T a[], int n, int r[])
-{// 原地重排数组元素
-    for (int i = 0; i < n; i++) {
-        // 获取应该排在a[i]处的元素
-        while (r[i] != i) {
-            int t = r[i];
-            Swap(a[i], a[t]);
-            Swap(r[i], r[t]);
-        }
+void RearrangeWithoutImageArray(T a[], int n, int r[]) {
+  // 原地重排数组元素
+  for (int i = 0; i < n; i++) {
+    // 获取应该排在a[i]处的元素
+    while (r[i] != i) {
+      int t = r[i];
+      Swap(a[i], a[t]);
+      Swap(r[i], r[t]);
     }
+  }
 }
 //}}
 
 template<class T>
-void RankSort(T a[], int n)
-{
-    int* r = new int[n];
-    if (r) {
-        Rank(a, n, r);
+void RankSort(T a[], int n) {
+  int* r = new int[n];
+  if (r) {
+    Rank(a, n, r);
 #if 0
-        Rearrange(a, n, r);
+    Rearrange(a, n, r);
 #else
-        RearrangeWithoutImageArray(a, n, r);
+    RearrangeWithoutImageArray(a, n, r);
 #endif
-        delete[] r;
-    }
+    delete[] r;
+  }
 }
 
-void PrintArray(int a[], int n)
-{
-    for (int i = 0; i < n; i++)
-        printf("%d ", a[i]);
-    printf("\n");
+void PrintArray(int a[], int n) {
+  for (int i = 0; i < n; i++)
+    printf("%d ", a[i]);
+  printf("\n");
 }
 
-int main(int argc, char* argv[])
-{
-    int a[] = { 12, 37, 4, 10, 2 };
-    RankSort<int>(a, sizeof(a) / sizeof(a[0]));
-    PrintArray(a, sizeof(a) / sizeof(a[0]));
-	return 0;
+int main(int argc, char* argv[]) {
+  int a[] = { 12, 37, 4, 10, 2 };
+  RankSort<int>(a, sizeof(a) / sizeof(a[0]));
+  PrintArray(a, sizeof(a) / sizeof(a[0]));
+  return 0;
 }
 

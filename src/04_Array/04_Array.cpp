@@ -8,14 +8,13 @@
 
 using namespace std;
 
-int main(int argc, char* argv[])
-{
-	int n = 10;
-	Array<int> a(n);
-	for (int i = 0; i < n; i++) {
-		a[i] = i * i;
-	}
+int main(int argc, char* argv[]) {
+  int n = 10;
+  Array<int> a(n);
+  for (int i = 0; i < n; i++) {
+    a[i] = i * i;
+  }
 
-	cout << "Array elements: \n" << a << endl;
-	return 0;
+  cout << "Array elements: \n" << a << endl;
+  return 0;
 }

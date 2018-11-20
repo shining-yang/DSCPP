@@ -10,11 +10,10 @@ using namespace std;
 #include <vector>
 #include <set>
 
-int main(int argc, char* argv[])
-{
-    SparseMatrixLinked<int> sml;
-    cin >> sml;
-    cout << sml << endl;
+int main(int argc, char* argv[]) {
+  SparseMatrixLinked<int> sml;
+  cin >> sml;
+  cout << sml << endl;
 
-    return 0;
+  return 0;
 }

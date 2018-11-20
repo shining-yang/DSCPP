@@ -35,7 +35,7 @@
 //  1) 以x 为根的子树的节点数目至少为2^^s(x) - 1
 //  2) 若子树x 有m 个节点，s(x) 最多为log2(m + 1)
 //  3) 通过最右路径（路径是从x 开始沿右孩子移动）从x 到达外部节点的路径长度为s(x)
-// 
+//
 #pragma once
 
 #include <iostream>
@@ -50,285 +50,272 @@ using namespace std;
 using namespace DSCPP::Utils;
 using namespace DSCPP::Queue;
 
-namespace DSCPP { namespace PriorityQueue {
+namespace DSCPP {
+namespace PriorityQueue {
 
 template<typename T> class MaxHBLT;
 template<typename T> class MinHBLT;
 
 template<typename T>
 class HBLTNode {
-public:
-    HBLTNode(const T& e, int sx = 0, HBLTNode<T>* l = NULL,
-        HBLTNode<T>* r = NULL) : data(e) {
-        s = sx;
-        lchild = l;
-        rchild = r;
-    }
-    ~HBLTNode() {}
+ public:
+  HBLTNode(const T& e, int sx = 0, HBLTNode<T>* l = NULL,
+           HBLTNode<T>* r = NULL) : data(e) {
+    s = sx;
+    lchild = l;
+    rchild = r;
+  }
+  ~HBLTNode() {}
 
-private:
-    T data;
-    int s;
-    HBLTNode<T>* lchild;
-    HBLTNode<T>* rchild;
+ private:
+  T data;
+  int s;
+  HBLTNode<T>* lchild;
+  HBLTNode<T>* rchild;
 
-    friend class MaxHBLT<T>;
-    friend class MinHBLT<T>;
+  friend class MaxHBLT<T>;
+  friend class MinHBLT<T>;
 };
 
 template<typename T>
 class MaxHBLT {
-public:
-    MaxHBLT();
-    ~MaxHBLT();
+ public:
+  MaxHBLT();
+  ~MaxHBLT();
 
-public:
-    bool IsEmpty() const { return root == NULL; }
-    T Max() const;
-    MaxHBLT<T>& Insert(const T& e);
-    MaxHBLT<T>& DeleteMax(T& e);
-    MaxHBLT<T>& Merge(MaxHBLT<T>& obj);
-    void Initialize(const T arr[], int n);
-    void Clear();
-    void Clone(MaxHBLT<T>& obj) const;
-    void PrintTreeVertically(ostream& os, int width) const;
+ public:
+  bool IsEmpty() const { return root == NULL; }
+  T Max() const;
+  MaxHBLT<T>& Insert(const T& e);
+  MaxHBLT<T>& DeleteMax(T& e);
+  MaxHBLT<T>& Merge(MaxHBLT<T>& obj);
+  void Initialize(const T arr[], int n);
+  void Clear();
+  void Clone(MaxHBLT<T>& obj) const;
+  void PrintTreeVertically(ostream& os, int width) const;
 
-protected:
-    void _Destroy(HBLTNode<T>* p);
-    virtual void _Merge(HBLTNode<T>*& dest, HBLTNode<T>* src);
-    HBLTNode<T>* _Clone(const HBLTNode<T>* p) const;
+ protected:
+  void _Destroy(HBLTNode<T>* p);
+  virtual void _Merge(HBLTNode<T>*& dest, HBLTNode<T>* src);
+  HBLTNode<T>* _Clone(const HBLTNode<T>* p) const;
 
-    struct VertPrintInfo {
-        VertPrintInfo() {}
-        VertPrintInfo(HBLTNode<T>* e, int l, int p) : node(e), level(l), pos(p) {}
-        HBLTNode<T>* node;
-        int level;
-        int pos;
-    };
-    void _PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) const;
+  struct VertPrintInfo {
+    VertPrintInfo() {}
+    VertPrintInfo(HBLTNode<T>* e, int l, int p) : node(e), level(l), pos(p) {}
+    HBLTNode<T>* node;
+    int level;
+    int pos;
+  };
+  void _PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) const;
 
-private:
-    HBLTNode<T>* root;
+ private:
+  HBLTNode<T>* root;
 };
 
 template<typename T>
-MaxHBLT<T>::MaxHBLT()
-{
-    root = NULL;
+MaxHBLT<T>::MaxHBLT() {
+  root = NULL;
 }
 
 template<typename T>
-MaxHBLT<T>::~MaxHBLT()
-{
-    Clear();
+MaxHBLT<T>::~MaxHBLT() {
+  Clear();
 }
 
 template<typename T>
-void MaxHBLT<T>::Clear()
-{
-    _Destroy(root);
-    root = NULL;
+void MaxHBLT<T>::Clear() {
+  _Destroy(root);
+  root = NULL;
 }
 
 template<typename T>
-void MaxHBLT<T>::_Destroy(HBLTNode<T>* p)
-{
-    if (p) {
-        _Destroy(p->lchild);
-        _Destroy(p->rchild);
-        delete p;
-    }
-}
-
-template<typename T>
-T MaxHBLT<T>::Max() const
-{
-    if (IsEmpty()) {
-        throw new OutOfBounds();
-    }
-
-    return root->data;
-}
-
-template<typename T>
-MaxHBLT<T>& MaxHBLT<T>::Insert(const T& e)
-{
-    HBLTNode<T>* p = new HBLTNode<T>(e, 1);
-    _Merge(root, p);
-    return *this;
-}
-
-template<typename T>
-MaxHBLT<T>& MaxHBLT<T>::DeleteMax(T& e)
-{
-    if (IsEmpty()) {
-        throw new OutOfBounds();
-    }
-
-    HBLTNode<T>* p = root;
-    root = p->lchild;
-    _Merge(root, p->rchild);
-
-    e = p->data;
+void MaxHBLT<T>::_Destroy(HBLTNode<T>* p) {
+  if (p) {
+    _Destroy(p->lchild);
+    _Destroy(p->rchild);
     delete p;
+  }
+}
+
+template<typename T>
+T MaxHBLT<T>::Max() const {
+  if (IsEmpty()) {
+    throw new OutOfBounds();
+  }
+
+  return root->data;
+}
+
+template<typename T>
+MaxHBLT<T>& MaxHBLT<T>::Insert(const T& e) {
+  HBLTNode<T>* p = new HBLTNode<T>(e, 1);
+  _Merge(root, p);
+  return *this;
+}
+
+template<typename T>
+MaxHBLT<T>& MaxHBLT<T>::DeleteMax(T& e) {
+  if (IsEmpty()) {
+    throw new OutOfBounds();
+  }
+
+  HBLTNode<T>* p = root;
+  root = p->lchild;
+  _Merge(root, p->rchild);
+
+  e = p->data;
+  delete p;
+  return *this;
+}
+
+template<typename T>
+MaxHBLT<T>& MaxHBLT<T>::Merge(MaxHBLT<T>& obj) {
+  if (this == &obj) {
     return *this;
+  }
+
+  _Merge(root, obj.root);
+  obj.root = NULL; // detach it
+  return *this;
 }
 
 template<typename T>
-MaxHBLT<T>& MaxHBLT<T>::Merge(MaxHBLT<T>& obj)
-{
-    if (this == &obj) {
-        return *this;
-    }
+void MaxHBLT<T>::_Merge(HBLTNode<T>*& dest, HBLTNode<T>* src) {
+  if (!src) {
+    return;
+  }
 
-    _Merge(root, obj.root);
-    obj.root = NULL; // detach it
-    return *this;
+  if (!dest) {
+    dest = src;
+    return;
+  }
+
+  if (dest->data < src->data) {
+    Swap(dest, src);
+  }
+
+  _Merge(dest->rchild, src);
+
+  if (!dest->lchild) {
+    dest->lchild = dest->rchild;
+    dest->rchild = NULL;
+    dest->s = 1;
+  } else {
+    if (dest->lchild->s < dest->rchild->s) {
+      Swap(dest->lchild, dest->rchild);
+    }
+    dest->s = dest->rchild->s + 1;
+  }
 }
 
 template<typename T>
-void MaxHBLT<T>::_Merge(HBLTNode<T>*& dest, HBLTNode<T>* src)
-{
-    if (!src) {
-        return;
-    }
+void MaxHBLT<T>::Initialize(const T arr[], int n) {
+  LinearQueue<HBLTNode<T>*> q(n);
+  for (int i = 0; i < n; i++) {
+    q.EnQueue(new HBLTNode<T>(arr[i], 1));
+  }
 
-    if (!dest) {
-        dest = src;
-        return;
-    }
+  HBLTNode<T>* x = NULL;
+  HBLTNode<T>* y = NULL;
 
-    if (dest->data < src->data) {
-        Swap(dest, src);
-    }
+  while (q.GetLength() > 1) {
+    q.DeQueue(x).DeQueue(y);
+    _Merge(x, y);
+    q.EnQueue(x);
+  }
 
-    _Merge(dest->rchild, src);
-
-    if (!dest->lchild) {
-        dest->lchild = dest->rchild;
-        dest->rchild = NULL;
-        dest->s = 1;
-    } else {
-        if (dest->lchild->s < dest->rchild->s) {
-            Swap(dest->lchild, dest->rchild);
-        }
-        dest->s = dest->rchild->s + 1;
-    }
+  q.DeQueue(root);
 }
 
 template<typename T>
-void MaxHBLT<T>::Initialize(const T arr[], int n)
-{
-    LinearQueue<HBLTNode<T>*> q(n);
-    for (int i = 0; i < n; i++) {
-        q.EnQueue(new HBLTNode<T>(arr[i], 1));
-    }
+void MaxHBLT<T>::Clone(MaxHBLT<T>& obj) const {
+  if (this == &obj) {
+    return;
+  }
 
-    HBLTNode<T>* x = NULL;
-    HBLTNode<T>* y = NULL;
-
-    while (q.GetLength() > 1) {
-        q.DeQueue(x).DeQueue(y);
-        _Merge(x, y);
-        q.EnQueue(x);
-    }
-
-    q.DeQueue(root);
+  obj.Clear();
+  obj.root = _Clone(root);
 }
 
 template<typename T>
-void MaxHBLT<T>::Clone(MaxHBLT<T>& obj) const
-{
-    if (this == &obj) {
-        return;
-    }
+HBLTNode<T>* MaxHBLT<T>::_Clone(const HBLTNode<T>* p) const {
+  if (!p) {
+    return NULL;
+  }
 
-    obj.Clear();
-    obj.root = _Clone(root);
+  return new HBLTNode<T>(p->data, p->s, _Clone(p->lchild), _Clone(p->rchild));
 }
 
 template<typename T>
-HBLTNode<T>* MaxHBLT<T>::_Clone(const HBLTNode<T>* p) const
-{
-    if (!p) {
-        return NULL;
-    }
-
-    return new HBLTNode<T>(p->data, p->s, _Clone(p->lchild), _Clone(p->rchild));
-}
-
-template<typename T>
-void MaxHBLT<T>::PrintTreeVertically(ostream& os, int width) const
-{
-    if (!root) {
-        return;
-    }
+void MaxHBLT<T>::PrintTreeVertically(ostream& os, int width) const {
+  if (!root) {
+    return;
+  }
 
 #define ASSUME_MAX_TREE_HEIGHT  32 // large enough for brevity
-    Array<Chain<VertPrintInfo> > a(ASSUME_MAX_TREE_HEIGHT);
-    LinkedListQueue<VertPrintInfo> q;
-    q.EnQueue(VertPrintInfo(root, 0, width / 2));
+  Array<Chain<VertPrintInfo> > a(ASSUME_MAX_TREE_HEIGHT);
+  LinkedListQueue<VertPrintInfo> q;
+  q.EnQueue(VertPrintInfo(root, 0, width / 2));
 
-    while (!q.IsEmpty()) {
-        VertPrintInfo t;
-        q.DeQueue(t);
+  while (!q.IsEmpty()) {
+    VertPrintInfo t;
+    q.DeQueue(t);
 
-        a[t.level].Insert(0, t);
+    a[t.level].Insert(0, t);
 
-        if (t.node->lchild) {
-            q.EnQueue(VertPrintInfo(t.node->lchild, t.level + 1,
-                t.pos - width / (1 << (t.level + 2))));
-        }
-
-        if (t.node->rchild) {
-            q.EnQueue(VertPrintInfo(t.node->rchild, t.level + 1,
-                t.pos + width / (1 << (t.level + 2))));
-        }
+    if (t.node->lchild) {
+      q.EnQueue(VertPrintInfo(t.node->lchild, t.level + 1,
+                              t.pos - width / (1 << (t.level + 2))));
     }
 
-    for (int i = 0; i < ASSUME_MAX_TREE_HEIGHT; i++) {
-        if (a[i].IsEmpty()) {
-            break;
-        }
-
-        _PrintVertByLevel(os, a[i]);
-        os << endl;
+    if (t.node->rchild) {
+      q.EnQueue(VertPrintInfo(t.node->rchild, t.level + 1,
+                              t.pos + width / (1 << (t.level + 2))));
     }
+  }
+
+  for (int i = 0; i < ASSUME_MAX_TREE_HEIGHT; i++) {
+    if (a[i].IsEmpty()) {
+      break;
+    }
+
+    _PrintVertByLevel(os, a[i]);
+    os << endl;
+  }
 }
 
 template<typename T>
-void MaxHBLT<T>::_PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) const
-{
-    int maxpos = 0;
-    VertPrintInfo x;
+void MaxHBLT<T>::_PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) const {
+  int maxpos = 0;
+  VertPrintInfo x;
 
-    // - get the max
-    for (int i = 0; i < c.Length(); i++) {
-        c.Find(i, x);
-        if (maxpos < x.pos) {
-            maxpos = x.pos;
-        }
+  // - get the max
+  for (int i = 0; i < c.Length(); i++) {
+    c.Find(i, x);
+    if (maxpos < x.pos) {
+      maxpos = x.pos;
     }
+  }
 
-    // - fill in valid items
-    Array<HBLTNode<T>*> A(maxpos + 1);
-    for (int i = 0; i <= maxpos; i++) {
-        A[i] = NULL;
-    }
+  // - fill in valid items
+  Array<HBLTNode<T>*> A(maxpos + 1);
+  for (int i = 0; i <= maxpos; i++) {
+    A[i] = NULL;
+  }
 
-    for (int i = 0; i < c.Length(); i++) {
-        c.Find(i, x);
-        A[x.pos] = x.node;
-    }
+  for (int i = 0; i < c.Length(); i++) {
+    c.Find(i, x);
+    A[x.pos] = x.node;
+  }
 
-    // - output
-    for (int i = 0; i <= maxpos; i++) {
-        if (A[i]) {
-            os << A[i]->data;
-        } else {
-            os << " ";
-        }
+  // - output
+  for (int i = 0; i <= maxpos; i++) {
+    if (A[i]) {
+      os << A[i]->data;
+    } else {
+      os << " ";
     }
+  }
 }
 
 //----------------------- MinHBLT -----------------------------------
@@ -337,117 +324,106 @@ void MaxHBLT<T>::_PrintVertByLevel(ostream& os, const Chain<VertPrintInfo>& c) c
 
 template<typename T>
 class MinHBLT : private MaxHBLT<T> {
-public:
-    MinHBLT();
-    ~MinHBLT();
+ public:
+  MinHBLT();
+  ~MinHBLT();
 
-public:
-    bool IsEmpty() const;
-    T Min() const;
-    MinHBLT<T>& Insert(const T& e);
-    MinHBLT<T>& DeleteMin(T& e);
-    MinHBLT<T>& Merge(MinHBLT<T>& obj);
-    void Initialize(const T arr[], int n);
-    void Clear();
-    void Clone(MinHBLT<T>& obj) const;
-    void PrintTreeVertically(ostream& os, int width) const;
+ public:
+  bool IsEmpty() const;
+  T Min() const;
+  MinHBLT<T>& Insert(const T& e);
+  MinHBLT<T>& DeleteMin(T& e);
+  MinHBLT<T>& Merge(MinHBLT<T>& obj);
+  void Initialize(const T arr[], int n);
+  void Clear();
+  void Clone(MinHBLT<T>& obj) const;
+  void PrintTreeVertically(ostream& os, int width) const;
 
-protected:
-    virtual void _Merge(HBLTNode<T>*& dest, HBLTNode<T>* src);
+ protected:
+  virtual void _Merge(HBLTNode<T>*& dest, HBLTNode<T>* src);
 };
 
 template<typename T>
-MinHBLT<T>::MinHBLT()
-{
+MinHBLT<T>::MinHBLT() {
 }
 
 template<typename T>
-MinHBLT<T>::~MinHBLT()
-{
+MinHBLT<T>::~MinHBLT() {
 }
 
 template<typename T>
-bool MinHBLT<T>::IsEmpty() const
-{
-    return MaxHBLT<T>::IsEmpty();
+bool MinHBLT<T>::IsEmpty() const {
+  return MaxHBLT<T>::IsEmpty();
 }
 
 template<typename T>
-T MinHBLT<T>::Min() const
-{
-    return MaxHBLT<T>::Max();
+T MinHBLT<T>::Min() const {
+  return MaxHBLT<T>::Max();
 }
 
 template<typename T>
-MinHBLT<T>& MinHBLT<T>::Insert(const T& e)
-{
-    return reinterpret_cast<MinHBLT<T>&>(MaxHBLT<T>::Insert(e));
+MinHBLT<T>& MinHBLT<T>::Insert(const T& e) {
+  return reinterpret_cast<MinHBLT<T>&>(MaxHBLT<T>::Insert(e));
 }
 
 template<typename T>
-MinHBLT<T>& MinHBLT<T>::DeleteMin(T& e)
-{
-    return reinterpret_cast<MinHBLT<T>&>(MaxHBLT<T>::DeleteMax(e));
+MinHBLT<T>& MinHBLT<T>::DeleteMin(T& e) {
+  return reinterpret_cast<MinHBLT<T>&>(MaxHBLT<T>::DeleteMax(e));
 }
 
 template<typename T>
-MinHBLT<T>& MinHBLT<T>::Merge(MinHBLT<T>& obj)
-{
-    return reinterpret_cast<MinHBLT<T>&>(MaxHBLT<T>::Merge(obj));
+MinHBLT<T>& MinHBLT<T>::Merge(MinHBLT<T>& obj) {
+  return reinterpret_cast<MinHBLT<T>&>(MaxHBLT<T>::Merge(obj));
 }
 
 template<typename T>
-void MinHBLT<T>::Initialize(const T arr[], int n)
-{
-    MaxHBLT<T>::Initialize(arr, n);
+void MinHBLT<T>::Initialize(const T arr[], int n) {
+  MaxHBLT<T>::Initialize(arr, n);
 }
 
 template<typename T>
-void MinHBLT<T>::Clear()
-{
-    MaxHBLT<T>::Clear();
+void MinHBLT<T>::Clear() {
+  MaxHBLT<T>::Clear();
 }
 
 template<typename T>
-void MinHBLT<T>::Clone(MinHBLT<T>& obj) const
-{
-    MaxHBLT<T>::Clone(obj);
+void MinHBLT<T>::Clone(MinHBLT<T>& obj) const {
+  MaxHBLT<T>::Clone(obj);
 }
 
 template<typename T>
-void MinHBLT<T>::PrintTreeVertically(ostream& os, int width) const
-{
-    MaxHBLT<T>::PrintTreeVertically(os, width);
+void MinHBLT<T>::PrintTreeVertically(ostream& os, int width) const {
+  MaxHBLT<T>::PrintTreeVertically(os, width);
 }
 
 template<typename T>
-void MinHBLT<T>::_Merge(HBLTNode<T>*& dest, HBLTNode<T>* src)
-{
-    if (!src) {
-        return;
+void MinHBLT<T>::_Merge(HBLTNode<T>*& dest, HBLTNode<T>* src) {
+  if (!src) {
+    return;
+  }
+
+  if (!dest) {
+    dest = src;
+    return;
+  }
+
+  if (dest->data > src->data) {
+    Swap(dest, src);
+  }
+
+  _Merge(dest->rchild, src);
+
+  if (!dest->lchild) {
+    dest->lchild = dest->rchild;
+    dest->rchild = NULL;
+    dest->s = 1;
+  } else {
+    if (dest->lchild->s < dest->rchild->s) {
+      Swap(dest->lchild, dest->rchild);
     }
-
-    if (!dest) {
-        dest = src;
-        return;
-    }
-
-    if (dest->data > src->data) {
-        Swap(dest, src);
-    }
-
-    _Merge(dest->rchild, src);
-
-    if (!dest->lchild) {
-        dest->lchild = dest->rchild;
-        dest->rchild = NULL;
-        dest->s = 1;
-    } else {
-        if (dest->lchild->s < dest->rchild->s) {
-            Swap(dest->lchild, dest->rchild);
-        }
-        dest->s = dest->rchild->s + 1;
-    }
+    dest->s = dest->rchild->s + 1;
+  }
 }
 
-}}
+}
+}

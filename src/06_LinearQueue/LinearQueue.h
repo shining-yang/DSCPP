@@ -9,142 +9,132 @@ using namespace std;
 #include "../Utility/Exception.h"
 using namespace DSCPP::Utils;
 
-namespace DSCPP { namespace Queue {
+namespace DSCPP {
+namespace Queue {
 
 template<typename T>
 class LinearQueue {
-public:
-    LinearQueue(int size = 16);
-    ~LinearQueue();
+ public:
+  LinearQueue(int size = 16);
+  ~LinearQueue();
 
-protected:
-    LinearQueue(const LinearQueue<T>& obj);
-    LinearQueue<T>& operator=(const LinearQueue<T>& obj);
+ protected:
+  LinearQueue(const LinearQueue<T>& obj);
+  LinearQueue<T>& operator=(const LinearQueue<T>& obj);
 
-public:
-    bool IsEmpty() const;
-    bool IsFull() const;
-    T Front() const;
-    T Rear() const;
-    LinearQueue<T>& EnQueue(const T& x);
-    LinearQueue<T>& DeQueue(T& x);
+ public:
+  bool IsEmpty() const;
+  bool IsFull() const;
+  T Front() const;
+  T Rear() const;
+  LinearQueue<T>& EnQueue(const T& x);
+  LinearQueue<T>& DeQueue(T& x);
 
-    int GetCapacity() const;
-    int GetLength() const;
+  int GetCapacity() const;
+  int GetLength() const;
 
-    void Output(ostream& os) const;
+  void Output(ostream& os) const;
 
-private:
-    int front;
-    int rear;
-    int capacity;
-    T* base;
+ private:
+  int front;
+  int rear;
+  int capacity;
+  T* base;
 };
 
 template<typename T>
-LinearQueue<T>::LinearQueue(int size /*= 16*/)
-{
-    if (size < 0) {
-        throw new BadInitializer();
-    }
+LinearQueue<T>::LinearQueue(int size /*= 16*/) {
+  if (size < 0) {
+    throw new BadInitializer();
+  }
 
-    this->front = 0;
-    this->rear = 0;
-    this->capacity = size + 1; // 1 for dummy
-    this->base = new T[this->capacity];
+  this->front = 0;
+  this->rear = 0;
+  this->capacity = size + 1; // 1 for dummy
+  this->base = new T[this->capacity];
 }
 
 template<typename T>
-LinearQueue<T>::~LinearQueue()
-{
-    delete[] this->base;
+LinearQueue<T>::~LinearQueue() {
+  delete[] this->base;
 }
 
 template<typename T>
-int LinearQueue<T>::GetCapacity() const
-{
-    return this->capacity - 1;
+int LinearQueue<T>::GetCapacity() const {
+  return this->capacity - 1;
 }
 
 template<typename T>
-int LinearQueue<T>::GetLength() const
-{
-    if (rear >= front) {
-        return rear - front;
-    } else {
-        return (rear + capacity) - front;
-    }
+int LinearQueue<T>::GetLength() const {
+  if (rear >= front) {
+    return rear - front;
+  } else {
+    return (rear + capacity) - front;
+  }
 }
 
 template<typename T>
-bool LinearQueue<T>::IsEmpty() const
-{
-    return front == rear;
+bool LinearQueue<T>::IsEmpty() const {
+  return front == rear;
 }
 
 template<typename T>
-bool LinearQueue<T>::IsFull() const
-{
-    return (rear + 1) % capacity == front;
+bool LinearQueue<T>::IsFull() const {
+  return (rear + 1) % capacity == front;
 }
 
 template<typename T>
-T LinearQueue<T>::Front() const
-{
-    if (IsEmpty()) {
-        throw new OutOfBounds();
-    }
+T LinearQueue<T>::Front() const {
+  if (IsEmpty()) {
+    throw new OutOfBounds();
+  }
 
-    return base[front];
+  return base[front];
 }
 
 template<typename T>
-T LinearQueue<T>::Rear() const
-{
-    if (IsEmpty()) {
-        throw new OutOfBounds();
-    }
+T LinearQueue<T>::Rear() const {
+  if (IsEmpty()) {
+    throw new OutOfBounds();
+  }
 
-    return base[(rear + capacity - 1) % capacity];
+  return base[(rear + capacity - 1) % capacity];
 }
 
 template<typename T>
-LinearQueue<T>& LinearQueue<T>::EnQueue(const T& x)
-{
-    if (IsFull()) {
-        throw new OutOfBounds();
-    }
+LinearQueue<T>& LinearQueue<T>::EnQueue(const T& x) {
+  if (IsFull()) {
+    throw new OutOfBounds();
+  }
 
-    base[rear++] = x;
-    rear %= capacity;
-    return *this;
+  base[rear++] = x;
+  rear %= capacity;
+  return *this;
 }
 
 template<typename T>
-LinearQueue<T>& LinearQueue<T>::DeQueue(T& x)
-{
-    if (IsEmpty()) {
-        throw new OutOfBounds();
-    }
+LinearQueue<T>& LinearQueue<T>::DeQueue(T& x) {
+  if (IsEmpty()) {
+    throw new OutOfBounds();
+  }
 
-    x = base[front++];
-    front %= capacity;
-    return *this;
+  x = base[front++];
+  front %= capacity;
+  return *this;
 }
 
 template<typename T>
-void LinearQueue<T>::Output(ostream& os) const
-{
-    for (int i = front; (i % capacity) != rear; i++) {
-        os << base[i] << " ";
-    }
+void LinearQueue<T>::Output(ostream& os) const {
+  for (int i = front; (i % capacity) != rear; i++) {
+    os << base[i] << " ";
+  }
 }
 
 template<typename T>
-ostream& operator<<(ostream& os, const LinearQueue<T>& obj)
-{
-    obj.Output(os);
-    return os;
+ostream& operator<<(ostream& os, const LinearQueue<T>& obj) {
+  obj.Output(os);
+  return os;
 }
 
-}}
+}
+}

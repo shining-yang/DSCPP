@@ -8,24 +8,23 @@
 
 #include <chrono>
 
-class CHighResTimeCounter
-{
-public:
-    CHighResTimeCounter();
-    ~CHighResTimeCounter();
+class CHighResTimeCounter {
+ public:
+  CHighResTimeCounter();
+  ~CHighResTimeCounter();
 
-public:
-    void Begin();
-    void End();
-    int GetElapsedTimeInSeconds();
-    int GetElapsedTimeInMS();
-    int GetElapsedTimeInMicroseconds();
+ public:
+  void Begin();
+  void End();
+  int GetElapsedTimeInSeconds();
+  int GetElapsedTimeInMS();
+  int GetElapsedTimeInMicroseconds();
 
-protected:
-    bool m_bInited;
-    bool m_bStarted;
-    bool m_bFinished;
-    std::chrono::high_resolution_clock::time_point m_nCounterBegin;
-    std::chrono::high_resolution_clock::time_point m_nCounterEnd;
+ protected:
+  bool m_bInited;
+  bool m_bStarted;
+  bool m_bFinished;
+  std::chrono::high_resolution_clock::time_point m_nCounterBegin;
+  std::chrono::high_resolution_clock::time_point m_nCounterEnd;
 };
 
