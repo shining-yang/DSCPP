@@ -2,12 +2,12 @@
 // HighResTimeCounter.h
 //
 // 2014-08-23, Shining Yang <y.s.n@live.com>
+// 2018-11-20, Shining Yang <y.s.n@live.com>, minor update for better portability with c++11 chrono
 //
 #pragma once
 
-#include <Windows.h>
+#include <chrono>
 
-// High resolution time counter
 class CHighResTimeCounter
 {
 public:
@@ -17,16 +17,15 @@ public:
 public:
     void Begin();
     void End();
-    unsigned long GetElapsedTimeInSeconds();
-    unsigned long GetElapsedTimeInMS();
-    LARGE_INTEGER GetElapsedTimeInMicroseconds();
+    int GetElapsedTimeInSeconds();
+    int GetElapsedTimeInMS();
+    int GetElapsedTimeInMicroseconds();
 
 protected:
     bool m_bInited;
     bool m_bStarted;
     bool m_bFinished;
-    LARGE_INTEGER m_nFrequency;
-    LARGE_INTEGER m_nCounterBegin;
-    LARGE_INTEGER m_nCounterEnd;
+    std::chrono::high_resolution_clock::time_point m_nCounterBegin;
+    std::chrono::high_resolution_clock::time_point m_nCounterEnd;
 };
 

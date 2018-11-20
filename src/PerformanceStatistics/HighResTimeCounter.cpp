@@ -7,12 +7,10 @@
 
 
 CHighResTimeCounter::CHighResTimeCounter()
+    : m_bInited(true),
+      m_bStarted(false),
+      m_bFinished(false)
 {
-    m_bInited = ::QueryPerformanceFrequency(&m_nFrequency) ? true : false;
-    m_bStarted = false;
-    m_bFinished = false;
-    m_nCounterBegin.QuadPart = 0;
-    m_nCounterEnd.QuadPart = 0;
 }
 
 CHighResTimeCounter::~CHighResTimeCounter()
@@ -24,7 +22,7 @@ void CHighResTimeCounter::Begin()
     if (m_bInited && !m_bStarted) {
         m_bStarted = true;
         m_bFinished = false;
-        ::QueryPerformanceCounter(&m_nCounterBegin);
+        m_nCounterBegin = std::chrono::high_resolution_clock::now();
     }
 }
 
@@ -33,34 +31,36 @@ void CHighResTimeCounter::End()
     if (m_bStarted) {
         m_bStarted = false;
         m_bFinished = true;
-        ::QueryPerformanceCounter(&m_nCounterEnd);
+        m_nCounterEnd = std::chrono::high_resolution_clock::now();
     }
 }
 
-LARGE_INTEGER CHighResTimeCounter::GetElapsedTimeInMicroseconds()
+int CHighResTimeCounter::GetElapsedTimeInMicroseconds()
 {
-    LARGE_INTEGER nElaped;
-    nElaped.QuadPart = 0;
-
-    if (m_bFinished) {
-        nElaped.QuadPart = m_nCounterEnd.QuadPart - m_nCounterBegin.QuadPart;
-        nElaped.QuadPart *= 1000000;
-        nElaped.QuadPart /= m_nFrequency.QuadPart;
+    if (!m_bFinished) {
+        return 0;
     }
-    
-    return nElaped;
+    auto span = std::chrono::duration_cast<std::chrono::microseconds>(
+            m_nCounterEnd - m_nCounterBegin);
+    return span.count();
 }
 
-unsigned long CHighResTimeCounter::GetElapsedTimeInMS()
+int CHighResTimeCounter::GetElapsedTimeInMS()
 {
-    // NOTE: conversion from 'LONGLONG' to 'unsigned long', possible loss of data
-    return static_cast<unsigned long>(
-        GetElapsedTimeInMicroseconds().QuadPart / 1000);
+    if (!m_bFinished) {
+        return 0;
+    }
+    auto span = std::chrono::duration_cast<std::chrono::milliseconds>(
+        m_nCounterEnd - m_nCounterBegin);
+    return span.count();
 }
 
-unsigned long CHighResTimeCounter::GetElapsedTimeInSeconds()
+int CHighResTimeCounter::GetElapsedTimeInSeconds()
 {
-    // NOTE: conversion from 'LONGLONG' to 'unsigned long', possible loss of data
-    return static_cast<unsigned long>(
-        GetElapsedTimeInMicroseconds().QuadPart / 1000000);
+    if (!m_bFinished) {
+        return 0;
+    }
+    auto span = std::chrono::duration_cast<std::chrono::seconds>(
+            m_nCounterEnd - m_nCounterBegin);
+    return span.count();
 }
