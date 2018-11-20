@@ -33,8 +33,8 @@ private:
     int col;
     T   val;
 
-    template<class T>
-    friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
+    template<class E>
+    friend istream& operator>>(istream& is, SparseMatrixLinked<E>& o);
 };
 
 template<class T>
@@ -58,8 +58,8 @@ private:
     int row;
     Chain<ColumnNode<T> > chainCol;
 
-    template<class T>
-    friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
+    template<class E>
+    friend istream& operator>>(istream& is, SparseMatrixLinked<E>& o);
 };
 
 template<class T>
@@ -85,8 +85,8 @@ private:
     int columns;
     Chain<RowNode<T> > chainRow;
 
-    template<class T>
-    friend istream& operator>>(istream& is, SparseMatrixLinked<T>& o);
+    template<class E>
+    friend istream& operator>>(istream& is, SparseMatrixLinked<E>& o);
 };
 
 template<class T>
@@ -127,7 +127,7 @@ istream& operator>>(istream& is, SparseMatrixLinked<T>& o)
         // {{ BAD practices. Since there are not proper methods available yet.
         bool inserted = false;
 _TryInsertColumnData:
-        for (Chain<RowNode<T> >::Iterator rit = o.chainRow.Begin();
+        for (auto rit = o.chainRow.Begin();
             rit != o.chainRow.End();
             ++rit) {
             if ((*rit).row == r) { // find the existing one

@@ -37,13 +37,13 @@ public:
     void Output(ostream& os) const;
 
 private:
-    template<typename T>
+    template<typename E>
     class LinkNode {
     private:
-        T data;
-        LinkNode<T>* next;
-        LinkNode<T>* prev;
-        friend class StackLinkedListCustomized<T>;
+        E data;
+        LinkNode<E>* next;
+        LinkNode<E>* prev;
+        friend class StackLinkedListCustomized<E>;
     };
 
     LinkNode<T>* nodes;

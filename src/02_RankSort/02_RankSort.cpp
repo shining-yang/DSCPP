@@ -1,7 +1,7 @@
 ﻿// 02_RankSort.cpp : Defines the entry point for the console application.
 //
 // 2014/8/28, Shining Yang <y.s.n@live.com>
-// 
+//
 // [计算名次] 元素在队列中的名次（rank）可定义为队列中所有比它小的元素数目加上在
 // 它左边出现的与它相同的元素数目。例如，给定一个数组a = [4, 3, 9, 3, 7]作为队列，
 // 则各元素的名次为r = [2, 0, 4, 1, 3]
@@ -48,21 +48,6 @@ void Rearrange(T a[], int n, int r[])
     delete[] u;
 }
 
-template<class T>
-void RankSort(T a[], int n)
-{
-    int* r = new int[n];
-    if (r) {
-        Rank(a, n, r);
-#if 0
-        Rearrange(a, n, r);
-#else
-        RearrangeWithoutImageArray(a, n, r);
-#endif
-        delete[] r;
-    }
-}
-
 //
 // 在原地把该数组中的元素按序重排，方法是从a[0] 开始，每次检查一个元素。
 // 如果当前正在检查的元素为a[i] 且r[i] = i，那么可以跳过该元素，继续检查下一个元素；
@@ -84,6 +69,21 @@ void RearrangeWithoutImageArray(T a[], int n, int r[])
     }
 }
 //}}
+
+template<class T>
+void RankSort(T a[], int n)
+{
+    int* r = new int[n];
+    if (r) {
+        Rank(a, n, r);
+#if 0
+        Rearrange(a, n, r);
+#else
+        RearrangeWithoutImageArray(a, n, r);
+#endif
+        delete[] r;
+    }
+}
 
 void PrintArray(int a[], int n)
 {

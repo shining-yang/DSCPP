@@ -28,12 +28,12 @@ public:
     }
 
     StackLinkedList<T>& Push(const T& x) { // internal call will throw exception if there are any
-        Insert(0, x);
+        Chain<T>::Insert(0, x);
         return *this;
     }
 
     StackLinkedList<T>& Pop(T& x) { // internal call will throw exception if there are any
-        Delete(0, x);
+        Chain<T>::Delete(0, x);
         return *this;
     }
 
@@ -43,7 +43,7 @@ public:
         }
 
         T x;
-        Find(0, x);
+        Chain<T>::Find(0, x);
         return x;
     }
 };

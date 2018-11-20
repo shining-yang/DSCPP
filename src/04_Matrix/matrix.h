@@ -268,15 +268,15 @@ public:
     SquareMatrix operator*(double coef) const;
 
 public:
-    // ÇóÐÐÁÐÊ½£¨Determinant£©µÄÖµ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½Determinantï¿½ï¿½ï¿½ï¿½Öµ
     double CalcDeterminant();
-    // Çó´úÊýÓà×ÓÊ½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
     double CalcCofactor(int i, int j);
-    // Çó°éËæ¾ØÕó£¨Adjoint matrix£©
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Adjoint matrixï¿½ï¿½
     SquareMatrix BuildAdjointMatrix();
-    // Éú³ÉÓà×ÓÊ½¾ØÕó
-    SquareMatrix SquareMatrix::BuildCofactorMatrix(int i, int j);
-    // ÇóÄæ¾ØÕó£¨Inverse matrix£©
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½
+    SquareMatrix BuildCofactorMatrix(int i, int j);
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Inverse matrixï¿½ï¿½
     SquareMatrix BuildInverseMatrix();
 
 protected:
@@ -314,7 +314,7 @@ SquareMatrix SquareMatrix::operator*(double ceof) const
     return sm;
 }
 
-// Éú³ÉÄæ¾ØÕó
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 SquareMatrix SquareMatrix::BuildInverseMatrix()
 {
     double det = CalcDeterminant();
@@ -325,7 +325,7 @@ SquareMatrix SquareMatrix::BuildInverseMatrix()
     return BuildAdjointMatrix() * (1 / det);
 }
 
-// Éú³É°éËæ¾ØÕó
+// ï¿½ï¿½ï¿½É°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 SquareMatrix SquareMatrix::BuildAdjointMatrix()
 {
     int n = Rows();
@@ -335,11 +335,11 @@ SquareMatrix SquareMatrix::BuildAdjointMatrix()
             sm(i, j) = CalcCofactor(j, i);
         }
     }
-    
+
     return sm;
 }
 
-// Óà×ÓÊ½£¨¾ØÕó£©
+// ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 SquareMatrix SquareMatrix::BuildCofactorMatrix(int I, int J)
 {
     int n = Rows() - 1;
@@ -361,7 +361,7 @@ SquareMatrix SquareMatrix::BuildCofactorMatrix(int I, int J)
     return sm;
 }
 
-// ´úÊýÓà×ÓÊ½£¨ÐÐÁÐÊ½Öµ£©
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½Öµï¿½ï¿½
 double SquareMatrix::CalcCofactor(int i, int j)
 {
     double det = BuildCofactorMatrix(i, j).CalcDeterminant();
@@ -372,7 +372,7 @@ double SquareMatrix::CalcCofactor(int i, int j)
     }
 }
 
-// ¼ÆËãÐÐÁÐÊ½µÄÖµ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½Öµ
 double SquareMatrix::CalcDeterminant()
 {
     int n = Rows();
@@ -414,7 +414,7 @@ void SquareMatrix::_PermuteVisitor(SquareMatrix& m, int index[], int n)
     }
 }
 
-// È«ÅÅÁÐµÄÄæÐò¼ÆÊý
+// È«ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int SquareMatrix::_CalcReverseOrderCount(int index[], int n)
 {
     int count = 0; // reversed indices order counter

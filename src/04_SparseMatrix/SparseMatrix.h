@@ -21,8 +21,8 @@ template<class T> class SparseMatrix;
 template<class T>
 class Term {
     friend class SparseMatrix<T>;
-    template<class T> friend istream& operator>>(istream&, SparseMatrix<T>&);
-    template<class T> friend ostream& operator<<(ostream&, const SparseMatrix<T>&);
+    template<class E> friend istream& operator>>(istream&, SparseMatrix<E>&);
+    template<class E> friend ostream& operator<<(ostream&, const SparseMatrix<E>&);
 private:
     int r; // row No.
     int c; // column No.
@@ -48,8 +48,8 @@ public:
     void Add(const SparseMatrix<T>& sm, SparseMatrix<T>& dm) const;
 
     // I/O operators
-    template<class T> friend istream& operator>>(istream&, SparseMatrix<T>&);
-    template<class T> friend ostream& operator<<(ostream&, const SparseMatrix<T>&);
+    template<class E> friend istream& operator>>(istream&, SparseMatrix<E>&);
+    template<class E> friend ostream& operator<<(ostream&, const SparseMatrix<E>&);
     void Output(ostream& os) const;
 
 protected:
@@ -89,7 +89,7 @@ istream& operator>>(istream& is, SparseMatrix<T>& m)
         << ", columns: " << c
         << ", none-zero elements: " << n
         << endl;
-        
+
     cout << "Second, enter the none-zero elements INCREAMENTLY (row column value):" << endl;
 
     for (int i = 0; i < m.size; i++) {
@@ -229,7 +229,7 @@ void SparseMatrix<T>::Add(const SparseMatrix<T>& sm, SparseMatrix<T>& dm) const
 
     int ptr1 = 0; // pointer for *this
     int ptr2 = 0; // pointer for sm
-    
+
     while (ptr1 < size && ptr2 < sm.size) {
         int pos1 = elements[ptr1].r * columns + elements[ptr1].c;
         int pos2 = sm.elements[ptr2].r * columns + sm.elements[ptr2].c;

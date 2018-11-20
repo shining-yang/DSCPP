@@ -31,11 +31,11 @@ private:
     friend class CRowNode < T >;
     friend class CSparseMatrixStdList < T > ;
 
-    template<typename T>
-    friend ostream& operator<<(ostream& os, const CColumnNode<T>& o);
+    template<typename E>
+    friend ostream& operator<<(ostream& os, const CColumnNode<E>& o);
 
-    template<typename T>
-    friend istream& operator>>(istream& is, CSparseMatrixStdList<T>& o);
+    template<typename E>
+    friend istream& operator>>(istream& is, CSparseMatrixStdList<E>& o);
 };
 
 template<typename T>
@@ -59,18 +59,18 @@ private:
 
     friend class CSparseMatrixStdList < T > ;
 
-    template<typename T>
-    friend ostream& operator<<(ostream& os, const CRowNode<T>& o);
+    template<typename E>
+    friend ostream& operator<<(ostream& os, const CRowNode<E>& o);
 
-    template<typename T>
-    friend istream& operator>>(istream& is, CSparseMatrixStdList<T>& o);
+    template<typename E>
+    friend istream& operator>>(istream& is, CSparseMatrixStdList<E>& o);
 };
 
 template<typename T>
 void CRowNode<T>::AddElementNode(int c, const T& d)
 {
-    std::list<CColumnNode<T> >::iterator pre = cl.begin();
-    std::list<CColumnNode<T> >::iterator itcol = cl.begin();
+    auto pre = cl.begin();
+    auto itcol = cl.begin();
 
     for ( ; itcol != cl.end(); ++itcol) {
         if (c == itcol->column) { // update if already exists
@@ -84,7 +84,7 @@ void CRowNode<T>::AddElementNode(int c, const T& d)
 
         pre = itcol;
     }
-    
+
     cl.insert(itcol, CColumnNode<T>(c, d));
 }
 
@@ -92,7 +92,7 @@ template<typename T>
 ostream& operator<<(ostream& os, const CRowNode<T>& o)
 {
     os << "Row " << o.row << ": ";
-    for (std::list<CColumnNode<T> >::const_iterator it = o.cl.cbegin();
+    for (auto it = o.cl.cbegin();
         it != o.cl.cend();
         ++it) {
         if (it != o.cl.cbegin()) {
@@ -122,20 +122,20 @@ private:
     int columns;    // columns of sparse matrix
     std::list<CRowNode<T> > rl; // list of row node
 
-    template<typename T>
-    friend ostream& operator<<(ostream& os, const CSparseMatrixStdList<T>& o);
+    template<typename E>
+    friend ostream& operator<<(ostream& os, const CSparseMatrixStdList<E>& o);
 
-    template<typename T>
-    friend istream& operator>>(istream& is, CSparseMatrixStdList<T>& o);
+    template<typename E>
+    friend istream& operator>>(istream& is, CSparseMatrixStdList<E>& o);
 };
 
 template<typename T>
 void CSparseMatrixStdList<T>::_AddElement(int r, int c, const T& d)
 {
-    std::list<CRowNode<T> >::iterator pre = rl.begin();
-    std::list<CRowNode<T> >::iterator itrow = rl.begin();
+    auto pre = rl.begin();
+    auto itrow = rl.begin();
 
-    for ( ; itrow != rl.end(); ++itrow) {
+    for (; itrow != rl.end(); ++itrow) {
         if (r == itrow->row) { // Row already exists
             itrow->AddElementNode(c, d);
             return;
@@ -148,7 +148,7 @@ void CSparseMatrixStdList<T>::_AddElement(int r, int c, const T& d)
         pre = itrow;
     }
 
-    std::list<CRowNode<T> >::iterator newitrow = rl.insert(itrow, CRowNode<T>(r));
+    auto newitrow = rl.insert(itrow, CRowNode<T>(r));
     newitrow->AddElementNode(c, d);
 }
 
@@ -167,10 +167,10 @@ void CSparseMatrixStdList<T>::Transpose(CSparseMatrixStdList<T>& o) const
     o.rows = columns;
     o.columns = rows;
 
-    for (std::list<CRowNode<T> >::const_iterator itrow = rl.begin();
+    for (auto itrow = rl.begin();
         itrow != rl.end();
         ++itrow) {
-        for (std::list<CColumnNode<T> >::const_iterator itcol = itrow->cl.begin();
+        for (auto itcol = itrow->cl.begin();
             itcol != itrow->cl.end();
             ++itcol) {
             o._AddElement(itcol->column, itrow->row, itcol->data);
@@ -182,7 +182,7 @@ template<typename T>
 ostream& operator<<(ostream& os, const CSparseMatrixStdList<T>& o)
 {
     os << "Dimension of matrix: " << o.rows << " x " << o.columns << endl;
-    for (std::list<CRowNode<T> >::const_iterator it = o.rl.cbegin();
+    for (auto it = o.rl.cbegin();
         it != o.rl.cend();
         ++it) {
         if (it != o.rl.cbegin()) {
@@ -221,7 +221,7 @@ istream& operator>>(istream& is, CSparseMatrixStdList<T>& o)
         bool inserted = false;
         CColumnNode<T> cnode(c, v);
 
-        for (std::list<CRowNode<T> >::iterator it = o.rl.begin();
+        for (auto it = o.rl.begin();
             it != o.rl.end();
             ++it) {
             if (it->row == r) {
