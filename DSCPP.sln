@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceStatistics", "src\PerformanceStatistics\PerformanceStatistics.vcxproj", "{C882E9C5-379E-4FEA-B0FB-535798FB6C66}"
 EndProject
@@ -15,8 +15,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_Subset", "src\01_Subset\01_Subset.vcxproj", "{4AAFC31C-F465-4109-93D6-AF7EA36AF879}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_Currency", "src\01_Currency\01_Currency.vcxproj", "{876BEFAD-B098-47CA-8F65-AF6D90975CFE}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Trial", "src\Trial\Trial.vcxproj", "{AA812970-8040-4D58-8811-B0BEB8C7B6FF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02_RankSort", "src\02_RankSort\02_RankSort.vcxproj", "{8DA0B896-C9F1-4FD5-B5C1-4BD981AE7C8A}"
 EndProject
@@ -118,10 +116,6 @@ Global
 		{876BEFAD-B098-47CA-8F65-AF6D90975CFE}.Debug|Win32.Build.0 = Debug|Win32
 		{876BEFAD-B098-47CA-8F65-AF6D90975CFE}.Release|Win32.ActiveCfg = Release|Win32
 		{876BEFAD-B098-47CA-8F65-AF6D90975CFE}.Release|Win32.Build.0 = Release|Win32
-		{AA812970-8040-4D58-8811-B0BEB8C7B6FF}.Debug|Win32.ActiveCfg = Debug|Win32
-		{AA812970-8040-4D58-8811-B0BEB8C7B6FF}.Debug|Win32.Build.0 = Debug|Win32
-		{AA812970-8040-4D58-8811-B0BEB8C7B6FF}.Release|Win32.ActiveCfg = Release|Win32
-		{AA812970-8040-4D58-8811-B0BEB8C7B6FF}.Release|Win32.Build.0 = Release|Win32
 		{8DA0B896-C9F1-4FD5-B5C1-4BD981AE7C8A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8DA0B896-C9F1-4FD5-B5C1-4BD981AE7C8A}.Debug|Win32.Build.0 = Debug|Win32
 		{8DA0B896-C9F1-4FD5-B5C1-4BD981AE7C8A}.Release|Win32.ActiveCfg = Release|Win32
