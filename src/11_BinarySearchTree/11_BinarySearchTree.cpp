@@ -3,7 +3,9 @@
 // Shining Yang <y.s.n@live.com>, 2014-12-15
 //
 #include "BinarySearchTree.h"
+
 using namespace DSCPP::SearchTree;
+
 int main(int argc, char* argv[])
 {
     int dummy;

@@ -28,8 +28,8 @@ public:
     SortedList<E, K>& Insert(const E& e);
     SortedList<E, K>& Delete(const K& k, E& e);
 
-    template<typename E, typename K>
-    friend std::ostream&  operator<<(std::ostream& os, const SortedList<E, K>& sl);
+    template<typename ET, typename KT>
+    friend std::ostream&  operator<<(std::ostream& os, const SortedList<ET, KT>& sl);
 
 protected:
     int _Locate(const K& k) const;
@@ -202,11 +202,11 @@ SortedList<E, K>& SortedList<E, K>::Insert(const E& e)
         if (elements[pos] == k) {
             throw new ItemAlreadyExisted();
         }
-        
+
         if (elements[pos] < k) {
             pos++;
         }
-        
+
         _MoveExpand(pos);
         elements[pos] = e;
         length++;

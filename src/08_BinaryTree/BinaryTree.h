@@ -110,7 +110,7 @@ public:
     void Clone(BinaryTree<T>& cp) const;
     bool Compare(const BinaryTree<T>& bt) const;
     void BuildCompleteBinaryTree(const T a[], int n);
-    
+
 protected:
     void _InOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
     void _PreOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
@@ -150,8 +150,8 @@ protected:
 protected:
     static void _DestroyVisitor(const BinaryTreeNode<T>* t);
     // For convenience of derived class to access the tree-node pointer.
-    BinaryTreeNode<T>* & Root() { return root; }
-    const BinaryTreeNode<T>* const & Root() const { return root; }
+    BinaryTreeNode<T>* & RootNodePtr() { return root; }
+    const BinaryTreeNode<T>* const & RootNodePtr() const { return root; }
 
 private:
     BinaryTreeNode<T>* root;
@@ -384,7 +384,7 @@ void BinaryTree<T>::_PrintHorz(BinaryTreeNode<T>* t, int pos, int indent) const
             std::cout << " ";
         }
         std::cout << t->Data() << endl;
-        
+
         _PrintHorz(t->lchild, pos + indent, indent);
     }
 }

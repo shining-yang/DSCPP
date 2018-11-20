@@ -6,6 +6,7 @@
 //
 #pragma once
 
+#include <cmath>
 #include <iostream>
 #include "../Utility/Exception.h"
 
@@ -37,7 +38,7 @@ public:
     MaxHeap<T>& DeleteMax(T& e);
     void Output(ostream& os) const;
     void PrintTreeVertically(ostream& os, int width) const;
-    
+
 public:
     static void Sort(T a[], int n);
 
@@ -230,7 +231,7 @@ void MaxHeap<T>::PrintTreeVertically(ostream& os, int width) const
 template<typename T>
 void MaxHeap<T>::_PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel, int nCount, int nWidth) const
 {
-    // °´ÐÐ¾ù·Ö£¬¼´N¸ö½áµã½«ÇøÓò»®·ÖÎª N+1 µÈ·Ý
+    // ï¿½ï¿½ï¿½Ð¾ï¿½ï¿½Ö£ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½ï¿½ã½«ï¿½ï¿½ï¿½ò»®·ï¿½Îª N+1 ï¿½È·ï¿½
     int nSegmentLen = nWidth / ((1 << nLevel) + 1);
     int nBlanks = nSegmentLen - 1; // assume that ELEMENT occupies 1 character
     for (int i = 0; i < nCount; i++) {

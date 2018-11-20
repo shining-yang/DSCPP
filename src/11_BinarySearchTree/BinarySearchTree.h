@@ -23,12 +23,12 @@ public:
     bool Search(const K& k, E& e) const;
     virtual BSTree<E, K>& Insert(const E& e);
     BSTree<E, K>& Delete(const K& k, E& e);
-    
+
     BSTree<E, K>& DeleteMax(E& e);
     BSTree<E, K>& DeleteMin(E& e);
 
     void OutputAscending() const {
-        InOrder(_PrintNode);
+        DSCPP::BinaryTree::BinaryTree<E>::InOrder(_PrintNode);
     }
 
 protected:
@@ -40,7 +40,9 @@ protected:
 template<typename E, typename K>
 bool BSTree<E, K>::Search(const K& k, E& e) const
 {
-    const BinaryTreeNode<E>* r = Root();
+    const DSCPP::BinaryTree::BinaryTreeNode<E>* r =
+        DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr();
+
     while (r) {
         if (k < r->data) {
             r = r->lchild;
@@ -59,8 +61,8 @@ template<typename E, typename K>
 BSTree<E, K>& BSTree<E, K>::Insert(const E& e)
 {
     K k = e; // auto conversion from E to K
-    BinaryTreeNode<E>* p = Root();
-    BinaryTreeNode<E>* pp = NULL; // parent
+    DSCPP::BinaryTree::BinaryTreeNode<E>* p = DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr();
+    DSCPP::BinaryTree::BinaryTreeNode<E>* pp = NULL; // parent
     while (p) {
         pp = p;
         if (k < p->data) {
@@ -71,10 +73,10 @@ BSTree<E, K>& BSTree<E, K>::Insert(const E& e)
             throw new ItemAlreadyExisted();
         }
     }
-    
-    BinaryTreeNode<E>* q = new BinaryTreeNode<E>(e);
+
+    DSCPP::BinaryTree::BinaryTreeNode<E>* q = new DSCPP::BinaryTree::BinaryTreeNode<E>(e);
     if (!pp) {
-        Root() = q;
+        DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr() = q;
     } else {
         if (k < pp->data) {
             pp->lchild = q;
@@ -89,8 +91,8 @@ BSTree<E, K>& BSTree<E, K>::Insert(const E& e)
 template<typename E, typename K>
 BSTree<E, K>& BSTree<E, K>::Delete(const K& k, E& e)
 {
-    BinaryTreeNode<E>* p = Root();
-    BinaryTreeNode<E>* pp = NULL; // parent
+    DSCPP::BinaryTree::BinaryTreeNode<E>* p = DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr();
+    DSCPP::BinaryTree::BinaryTreeNode<E>* pp = NULL; // parent
 
     while (p && (k != p->data)) {
         pp = p;
@@ -127,7 +129,7 @@ BSTree<E, K>& BSTree<E, K>::Delete(const K& k, E& e)
     }
 
     if (!pp) { // it's root
-        Root() = c;
+        DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr() = c;
     } else if (pp->lchild == p) {
         pp->lchild = c;
     } else {
@@ -141,8 +143,8 @@ BSTree<E, K>& BSTree<E, K>::Delete(const K& k, E& e)
 template<typename E, typename K>
 BSTree<E, K>& BSTree<E, K>::DeleteMax(E& e)
 {
-    BinaryTreeNode<E>* p = Root();
-    BinaryTreeNode<E>* pp = NULL;
+    DSCPP::BinaryTree::BinaryTreeNode<E>* p = DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr();
+    DSCPP::BinaryTree::BinaryTreeNode<E>* pp = NULL;
 
     if (!p) {
         throw new ItemUnderFlow();
@@ -154,7 +156,7 @@ BSTree<E, K>& BSTree<E, K>::DeleteMax(E& e)
     }
 
     if (!pp) { // it's the root node
-        Root() = p->lchild;
+        DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr() = p->lchild;
     } else {
         pp->rchild = p->lchild;
     }
@@ -167,8 +169,8 @@ BSTree<E, K>& BSTree<E, K>::DeleteMax(E& e)
 template<typename E, typename K>
 BSTree<E, K>& BSTree<E, K>::DeleteMin(E& e)
 {
-    BinaryTreeNode<E>* p = Root();
-    BinaryTreeNode<E>* pp = NULL;
+    DSCPP::BinaryTree::BinaryTreeNode<E>* p = DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr();
+    DSCPP::BinaryTree::BinaryTreeNode<E>* pp = NULL;
 
     if (!p) {
         throw new ItemUnderFlow();
@@ -180,7 +182,7 @@ BSTree<E, K>& BSTree<E, K>::DeleteMin(E& e)
     }
 
     if (!pp) {
-        Root() = p->rchild;
+        DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr() = p->rchild;
     } else {
         pp->lchild = p->rchild;
     }
@@ -209,8 +211,8 @@ template<typename E, typename K>
 DupBSTree<E, K>& DupBSTree<E, K>::Insert(const E& e)
 {
     K k = e; // auto conversion from E to K
-    BinaryTreeNode<E>* p = Root();
-    BinaryTreeNode<E>* pp = NULL; // parent
+    DSCPP::BinaryTree::BinaryTreeNode<E>* p = DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr();
+    DSCPP::BinaryTree::BinaryTreeNode<E>* pp = NULL; // parent
     while (p) {
         pp = p;
         if (k <= p->data) { // allow duplicate elements
@@ -222,7 +224,7 @@ DupBSTree<E, K>& DupBSTree<E, K>::Insert(const E& e)
 
     BinaryTreeNode<E>* q = new BinaryTreeNode<E>(e);
     if (!pp) {
-        Root() = q;
+        DSCPP::BinaryTree::BinaryTree<E>::RootNodePtr() = q;
     } else {
         if (k < pp->data) {
             pp->lchild = q;
