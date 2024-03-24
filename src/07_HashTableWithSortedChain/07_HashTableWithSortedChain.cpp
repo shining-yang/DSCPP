@@ -1,12 +1,12 @@
 //
 // File: 07_HashTableWithSortedChain.cpp
 //
-#include <iostream>
 #include "HashTableWithSortedChain.h"
+#include <iostream>
 using namespace std;
 using namespace DSCPP::Hash;
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   int dummy;
   HashTableWithSortedChain<int, int> h;
   cout << h << endl;

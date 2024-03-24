@@ -2,18 +2,17 @@
 // File: 08_BinaryTree.cpp
 // Shining Yang <y.s.n@live.com>, 2014-12-03
 //
-#include <iostream>
 #include "BinaryTree.h"
+#include <iostream>
 
 using namespace std;
 using namespace DSCPP::BinaryTree;
 
-template<typename T>
-void PrintNode(const BinaryTreeNode<T>* n) {
+template <typename T> void PrintNode(const BinaryTreeNode<T> *n) {
   cout << n->Data() << " ";
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   BinaryTree<char> bt;
   BinaryTree<char> x, a, b, c, d, e, f, g, h, i, j, T;
   a.MakeTree('A', x, x);
@@ -80,4 +79,3 @@ int main(int argc, char* argv[]) {
   ST.PrintVerticallyWithLine(78);
   return 0;
 }
-

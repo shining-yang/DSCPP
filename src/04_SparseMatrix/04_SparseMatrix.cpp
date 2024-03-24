@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   cout << "> Creating sm <" << endl;
   SparseMatrix<int> sm;
   cin >> sm;

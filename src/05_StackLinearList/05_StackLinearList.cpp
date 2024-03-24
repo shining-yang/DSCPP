@@ -3,11 +3,11 @@
 //
 #include "StackLinearList.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 #if 0
   typedef DSCPP::Stack::Stack<char>   CharStack;
 #else
-  typedef DSCPP::Stack::LinearStack2<char>  CharStack;
+  typedef DSCPP::Stack::LinearStack2<char> CharStack;
 #endif
 
   char c;
@@ -28,11 +28,12 @@ int main(int argc, char* argv[]) {
 #if 0
   typedef DSCPP::Stack::Stack<DSCPP::Stack::Stack<char> > CharStackStack;
 #else
-  typedef DSCPP::Stack::LinearStack2<DSCPP::Stack::LinearStack2<char> > CharStackStack;
+  typedef DSCPP::Stack::LinearStack2<DSCPP::Stack::LinearStack2<char>>
+      CharStackStack;
 #endif
   CharStackStack css;
   cout << (css.IsFull() ? "Y" : "N") << endl;
-//     css.Push(sc); // Error: no proper copy-constructor/operator=() provided
+  //     css.Push(sc); // Error: no proper copy-constructor/operator=() provided
 
   return 0;
 }

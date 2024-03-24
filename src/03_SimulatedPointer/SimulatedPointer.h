@@ -1,7 +1,7 @@
 //
 // File: SimulatedPointer.h
 //
-// Ä£ÄâÖ¸Õë
+// æ¨¡æ‹ŸæŒ‡é’ˆ
 //
 // 2014/9/5, Shining Yang <y.s.n@live.com>
 //
@@ -10,35 +10,33 @@
 #include <iostream>
 using namespace std;
 
-class OutOfBounds {
-};
+class OutOfBounds {};
 
-class NoMem {
-};
+class NoMem {};
 
-template<class T> class SimNode;
-template<class T> class SimSpace;
-template<class T> class SimChain;
+template <class T> class SimNode;
+template <class T> class SimSpace;
+template <class T> class SimChain;
 
-template<class T>
-class SimNode {
-  friend class SimSpace < T > ;
-  friend class SimChain < T > ;
- private:
+template <class T> class SimNode {
+  friend class SimSpace<T>;
+  friend class SimChain<T>;
+
+private:
   T data;
   int link;
 };
 
 //------------------------------------------------------------------------------
 // SimSpace NOTES:
-// Ê¹ÓÃÁ½¸ö±äÁ¿µÄ·½·¨£¬ÆäĞ§ÂÊ»á¸ßĞ©¡£ÒòÎªËüµÄ¹¹Ôìº¯Êı²»ĞèÒª¶Ô·ÖÅäµÄ´æ´¢½øĞĞ³õÊ¼»¯¡£
-// ¶øÁ½ÖÖ·½·¨µÄAllocate/Deallocate¶¼ÊÇÒ»Ñù´úÂë£¬£¨AllocateÉÔÓĞÇø±ğ£¬µ«±ÈÆğÇ°ÕßµÄ
-// ¹¹Ôìº¯Êı³õÊ¼»¯¶øÑÔ£¬ÆäĞ§ÂÊÍ¨³£Òª¸ßĞ©£©
+// ä½¿ç”¨ä¸¤ä¸ªå˜é‡çš„æ–¹æ³•ï¼Œå…¶æ•ˆç‡ä¼šé«˜äº›ã€‚å› ä¸ºå®ƒçš„æ„é€ å‡½æ•°ä¸éœ€è¦å¯¹åˆ†é…çš„å­˜å‚¨è¿›è¡Œåˆå§‹åŒ–ã€‚
+// è€Œä¸¤ç§æ–¹æ³•çš„Allocate/Deallocateéƒ½æ˜¯ä¸€æ ·ä»£ç ï¼Œï¼ˆAllocateç¨æœ‰åŒºåˆ«ï¼Œä½†æ¯”èµ·å‰è€…çš„
+// æ„é€ å‡½æ•°åˆå§‹åŒ–è€Œè¨€ï¼Œå…¶æ•ˆç‡é€šå¸¸è¦é«˜äº›ï¼‰
 //------------------------------------------------------------------------------
 
 #if 0
 //
-// Ê¹ÓÃÒ»¸ö±äÁ¿£¨first£©Ö¸Ê¾¿ÉÓÃ¿Õ¼ä±í
+// ä½¿ç”¨ä¸€ä¸ªå˜é‡ï¼ˆfirstï¼‰æŒ‡ç¤ºå¯ç”¨ç©ºé—´è¡¨
 //
 template<class T>
 class SimSpace {
@@ -97,41 +95,35 @@ void SimSpace<T>::Deallocate(int& i) {
 }
 #else
 //
-// Ê¹ÓÃÁ½¸ö±äÁ¿£¨first1, first2£©Ö¸Ê¾¿ÉÓÃ¿Õ¼ä±í
+// ä½¿ç”¨ä¸¤ä¸ªå˜é‡ï¼ˆfirst1, first2ï¼‰æŒ‡ç¤ºå¯ç”¨ç©ºé—´è¡¨
 //
-template<class T>
-class SimSpace {
-  friend class SimChain < T > ;
+template <class T> class SimSpace {
+  friend class SimChain<T>;
 
- public:
+public:
   SimSpace(int nSize = 100);
   ~SimSpace();
 
- public:
+public:
   int Allocate();
-  void Deallocate(int& i);
+  void Deallocate(int &i);
 
- private:
+private:
   int num;
   int first1, first2;
-  SimNode<T>* node;
+  SimNode<T> *node;
 };
 
-template<class T>
-SimSpace<T>::SimSpace(int nSize /*= 100*/) {
+template <class T> SimSpace<T>::SimSpace(int nSize /*= 100*/) {
   node = new SimNode<T>[nSize];
   num = nSize;
   first1 = 0;
   first2 = -1;
 }
 
-template<class T>
-SimSpace<T>::~SimSpace() {
-  delete[] node;
-}
+template <class T> SimSpace<T>::~SimSpace() { delete[] node; }
 
-template<class T>
-int SimSpace<T>::Allocate() {
+template <class T> int SimSpace<T>::Allocate() {
   if (first2 == -1) {
     if (first1 == num) {
       throw new NoMem();
@@ -144,8 +136,7 @@ int SimSpace<T>::Allocate() {
   return i;
 }
 
-template<class T>
-void SimSpace<T>::Deallocate(int& i) {
+template <class T> void SimSpace<T>::Deallocate(int &i) {
   if (i < 0 || i > num - 1) {
     throw new OutOfBounds();
   }
@@ -159,29 +150,27 @@ void SimSpace<T>::Deallocate(int& i) {
 //
 // SimChain
 //
-template<class T>
-class SimChain {
- public:
+template <class T> class SimChain {
+public:
   SimChain() { first = -1; }
   ~SimChain() { Destroy(); }
-  void Destroy(); // Ê¹±íÎª¿Õ
+  void Destroy(); // ä½¿è¡¨ä¸ºç©º
   int Length() const;
-  bool Find(int k, T& x) const;
-  int Search(const T& x) const;
-  SimChain<T>& Delete(int k, T& x);
-  SimChain<T>& Insert(int k, const T& x);
-  void Output(ostream& out) const;
+  bool Find(int k, T &x) const;
+  int Search(const T &x) const;
+  SimChain<T> &Delete(int k, T &x);
+  SimChain<T> &Insert(int k, const T &x);
+  void Output(ostream &out) const;
 
- private:
-  int first; // µÚÒ»¸ö½ÚµãµÄË÷Òı
+private:
+  int first; // ç¬¬ä¸€ä¸ªèŠ‚ç‚¹çš„ç´¢å¼•
   static SimSpace<T> S;
 };
 
 // static member shared by all SimChain instances
-template<class T> SimSpace<T> SimChain<T>::S;
+template <class T> SimSpace<T> SimChain<T>::S;
 
-template<class T>
-void SimChain<T>::Destroy() {
+template <class T> void SimChain<T>::Destroy() {
   int next;
   while (first != -1) {
     next = S.node[first].link;
@@ -190,8 +179,7 @@ void SimChain<T>::Destroy() {
   }
 }
 
-template<class T>
-int SimChain<T>::Length() const {
+template <class T> int SimChain<T>::Length() const {
   int n = 0;
   for (int i = first; i != -1; i = S.node[i].link) {
     n++;
@@ -200,8 +188,7 @@ int SimChain<T>::Length() const {
 }
 
 // 0-based index
-template<class T>
-bool SimChain<T>::Find(int k, T& x) const {
+template <class T> bool SimChain<T>::Find(int k, T &x) const {
   if (k < 0) {
     return false;
   }
@@ -216,8 +203,7 @@ bool SimChain<T>::Find(int k, T& x) const {
 }
 
 // 0-based index
-template<class T>
-int SimChain<T>::Search(const T& x) const {
+template <class T> int SimChain<T>::Search(const T &x) const {
   int n = -1;
   for (int i = first; i != -1; i = S.node[i].link) {
     n++;
@@ -229,8 +215,7 @@ int SimChain<T>::Search(const T& x) const {
 }
 
 // 0-based index
-template<class T>
-SimChain<T>& SimChain<T>::Delete(int k, T& x) {
+template <class T> SimChain<T> &SimChain<T>::Delete(int k, T &x) {
   if (k < 0) {
     throw new OutOfBounds();
   }
@@ -258,8 +243,7 @@ SimChain<T>& SimChain<T>::Delete(int k, T& x) {
 }
 
 // 0-based index
-template<class T>
-SimChain<T>& SimChain<T>::Insert(int k, const T& x) {
+template <class T> SimChain<T> &SimChain<T>::Insert(int k, const T &x) {
   if (k < 0) {
     throw new OutOfBounds();
   }
@@ -272,7 +256,7 @@ SimChain<T>& SimChain<T>::Insert(int k, const T& x) {
     first = y;
   } else {
     int i = first; // position to be inserted
-    int j; // previous node
+    int j;         // previous node
     while (i != -1 && k-- > 0) {
       j = i;
       i = S.node[i].link;
@@ -293,15 +277,13 @@ SimChain<T>& SimChain<T>::Insert(int k, const T& x) {
   return *this;
 }
 
-template<class T>
-void SimChain<T>::Output(ostream& os) const {
+template <class T> void SimChain<T>::Output(ostream &os) const {
   for (int i = first; i != -1; i = S.node[i].link) {
     os << S.node[i].data << " ";
   }
 }
 
-template<class T>
-ostream& operator<<(std::ostream& os, const SimChain<T>& c) {
+template <class T> ostream &operator<<(std::ostream &os, const SimChain<T> &c) {
   c.Output(os);
   return os;
 }

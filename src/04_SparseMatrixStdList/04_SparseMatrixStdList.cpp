@@ -3,7 +3,7 @@
 //
 #include "SparseMatrixStdList.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   CSparseMatrixStdList<int> sml;
   cin >> sml;
   cout << sml << endl;

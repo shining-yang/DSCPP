@@ -5,7 +5,7 @@
 //
 #include "DoublyLinkedCircularList.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   DoublyLinkedCircularList<char> o;
 
   char c = '$';
@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
   bool found;
 
   pos = o.Search('$');
-  //found = o.Find(pos, c2); // exception: -1 as argument
+  // found = o.Find(pos, c2); // exception: -1 as argument
 
   o.PushBack(c);
 
@@ -42,13 +42,13 @@ int main(int argc, char* argv[]) {
   cout << o << endl;
 
   c = 'X';
-  //o.PushBack(c++).PushBack(c++);
+  // o.PushBack(c++).PushBack(c++);
   o.PushBack(c++);
   o.PushBack(c++);
   cout << o << endl;
 
   c = '1';
-  //o.PushFront(c++).PushFront(c++);
+  // o.PushFront(c++).PushFront(c++);
   o.PushFront(c++);
   o.PushFront(c++);
   cout << o << endl;

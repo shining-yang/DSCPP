@@ -4,7 +4,7 @@
 #include "LinearQueue.h"
 using namespace DSCPP::Queue;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   LinearQueue<char> q;
   char c = 'A';
   int n = 0;
@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
     q.EnQueue(c + i);
   }
 
-  //q.EnQueue('X');
+  // q.EnQueue('X');
   n = q.GetCapacity();
   n = q.GetLength();
 

@@ -7,10 +7,10 @@
 #include <iostream>
 using namespace std;
 
-#include <vector>
 #include <set>
+#include <vector>
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   SparseMatrixLinked<int> sml;
   cin >> sml;
   cout << sml << endl;

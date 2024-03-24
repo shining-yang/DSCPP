@@ -1,18 +1,20 @@
-// 03_SinglyLinkedList.cpp : Defines the entry point for the console application.
+// 03_SinglyLinkedList.cpp : Defines the entry point for the console
+// application.
 //
 // Singly linked list
 // Shining Yang <y.s.n@live.com>, 2014/09/02
 
 #include <iostream>
-#include "../Utility/NewHandler.h"
+
 #include "../PerformanceStatistics/HighResTimeCounter.h"
+#include "../Utility/NewHandler.h"
 #include "SinglyLinkedList.h"
 
 using namespace std;
 #pragma comment(lib, "Utility")
 #pragma comment(lib, "PerformanceStatistics")
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   ApplyCustomNewHandler();
 
   Chain<int> c;
@@ -31,11 +33,11 @@ int main(int argc, char* argv[]) {
 
   Chain<int> cp = c;
   cp.Reverse();
-  for (Chain<int>::Iterator it = cp.Begin(); it != cp.End(); ) {
+  for (Chain<int>::Iterator it = cp.Begin(); it != cp.End();) {
     std::cout << *it++ << " ";
   }
 
-//--------------------------------------------------------------------------
+  //--------------------------------------------------------------------------
   Chain<int> cr1 = cp;
   Chain<int> cr2;
   CHighResTimeCounter tc;
@@ -50,7 +52,7 @@ int main(int argc, char* argv[]) {
   tc.End();
   std::cout << "\nTime costed: " << tc.GetElapsedTimeInMS() << std::endl;
 
-//--------------------------------------------------------------------------
+  //--------------------------------------------------------------------------
   Chain<int> ca = c;
   ca.Insert(0, 7);
   ca.Insert(4, 5);
@@ -72,4 +74,3 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
-

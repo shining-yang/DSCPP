@@ -2,16 +2,15 @@
 //
 // 2014/8/25, Shining Yang <y.s.n@live.com>
 //
-// Ê×ÏÈÕÒ³ö×î´óµÄÔªËØ£¬°ÑËüÒÆ¶¯µ½a[n-1]£¬È»ºóÔÚÓàÏÂµÄn-1¸öÔªËØÖĞÑ°ÕÒ×î´óµÄÔªËØ
-// ²¢°ÑËüÒÆ¶¯µ½a[n-2]£¬Èç´Ë½øĞĞÏÂÈ¥£¬ÕâÖÖÅÅĞò·½·¨ÎªÑ¡ÔñÅÅĞò£¨selection sort£©
+// é¦–å…ˆæ‰¾å‡ºæœ€å¤§çš„å…ƒç´ ï¼ŒæŠŠå®ƒç§»åŠ¨åˆ°a[n-1]ï¼Œç„¶ååœ¨ä½™ä¸‹çš„n-1ä¸ªå…ƒç´ ä¸­å¯»æ‰¾æœ€å¤§çš„å…ƒç´ 
+// å¹¶æŠŠå®ƒç§»åŠ¨åˆ°a[n-2]ï¼Œå¦‚æ­¤è¿›è¡Œä¸‹å»ï¼Œè¿™ç§æ’åºæ–¹æ³•ä¸ºé€‰æ‹©æ’åºï¼ˆselection sortï¼‰
 //
 #include <stdio.h>
+
 #include "../Utility/Misc.h"
 using namespace DSCPP::Utils;
 
-
-template<class T>
-int GetMaxIndex(T a[], int n) {
+template <class T> int GetMaxIndex(T a[], int n) {
   int index = 0;
   for (int i = 1; i < n; i++) {
     if (a[index] < a[i]) {
@@ -21,8 +20,7 @@ int GetMaxIndex(T a[], int n) {
   return index;
 }
 
-template<class T>
-void SelectionSort(T a[], int n) {
+template <class T> void SelectionSort(T a[], int n) {
   for (int i = n; i > 1; i--) {
     int index = GetMaxIndex(a, i);
     Swap(a[index], a[i - 1]);
@@ -30,25 +28,23 @@ void SelectionSort(T a[], int n) {
 }
 
 // {{ Stop sorting immediately when it's already sorted
-template<class T>
-void SelectionSortStopInTime(T a[], int n) {
-  // ¼°Ê±ÖÕÖ¹µÄÑ¡ÔñÅÅĞò
+template <class T> void SelectionSortStopInTime(T a[], int n) {
+  // åŠæ—¶ç»ˆæ­¢çš„é€‰æ‹©æ’åº
   bool sorted = false;
   for (int size = n; !sorted && (size > 1); size--) {
     int pos = 0;
     sorted = true;
-    for (int i = 0; i < size; i++) { // ÕÒ×î´óÔªËØ
+    for (int i = 0; i < size; i++) { // æ‰¾æœ€å¤§å…ƒç´ 
       if (a[pos] <= a[i]) {
         pos = i;
       } else {
-        sorted = false; // Î´°´ĞòÅÅÁĞ
+        sorted = false; // æœªæŒ‰åºæ’åˆ—
       }
     }
     Swap(a[pos], a[size - 1]);
   }
 }
 //}}
-
 
 void PrintArray(int a[], int n) {
   for (int i = 0; i < n; i++) {
@@ -57,8 +53,8 @@ void PrintArray(int a[], int n) {
   printf("\n");
 }
 
-int main(int argc, char* argv[]) {
-  int a[] = { 10, 5, 21, 13, 44, 13, 5 };
+int main(int argc, char *argv[]) {
+  int a[] = {10, 5, 21, 13, 44, 13, 5};
 #if 0
   SelectionSort(a, sizeof(a) / sizeof(a[0]));
 #else

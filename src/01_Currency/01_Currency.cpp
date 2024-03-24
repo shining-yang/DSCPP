@@ -8,10 +8,11 @@
 //
 
 #include <iostream>
+
 #include "Currency.h"
 using namespace std;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   CCurrency a(3599, 99);
   CCurrency b(11088, 1, MINUS);
   CCurrency c, d, e;
@@ -35,4 +36,3 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
-

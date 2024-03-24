@@ -2,15 +2,14 @@
 //
 // Get all subsets of a given set
 //
-// ¼¯ºÏµÄËùÓĞ×Ó¼¯
+// é›†åˆçš„æ‰€æœ‰å­é›†
 // 2014/8/25, Shining Yang <y.s.n@live.com>
 //
 #include <iostream>
 #include <string>
 using namespace std;
 
-template<class T>
-void PrintSubset(T a[], int size, int index, bool flag[]) {
+template <class T> void PrintSubset(T a[], int size, int index, bool flag[]) {
   if (index < size) {
     flag[index] = false;
     PrintSubset(a, size, index + 1, flag);
@@ -30,9 +29,8 @@ void PrintSubset(T a[], int size, int index, bool flag[]) {
   }
 }
 
-template<class T>
-void PrintSubset(T a[], int size) {
-  bool* flag = new bool[size];
+template <class T> void PrintSubset(T a[], int size) {
+  bool *flag = new bool[size];
   if (flag) {
     PrintSubset(a, size, 0, flag);
     delete[] flag;
@@ -40,7 +38,7 @@ void PrintSubset(T a[], int size) {
 }
 
 void TestPrintSubset() {
-  char a[] = { 'A', 'B', 'C', 'D', 'E' };
+  char a[] = {'A', 'B', 'C', 'D', 'E'};
   PrintSubset<char>(a, sizeof(a) / sizeof(a[0]));
 }
 
@@ -53,10 +51,9 @@ void printsubset(string sofar, string rest) {
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   TestPrintSubset();
 
   printsubset("", "abcd");
   return 0;
 }
-

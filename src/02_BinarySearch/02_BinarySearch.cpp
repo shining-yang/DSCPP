@@ -8,8 +8,7 @@
 #include <stdio.h>
 
 // Binary search from a sorted array
-template<class T>
-int BinarySearch(T a[], int n, const T& x) {
+template <class T> int BinarySearch(T a[], int n, const T &x) {
   int lo = 0;
   int hi = n - 1;
   while (lo <= hi) {
@@ -26,8 +25,8 @@ int BinarySearch(T a[], int n, const T& x) {
 }
 
 // Binary search recursively
-template<class T>
-int BinarySearchRecursively(T a[], int low, int high, const T& x) {
+template <class T>
+int BinarySearchRecursively(T a[], int low, int high, const T &x) {
   if (low > high) {
     return -1;
   }
@@ -42,8 +41,8 @@ int BinarySearchRecursively(T a[], int low, int high, const T& x) {
   }
 }
 
-int main(int argc, char* argv[]) {
-  int a[] = { 1, 2, 3, 5, 8, 13, 21, 34, 65, 99 };
+int main(int argc, char *argv[]) {
+  int a[] = {1, 2, 3, 5, 8, 13, 21, 34, 65, 99};
   int x = 2;
 #if 0
   printf("Index: %d\n",

@@ -3,24 +3,23 @@
 //
 // Shining Yang <y.s.n@live.com>, 2014-11-17
 //
-#include <string>
 #include <iostream>
+#include <string>
 
 #include "SortedChain.h"
 using namespace DSCPP::SortedLinearList;
 
-template<class KT>
-class Employee {
- public:
+template <class KT> class Employee {
+public:
   enum SEX { MALE, FEMALE };
 
   // no need on these
-  //Employee(const Employee<KT>& o);
-  //Employee& operator=(const Employee<KT>& o);
+  // Employee(const Employee<KT>& o);
+  // Employee& operator=(const Employee<KT>& o);
 
   Employee() {}
-  Employee(KT NO, const std::string& name, SEX sex, int age,
-           const std::string& phone, double salary) {
+  Employee(KT NO, const std::string &name, SEX sex, int age,
+           const std::string &phone, double salary) {
     this->NO = NO;
     this->name = name;
     this->sex = sex;
@@ -29,22 +28,16 @@ class Employee {
     this->salary = salary;
   }
 
-  operator KT() const {
-    return NO;
-  }
+  operator KT() const { return NO; }
 
-  bool operator<(KT k) {
-    return NO < k;
-  }
+  bool operator<(KT k) { return NO < k; }
 
-  bool operator==(KT k) {
-    return NO == k;
-  }
+  bool operator==(KT k) { return NO == k; }
 
-  template<class T>
-  friend std::ostream& operator<<(std::ostream& os, const Employee<T>& obj);
+  template <class T>
+  friend std::ostream &operator<<(std::ostream &os, const Employee<T> &obj);
 
- private:
+private:
   KT NO;
   std::string name;
   SEX sex;
@@ -53,16 +46,12 @@ class Employee {
   double salary;
 };
 
-
-template<class KT>
-std::ostream& operator<<(std::ostream& os, const Employee<KT>& obj) {
-  os << "NO: " << obj.NO
-     << " Name: " << obj.name
+template <class KT>
+std::ostream &operator<<(std::ostream &os, const Employee<KT> &obj) {
+  os << "NO: " << obj.NO << " Name: " << obj.name
      << " Gender: " << (obj.sex == Employee<KT>::MALE ? "M" : "F")
-     << " Age: " << obj.age
-     << " Phone: " << obj.phone
-     << " Salary: " << obj.salary
-     << std::endl;
+     << " Age: " << obj.age << " Phone: " << obj.phone
+     << " Salary: " << obj.salary << std::endl;
 
   return os;
 }
@@ -88,7 +77,7 @@ void test1() {
   std::cout << dummy << endl;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 #if 0
   int dummy;
   SortedChain<int, int> s;

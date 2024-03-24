@@ -2,17 +2,16 @@
 //
 // 2014/8/25, Shining Yang <y.s.n@live.com>
 //
-// Ã°ÅİÅÅĞò£¨bubble sort£©²ÉÓÃÒ»ÖÖ¡°Ã°Åİ²ßÂÔ¡±°Ñ×î´óÔªËØÒÆµ½ÓÒ²¿¡£ÔÚÃ°Åİ¹ı³ÌÖĞ£¬
-// ¶ÔÏàÁÚµÄÔªËØ½øĞĞ±È½Ï£¬Èç¹û×ó±ßµÄÔªËØ´óÓÚÓÒ±ßµÄÔªËØ£¬Ôò½»»»ÕâÁ½¸öÔªËØ¡£
+// å†’æ³¡æ’åºï¼ˆbubble sortï¼‰é‡‡ç”¨ä¸€ç§â€œå†’æ³¡ç­–ç•¥â€æŠŠæœ€å¤§å…ƒç´ ç§»åˆ°å³éƒ¨ã€‚åœ¨å†’æ³¡è¿‡ç¨‹ä¸­ï¼Œ
+// å¯¹ç›¸é‚»çš„å…ƒç´ è¿›è¡Œæ¯”è¾ƒï¼Œå¦‚æœå·¦è¾¹çš„å…ƒç´ å¤§äºå³è¾¹çš„å…ƒç´ ï¼Œåˆ™äº¤æ¢è¿™ä¸¤ä¸ªå…ƒç´ ã€‚
 //
 
 #include <stdio.h>
+
 #include "../Utility/Misc.h"
 using namespace DSCPP::Utils;
 
-
-template<class T>
-void Bubble(T a[], int n) {
+template <class T> void Bubble(T a[], int n) {
   for (int i = 0; i < n - 1; i++) {
     if (a[i] > a[i + 1]) {
       Swap(a[i], a[i + 1]);
@@ -20,17 +19,15 @@ void Bubble(T a[], int n) {
   }
 }
 
-template<class T>
-void BubbleSort(T a[], int n) {
+template <class T> void BubbleSort(T a[], int n) {
   for (int i = n; i > 1; i--) {
     Bubble(a, i);
   }
 }
 
 //{{ Stop bubble sorting when it's already sorted
-template<class T>
-void BubbleSortStopInTime(T a[], int n) {
-  // ¼°Ê±ÖÕÖ¹µÄÃ°ÅİÅÅĞò
+template <class T> void BubbleSortStopInTime(T a[], int n) {
+  // åŠæ—¶ç»ˆæ­¢çš„å†’æ³¡æ’åº
   bool sorted = false;
   for (int i = n; i > 1 && !sorted; i--) {
     sorted = true;
@@ -44,7 +41,6 @@ void BubbleSortStopInTime(T a[], int n) {
 }
 //}}
 
-
 void PrintArray(int a[], int n) {
   for (int i = 0; i < n; i++) {
     printf("%d ", a[i]);
@@ -52,8 +48,8 @@ void PrintArray(int a[], int n) {
   printf("\n");
 }
 
-int main(int argc, char* argv[]) {
-  int a[] = { 10, 21, 13, 44, 5 };
+int main(int argc, char *argv[]) {
+  int a[] = {10, 21, 13, 44, 5};
 #if 0
   BubbleSort(a, sizeof(a) / sizeof(a[0]));
 #else
@@ -62,4 +58,3 @@ int main(int argc, char* argv[]) {
   PrintArray(a, sizeof(a) / sizeof(a[0]));
   return 0;
 }
-

@@ -2,40 +2,38 @@
 // File: 11_IndexedBinarySearchTree.cpp
 // Shining Yang <y.s.n@live.com>, 2014-12-16
 //
+#include "IndexedBinarySearchTree.h"
 #include <iostream>
 #include <string>
-#include "IndexedBinarySearchTree.h"
 
 using namespace std;
 using namespace DSCPP::SearchTree;
 
 class SmartPhone {
- public:
+public:
   /*
    * Copy-constructor and assignment operator are not mandatory for this
    * simple class, since its members will implicitly do that.
    */
   SmartPhone() {}
-  SmartPhone(const std::string& m, const std::string& v, int p)
-    : model(m), vendor(v), price(p) {}
+  SmartPhone(const std::string &m, const std::string &v, int p)
+      : model(m), vendor(v), price(p) {}
 
-  operator int() const {
-    return price;
-  }
+  operator int() const { return price; }
 
- private:
+private:
   std::string model;
   std::string vendor;
   int price;
-  friend ostream& operator<<(ostream& os, const SmartPhone& ph);
+  friend ostream &operator<<(ostream &os, const SmartPhone &ph);
 };
 
-ostream& operator<<(ostream& os, const SmartPhone& ph) {
+ostream &operator<<(ostream &os, const SmartPhone &ph) {
   os << ph.model << " $" << ph.price;
   return os;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   int dummy;
   IndexedBSTree<int, int> x, a, b, c, d;
   a.MakeTree(IndexedBSTreeNodeInfo<int, int>(1, 1), x, x);
@@ -48,11 +46,19 @@ int main(int argc, char* argv[]) {
 
   //--
   IndexedBSTree<int, int> ibst;
-  ibst.Insert(5).Insert(9).Insert(4).Insert(2).Insert(1).Insert(7).Insert(6).Insert(8);
+  ibst.Insert(5)
+      .Insert(9)
+      .Insert(4)
+      .Insert(2)
+      .Insert(1)
+      .Insert(7)
+      .Insert(6)
+      .Insert(8);
   ibst.PrintVerticallyWithLine(64);
 
   //-- compare two trees
-  cout << "The two trees are equal? " << (ibst.Compare(d) ? "Yes" : "No") << endl;
+  cout << "The two trees are equal? " << (ibst.Compare(d) ? "Yes" : "No")
+       << endl;
 
   //--
   cout << endl;
@@ -87,7 +93,7 @@ int main(int argc, char* argv[]) {
   try {
     phones.Delete(10000, dummyPhone);
     cout << "Deleted by key: " << dummyPhone << endl;
-  } catch (ItemNotExisted* e) {
+  } catch (ItemNotExisted *e) {
     delete e;
     cout << "Item not exists." << endl;
   }
@@ -104,7 +110,7 @@ int main(int argc, char* argv[]) {
   try {
     phones.IndexDelete(2, dummyPhone);
     cout << "Deleted by index: " << dummyPhone << endl;
-  } catch (ItemNotExisted* e) {
+  } catch (ItemNotExisted *e) {
     delete e;
     cout << "Item with specified index cannot been found." << endl;
   }

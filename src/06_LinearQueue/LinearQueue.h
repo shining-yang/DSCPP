@@ -12,38 +12,36 @@ using namespace DSCPP::Utils;
 namespace DSCPP {
 namespace Queue {
 
-template<typename T>
-class LinearQueue {
- public:
+template <typename T> class LinearQueue {
+public:
   LinearQueue(int size = 16);
   ~LinearQueue();
 
- protected:
-  LinearQueue(const LinearQueue<T>& obj);
-  LinearQueue<T>& operator=(const LinearQueue<T>& obj);
+protected:
+  LinearQueue(const LinearQueue<T> &obj);
+  LinearQueue<T> &operator=(const LinearQueue<T> &obj);
 
- public:
+public:
   bool IsEmpty() const;
   bool IsFull() const;
   T Front() const;
   T Rear() const;
-  LinearQueue<T>& EnQueue(const T& x);
-  LinearQueue<T>& DeQueue(T& x);
+  LinearQueue<T> &EnQueue(const T &x);
+  LinearQueue<T> &DeQueue(T &x);
 
   int GetCapacity() const;
   int GetLength() const;
 
-  void Output(ostream& os) const;
+  void Output(ostream &os) const;
 
- private:
+private:
   int front;
   int rear;
   int capacity;
-  T* base;
+  T *base;
 };
 
-template<typename T>
-LinearQueue<T>::LinearQueue(int size /*= 16*/) {
+template <typename T> LinearQueue<T>::LinearQueue(int size /*= 16*/) {
   if (size < 0) {
     throw new BadInitializer();
   }
@@ -54,18 +52,13 @@ LinearQueue<T>::LinearQueue(int size /*= 16*/) {
   this->base = new T[this->capacity];
 }
 
-template<typename T>
-LinearQueue<T>::~LinearQueue() {
-  delete[] this->base;
-}
+template <typename T> LinearQueue<T>::~LinearQueue() { delete[] this->base; }
 
-template<typename T>
-int LinearQueue<T>::GetCapacity() const {
+template <typename T> int LinearQueue<T>::GetCapacity() const {
   return this->capacity - 1;
 }
 
-template<typename T>
-int LinearQueue<T>::GetLength() const {
+template <typename T> int LinearQueue<T>::GetLength() const {
   if (rear >= front) {
     return rear - front;
   } else {
@@ -73,18 +66,15 @@ int LinearQueue<T>::GetLength() const {
   }
 }
 
-template<typename T>
-bool LinearQueue<T>::IsEmpty() const {
+template <typename T> bool LinearQueue<T>::IsEmpty() const {
   return front == rear;
 }
 
-template<typename T>
-bool LinearQueue<T>::IsFull() const {
+template <typename T> bool LinearQueue<T>::IsFull() const {
   return (rear + 1) % capacity == front;
 }
 
-template<typename T>
-T LinearQueue<T>::Front() const {
+template <typename T> T LinearQueue<T>::Front() const {
   if (IsEmpty()) {
     throw new OutOfBounds();
   }
@@ -92,8 +82,7 @@ T LinearQueue<T>::Front() const {
   return base[front];
 }
 
-template<typename T>
-T LinearQueue<T>::Rear() const {
+template <typename T> T LinearQueue<T>::Rear() const {
   if (IsEmpty()) {
     throw new OutOfBounds();
   }
@@ -101,8 +90,7 @@ T LinearQueue<T>::Rear() const {
   return base[(rear + capacity - 1) % capacity];
 }
 
-template<typename T>
-LinearQueue<T>& LinearQueue<T>::EnQueue(const T& x) {
+template <typename T> LinearQueue<T> &LinearQueue<T>::EnQueue(const T &x) {
   if (IsFull()) {
     throw new OutOfBounds();
   }
@@ -112,8 +100,7 @@ LinearQueue<T>& LinearQueue<T>::EnQueue(const T& x) {
   return *this;
 }
 
-template<typename T>
-LinearQueue<T>& LinearQueue<T>::DeQueue(T& x) {
+template <typename T> LinearQueue<T> &LinearQueue<T>::DeQueue(T &x) {
   if (IsEmpty()) {
     throw new OutOfBounds();
   }
@@ -123,18 +110,17 @@ LinearQueue<T>& LinearQueue<T>::DeQueue(T& x) {
   return *this;
 }
 
-template<typename T>
-void LinearQueue<T>::Output(ostream& os) const {
+template <typename T> void LinearQueue<T>::Output(ostream &os) const {
   for (int i = front; (i % capacity) != rear; i++) {
     os << base[i] << " ";
   }
 }
 
-template<typename T>
-ostream& operator<<(ostream& os, const LinearQueue<T>& obj) {
+template <typename T>
+ostream &operator<<(ostream &os, const LinearQueue<T> &obj) {
   obj.Output(os);
   return os;
 }
 
-}
-}
+} // namespace Queue
+} // namespace DSCPP

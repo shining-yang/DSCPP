@@ -8,8 +8,9 @@
 //
 
 #include <stdio.h>
-#include "../PerformanceStatistics/TickCounter.h"
+
 #include "../PerformanceStatistics/HighResTimeCounter.h"
+#include "../PerformanceStatistics/TickCounter.h"
 
 #pragma comment(lib, "PerformanceStatistics")
 
@@ -42,7 +43,7 @@ int FibonacciRecursive(int n) {
   return FibonacciRecursive(n - 1) + FibonacciRecursive(n - 2);
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   int n1 = 0;
   int n2 = 0;
   CHighResTimeCounter tc1;
@@ -57,10 +58,9 @@ int main(int argc, char* argv[]) {
     n2 = FibonacciRecursive(i);
     tc2.End();
 
-    printf("Fibonacci(%d) : %4d [%4d], %4d [%4d]\n", i,
-           n1, tc1.GetElapsedTimeInMS(), n2, tc2.GetElapsedTimeInMS());
+    printf("Fibonacci(%d) : %4d [%4d], %4d [%4d]\n", i, n1,
+           tc1.GetElapsedTimeInMS(), n2, tc2.GetElapsedTimeInMS());
   }
 
   return 0;
 }
-

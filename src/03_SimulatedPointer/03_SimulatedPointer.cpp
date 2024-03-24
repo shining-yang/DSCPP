@@ -1,13 +1,15 @@
-// 03_SimulatedPointer.cpp : Defines the entry point for the console application.
+// 03_SimulatedPointer.cpp : Defines the entry point for the console
+// application.
 //
 // 2014/9/5, Shining Yang <y.s.n@live.com>
 //
 #include <iostream>
+
 #include "SimulatedPointer.h"
 
 using namespace std;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   int x;
   SimChain<int> c;
   cout << "Chain length is: " << c.Length() << endl;
@@ -28,4 +30,3 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
-

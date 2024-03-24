@@ -10,12 +10,11 @@
 namespace DSCPP {
 namespace Utils {
 
-template<typename T>
-void Swap(T& a, T& b) {
+template <typename T> void Swap(T &a, T &b) {
   T x = a;
   a = b;
   b = x;
 }
 
-}
-} // namespaces
+} // namespace Utils
+} // namespace DSCPP

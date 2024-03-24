@@ -9,9 +9,9 @@
 //
 #pragma once
 
+#include "../Utility/Exception.h"
 #include <cmath>
 #include <iostream>
-#include "../Utility/Exception.h"
 
 using namespace std;
 using namespace DSCPP::Utils;
@@ -19,43 +19,41 @@ using namespace DSCPP::Utils;
 namespace DSCPP {
 namespace PriorityQueue {
 
-template<typename T>
-class Heap {
- public:
+template <typename T> class Heap {
+public:
   Heap(int capcity = 16);
   virtual ~Heap();
 
- public:
+public:
   bool IsEmpty() const;
   bool IsFull() const;
   int GetLength() const;
   int GetCapacity() const;
   T GetMin() const;
-  Heap<T>& Insert(const T& e);
-  Heap<T>& DeleteMin(T& e);
-  void Output(ostream& os) const;
-  void PrintTreeVertically(ostream& os, int width) const;
+  Heap<T> &Insert(const T &e);
+  Heap<T> &DeleteMin(T &e);
+  void Output(ostream &os) const;
+  void PrintTreeVertically(ostream &os, int width) const;
 
- public:
+public:
   static void Sort(T a[], int n);
 
- protected:
-  void _PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel,
-                         int nCount, int nWidth) const;
+protected:
+  void _PrintTreeAtLevel(ostream &os, const T *pElement, int nLevel, int nCount,
+                         int nWidth) const;
   void _Attach(T pArray[], int nArrayLength, int nElementCount);
   void _Detach();
 
- private:
+private:
   int capacity;
   int length;
-  T* elements;
+  T *elements;
 };
 
 //
 // Heap-sort. (Sort using a heap)
 //
-template<typename T>
-void Heap<T>::Sort(T a[], int n) {
+template <typename T> void Heap<T>::Sort(T a[], int n) {
   T x;
   Heap<T> hp(n);
   hp._Attach(a, n, n);
@@ -69,7 +67,7 @@ void Heap<T>::Sort(T a[], int n) {
 //
 // Associate with a specific memory block and build a heap on it.
 //
-template<typename T>
+template <typename T>
 void Heap<T>::_Attach(T pArray[], int nArrayLength, int nElementCount) {
   if (!pArray || (nElementCount < 0) || (nArrayLength < nElementCount)) {
     throw new InvalideArgument();
@@ -106,47 +104,31 @@ void Heap<T>::_Attach(T pArray[], int nArrayLength, int nElementCount) {
 //
 // Detach the associated working memory.
 //
-template<typename T>
-void Heap<T>::_Detach() {
+template <typename T> void Heap<T>::_Detach() {
   this->capacity = 0;
   this->length = 0;
   this->elements = NULL;
 }
 
-template<typename T>
-Heap<T>::Heap(int capacity /* = 16*/) {
+template <typename T> Heap<T>::Heap(int capacity /* = 16*/) {
   this->length = 0;
   this->capacity = capacity;
   this->elements = new T[capacity];
 }
 
-template<typename T>
-Heap<T>::~Heap() {
-  delete[] elements;
-}
+template <typename T> Heap<T>::~Heap() { delete[] elements; }
 
-template<typename T>
-bool Heap<T>::IsEmpty() const {
-  return length == 0;
-}
+template <typename T> bool Heap<T>::IsEmpty() const { return length == 0; }
 
-template<typename T>
-bool Heap<T>::IsFull() const {
+template <typename T> bool Heap<T>::IsFull() const {
   return length == capacity;
 }
 
-template<typename T>
-int Heap<T>::GetLength() const {
-  return length;
-}
+template <typename T> int Heap<T>::GetLength() const { return length; }
 
-template<typename T>
-int Heap<T>::GetCapacity() const {
-  return capacity;
-}
+template <typename T> int Heap<T>::GetCapacity() const { return capacity; }
 
-template<typename T>
-T Heap<T>::GetMin() const {
+template <typename T> T Heap<T>::GetMin() const {
   if (IsEmpty()) {
     throw new ItemUnderFlow();
   }
@@ -154,8 +136,7 @@ T Heap<T>::GetMin() const {
   return elements[0];
 }
 
-template<typename T>
-Heap<T>& Heap<T>::Insert(const T& e) {
+template <typename T> Heap<T> &Heap<T>::Insert(const T &e) {
   if (IsFull()) {
     throw new ItemOverFlow();
   }
@@ -170,8 +151,7 @@ Heap<T>& Heap<T>::Insert(const T& e) {
   return *this;
 }
 
-template<typename T>
-Heap<T>& Heap<T>::DeleteMin(T& e) {
+template <typename T> Heap<T> &Heap<T>::DeleteMin(T &e) {
   if (IsEmpty()) {
     throw new ItemUnderFlow();
   }
@@ -180,7 +160,7 @@ Heap<T>& Heap<T>::DeleteMin(T& e) {
 
   T x = elements[--length]; // the last node
 
-  int n = 0; // root
+  int n = 0;         // root
   int m = n * 2 + 1; // left child
   while (m < length) {
     if ((m < length - 1) && (elements[m] > elements[m + 1])) {
@@ -200,22 +180,19 @@ Heap<T>& Heap<T>::DeleteMin(T& e) {
   return *this;
 }
 
-template<typename T>
-void Heap<T>::Output(ostream& os) const {
+template <typename T> void Heap<T>::Output(ostream &os) const {
   for (int i = 0; i < length; i++) {
     os << elements[i] << ", ";
   }
 }
 
-template<typename T>
-ostream& operator<<(ostream& os, const Heap<T>& obj) {
+template <typename T> ostream &operator<<(ostream &os, const Heap<T> &obj) {
   obj.Output(os);
   return os;
-
 }
 
-template<typename T>
-void Heap<T>::PrintTreeVertically(ostream& os, int width) const {
+template <typename T>
+void Heap<T>::PrintTreeVertically(ostream &os, int width) const {
   int nPrinted = 0;
   int nTotalLevel = 1 + static_cast<int>(log(length) / log(2));
 
@@ -229,8 +206,8 @@ void Heap<T>::PrintTreeVertically(ostream& os, int width) const {
   }
 }
 
-template<typename T>
-void Heap<T>::_PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel,
+template <typename T>
+void Heap<T>::_PrintTreeAtLevel(ostream &os, const T *pElement, int nLevel,
                                 int nCount, int nWidth) const {
   // ���о��֣���N����㽫���򻮷�Ϊ N+1 �ȷ�
   int nSegmentLen = nWidth / ((1 << nLevel) + 1);
@@ -244,5 +221,5 @@ void Heap<T>::_PrintTreeAtLevel(ostream& os, const T* pElement, int nLevel,
   os << endl;
 }
 
-}
-}
+} // namespace PriorityQueue
+} // namespace DSCPP

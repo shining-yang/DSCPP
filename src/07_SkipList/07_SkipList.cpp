@@ -6,7 +6,7 @@
 #include "SkipList.h"
 #include <iostream>
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   DSCPP::SkipList::SkipList<int, int> sl(10000);
   sl.Insert(10).Insert(20).Insert(30).Insert(40).Insert(50);
   sl.Insert(5);

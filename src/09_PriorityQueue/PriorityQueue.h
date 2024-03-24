@@ -10,43 +10,36 @@
 namespace DSCPP {
 namespace PriorityQueue {
 
-template<typename T, typename P>
-class PriorityQueue {
- public:
+template <typename T, typename P> class PriorityQueue {
+public:
   PriorityQueue(int capacity = 16);
   ~PriorityQueue();
 
   int Length() const;
   T Max() const;
-  PriorityQueue<T, P>& EnQueue(const T& e);
-  PriorityQueue<T, P>& DeQueue(T& e);
+  PriorityQueue<T, P> &EnQueue(const T &e);
+  PriorityQueue<T, P> &DeQueue(T &e);
 
- private:
+private:
   struct PQS {
     PQS() {}
-    PQS(const T& e, const P& p) : data(e), priority(p) {}
+    PQS(const T &e, const P &p) : data(e), priority(p) {}
     T data;
     P priority;
   };
   LinearList<PQS> linear;
 };
 
-template<typename T, typename P>
-PriorityQueue<T, P>::PriorityQueue(int capacity /*= 16*/)
-  : linear(capacity) {
-}
+template <typename T, typename P>
+PriorityQueue<T, P>::PriorityQueue(int capacity /*= 16*/) : linear(capacity) {}
 
-template<typename T, typename P>
-PriorityQueue<T, P>::~PriorityQueue() {
-}
+template <typename T, typename P> PriorityQueue<T, P>::~PriorityQueue() {}
 
-template<typename T, typename P>
-int PriorityQueue<T, P>::Length() const {
+template <typename T, typename P> int PriorityQueue<T, P>::Length() const {
   return this->linear.Length();
 }
 
-template<typename T, typename P>
-T PriorityQueue<T, P>::Max() const {
+template <typename T, typename P> T PriorityQueue<T, P>::Max() const {
   if (this->linear.Length() <= 0) {
     throw new ItemUnderFlow();
   }
@@ -65,15 +58,15 @@ T PriorityQueue<T, P>::Max() const {
   return t.data;
 }
 
-template<typename T, typename P>
-PriorityQueue<T, P>& PriorityQueue<T, P>::EnQueue(const T& e) {
+template <typename T, typename P>
+PriorityQueue<T, P> &PriorityQueue<T, P>::EnQueue(const T &e) {
   P p = e; // make a conversion implicitly
   this->linear.Insert(this->linear.Length(), PQS(e, p));
   return *this;
 }
 
-template<typename T, typename P>
-PriorityQueue<T, P>& PriorityQueue<T, P>::DeQueue(T& e) {
+template <typename T, typename P>
+PriorityQueue<T, P> &PriorityQueue<T, P>::DeQueue(T &e) {
   if (this->linear.Length() <= 0) {
     throw new ItemUnderFlow();
   }
@@ -95,5 +88,5 @@ PriorityQueue<T, P>& PriorityQueue<T, P>::DeQueue(T& e) {
   return *this;
 }
 
-}
-}
+} // namespace PriorityQueue
+} // namespace DSCPP

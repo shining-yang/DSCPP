@@ -2,12 +2,12 @@
 // File: 09_HeightBiasedLeftistTree.cpp
 // Shining Yang <y.s.n@live.com>, 2014-12-09
 //
-#include <iostream>
 #include "HeightBiasedLeftistTree.h"
+#include <iostream>
 using namespace std;
 using namespace DSCPP::PriorityQueue;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   int dummy;
   MaxHBLT<int> mh, mh2;
 
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
   cout << "Print vertically: " << endl;
   mh2.PrintTreeVertically(cout, 64);
 
-  int a[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  int a[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
   mh2.Initialize(a, sizeof(a) / sizeof(a[0]));
   cout << "Print vertically: " << endl;
   mh2.PrintTreeVertically(cout, 64);

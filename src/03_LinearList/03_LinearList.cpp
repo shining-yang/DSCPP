@@ -9,7 +9,7 @@ using namespace std;
 
 #include "LinearList.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   LinearList<int> la(16);
   for (int i = 0; i < 8; i++) {
     la.Insert(i, i * 2 + 1);

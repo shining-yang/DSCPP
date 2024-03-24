@@ -6,17 +6,16 @@
 #pragma once
 
 class CTickCounter {
- public:
+public:
   CTickCounter();
   ~CTickCounter();
 
- public:
+public:
   void Begin();
   void End();
   unsigned long GetTicks();
 
- private:
+private:
   unsigned long m_nTickStart;
   unsigned long m_nTickStop;
 };
-

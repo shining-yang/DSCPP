@@ -4,14 +4,14 @@
 // Shining Yang <y.s.n@live.com>, 2014-12-03
 //
 #pragma once
-#include <iostream>
-#include <cmath>
-#include <string.h>
-#include "../Utility/Exception.h"
-#include "../06_LinkedListQueue/LinkedListQueue.h"
-#include "../04_Array/Array.h"
 #include "../03_SinglyLinkedList/SinglyLinkedList.h"
+#include "../04_Array/Array.h"
 #include "../05_StackLinearList/StackLinearList.h"
+#include "../06_LinkedListQueue/LinkedListQueue.h"
+#include "../Utility/Exception.h"
+#include <cmath>
+#include <iostream>
+#include <string.h>
 
 using namespace std;
 using namespace DSCPP::Utils;
@@ -22,77 +22,71 @@ using namespace DSCPP::Stack;
 // while we wanna declare it as a friend of BinaryTreeNode
 namespace DSCPP {
 namespace SearchTree {
-template<typename E, typename K> class BSTree;
-template<typename E, typename K> class DupBSTree;
-template<typename E, typename K> class IndexedBSTree;
-}
-}
+template <typename E, typename K> class BSTree;
+template <typename E, typename K> class DupBSTree;
+template <typename E, typename K> class IndexedBSTree;
+} // namespace SearchTree
+} // namespace DSCPP
 
 namespace DSCPP {
 namespace BinaryTree {
 
 // Binary tree node
-template<typename T>
-class BinaryTreeNode {
- public:
+template <typename T> class BinaryTreeNode {
+public:
   BinaryTreeNode();
-  BinaryTreeNode(const T& e);
-  BinaryTreeNode(const T& e, BinaryTreeNode<T>* l, BinaryTreeNode<T>* r);
+  BinaryTreeNode(const T &e);
+  BinaryTreeNode(const T &e, BinaryTreeNode<T> *l, BinaryTreeNode<T> *r);
   ~BinaryTreeNode();
 
-  T& Data() {
-    return data;
+  T &Data() { return data; }
+
+  const T &Data() const {
+    return const_cast<BinaryTreeNode<T> *>(this)->Data();
   }
 
-  const T& Data() const {
-    return const_cast<BinaryTreeNode<T>*>(this)->Data();
-  }
-
- private:
+private:
   T data;
-  BinaryTreeNode<T>* lchild;
-  BinaryTreeNode<T>* rchild;
-  template<typename X> friend class BinaryTree;
-  template<typename E, typename K> friend class DSCPP::SearchTree::BSTree;
-  template<typename E, typename K> friend class DSCPP::SearchTree::DupBSTree;
-  template<typename E, typename K> friend class DSCPP::SearchTree::IndexedBSTree;
+  BinaryTreeNode<T> *lchild;
+  BinaryTreeNode<T> *rchild;
+  template <typename X> friend class BinaryTree;
+  template <typename E, typename K> friend class DSCPP::SearchTree::BSTree;
+  template <typename E, typename K> friend class DSCPP::SearchTree::DupBSTree;
+  template <typename E, typename K>
+  friend class DSCPP::SearchTree::IndexedBSTree;
 };
 
-template<typename T>
-BinaryTreeNode<T>::BinaryTreeNode() : lchild(NULL), rchild(NULL) {
-}
+template <typename T>
+BinaryTreeNode<T>::BinaryTreeNode() : lchild(NULL), rchild(NULL) {}
 
-template<typename T>
-BinaryTreeNode<T>::BinaryTreeNode(const T& e) : data(e), lchild(NULL), rchild(NULL) {
-}
+template <typename T>
+BinaryTreeNode<T>::BinaryTreeNode(const T &e)
+    : data(e), lchild(NULL), rchild(NULL) {}
 
-template<typename T>
-BinaryTreeNode<T>::BinaryTreeNode(const T& e, BinaryTreeNode<T>* l, BinaryTreeNode<T>* r)
-  : data(e), lchild(l), rchild(r) {
-}
+template <typename T>
+BinaryTreeNode<T>::BinaryTreeNode(const T &e, BinaryTreeNode<T> *l,
+                                  BinaryTreeNode<T> *r)
+    : data(e), lchild(l), rchild(r) {}
 
-template<typename T>
-BinaryTreeNode<T>::~BinaryTreeNode() {
-}
+template <typename T> BinaryTreeNode<T>::~BinaryTreeNode() {}
 
 // Binary tree
-template<typename T>
-class BinaryTree {
- public:
+template <typename T> class BinaryTree {
+public:
   BinaryTree();
   virtual ~BinaryTree();
 
-  typedef void (*BTVisitor)(const BinaryTreeNode<T>*);
+  typedef void (*BTVisitor)(const BinaryTreeNode<T> *);
   enum { H_INDENT = 4 }; // indentation for printing tree horizontally
 
- public:
-  bool GetRoot(T& x) const;
+public:
+  bool GetRoot(T &x) const;
   bool IsEmpty() const;
   int GetHeight() const;
   int GetCount() const;
 
-  void MakeTree(const T& e, BinaryTree<T>& l, BinaryTree<T>& r);
-  void BreakTree(T& e, BinaryTree<T>& l, BinaryTree<T>& r);
+  void MakeTree(const T &e, BinaryTree<T> &l, BinaryTree<T> &r);
+  void BreakTree(T &e, BinaryTree<T> &l, BinaryTree<T> &r);
 
   void InOrder(BTVisitor v) const;
   void PreOrder(BTVisitor v) const;
@@ -106,67 +100,63 @@ class BinaryTree {
   void PrintVerticallyWithLine(int width) const;
 
   // Utility methods
-  void Clone(BinaryTree<T>& cp) const;
-  bool Compare(const BinaryTree<T>& bt) const;
+  void Clone(BinaryTree<T> &cp) const;
+  bool Compare(const BinaryTree<T> &bt) const;
   void BuildCompleteBinaryTree(const T a[], int n);
 
- protected:
-  void _InOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
-  void _PreOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
-  void _PostOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
-  void _LevelOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
-  void _ZigzagOrder(BTVisitor v, BinaryTreeNode<T>* t) const;
+protected:
+  void _InOrder(BTVisitor v, BinaryTreeNode<T> *t) const;
+  void _PreOrder(BTVisitor v, BinaryTreeNode<T> *t) const;
+  void _PostOrder(BTVisitor v, BinaryTreeNode<T> *t) const;
+  void _LevelOrder(BTVisitor v, BinaryTreeNode<T> *t) const;
+  void _ZigzagOrder(BTVisitor v, BinaryTreeNode<T> *t) const;
   void _Destroy();
-  void _PrintHorz(BinaryTreeNode<T>* t, int pos, int indent) const;
-  void _PrintVert(BinaryTreeNode<T>* t, int level, int width) const;
-  void _PrintVertWithLine(BinaryTreeNode<T>* t, int level, int width) const;
+  void _PrintHorz(BinaryTreeNode<T> *t, int pos, int indent) const;
+  void _PrintVert(BinaryTreeNode<T> *t, int level, int width) const;
+  void _PrintVertWithLine(BinaryTreeNode<T> *t, int level, int width) const;
 
   // structure used to print binary tree vertically
   struct VPrintInfo {
     VPrintInfo() {}
-    VPrintInfo(BinaryTreeNode<T>* n, int l, int p)
-      : node(n), level(l), pos(p) {}
-    BinaryTreeNode<T>* node;
+    VPrintInfo(BinaryTreeNode<T> *n, int l, int p)
+        : node(n), level(l), pos(p) {}
+    BinaryTreeNode<T> *node;
     int level;
     int pos;
   };
 
   struct VPrintInfoWithLine : public VPrintInfo {
     VPrintInfoWithLine() {}
-    VPrintInfoWithLine(BinaryTreeNode<T>* n, int l, int p, int prntpos) :
-      VPrintInfo(n, l, p), parentpos(prntpos) {}
+    VPrintInfoWithLine(BinaryTreeNode<T> *n, int l, int p, int prntpos)
+        : VPrintInfo(n, l, p), parentpos(prntpos) {}
     int parentpos;
   };
 
-  void _PrintVertByLevel(const Chain<VPrintInfo>& c) const;
-  void _PrintVertByLevelWithLine(const Chain<VPrintInfoWithLine>& c, int width) const;
-  BinaryTreeNode<T>* _Clone(const BinaryTreeNode<T>* t) const;
-  bool _Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const;
-  int _CalcCount(const BinaryTreeNode<T>* t) const;
-  int _CalcHeight(const BinaryTreeNode<T>* t) const;
-  void _BuildCompleteBinaryTree(BinaryTreeNode<T>*& p, int i, const T a[], int n);
+  void _PrintVertByLevel(const Chain<VPrintInfo> &c) const;
+  void _PrintVertByLevelWithLine(const Chain<VPrintInfoWithLine> &c,
+                                 int width) const;
+  BinaryTreeNode<T> *_Clone(const BinaryTreeNode<T> *t) const;
+  bool _Compare(const BinaryTreeNode<T> *s, const BinaryTreeNode<T> *t) const;
+  int _CalcCount(const BinaryTreeNode<T> *t) const;
+  int _CalcHeight(const BinaryTreeNode<T> *t) const;
+  void _BuildCompleteBinaryTree(BinaryTreeNode<T> *&p, int i, const T a[],
+                                int n);
 
- protected:
-  static void _DestroyVisitor(const BinaryTreeNode<T>* t);
+protected:
+  static void _DestroyVisitor(const BinaryTreeNode<T> *t);
   // For convenience of derived class to access the tree-node pointer.
-  BinaryTreeNode<T>* & RootNodePtr() { return root; }
-  const BinaryTreeNode<T>* const & RootNodePtr() const { return root; }
+  BinaryTreeNode<T> *&RootNodePtr() { return root; }
+  const BinaryTreeNode<T> *const &RootNodePtr() const { return root; }
 
- private:
-  BinaryTreeNode<T>* root;
+private:
+  BinaryTreeNode<T> *root;
 };
 
-template<typename T>
-BinaryTree<T>::BinaryTree() : root(NULL) {
-}
+template <typename T> BinaryTree<T>::BinaryTree() : root(NULL) {}
 
-template<typename T>
-BinaryTree<T>::~BinaryTree() {
-  _Destroy();
-}
+template <typename T> BinaryTree<T>::~BinaryTree() { _Destroy(); }
 
-template<typename T>
-bool BinaryTree<T>::GetRoot(T& x) const {
+template <typename T> bool BinaryTree<T>::GetRoot(T &x) const {
   if (!this->root) {
     return false;
   }
@@ -175,31 +165,28 @@ bool BinaryTree<T>::GetRoot(T& x) const {
   return true;
 }
 
-template<typename T>
-bool BinaryTree<T>::IsEmpty() const {
+template <typename T> bool BinaryTree<T>::IsEmpty() const {
   return (this->root == NULL);
 }
 
-template<typename T>
-int BinaryTree<T>::GetHeight() const {
+template <typename T> int BinaryTree<T>::GetHeight() const {
   return _CalcHeight(this->root);
 }
 
-template<typename T>
-int BinaryTree<T>::GetCount() const {
+template <typename T> int BinaryTree<T>::GetCount() const {
   return _CalcCount(this->root);
 }
 
-template<typename T>
-void BinaryTree<T>::MakeTree(const T& e, BinaryTree<T>& l, BinaryTree<T>& r) {
+template <typename T>
+void BinaryTree<T>::MakeTree(const T &e, BinaryTree<T> &l, BinaryTree<T> &r) {
   _Destroy(); // first to release ourselves
   this->root = new BinaryTreeNode<T>(e, l.root, r.root);
   l.root = NULL;
   r.root = NULL;
 }
 
-template<typename T>
-void BinaryTree<T>::BreakTree(T& e, BinaryTree<T>& l, BinaryTree<T>& r) {
+template <typename T>
+void BinaryTree<T>::BreakTree(T &e, BinaryTree<T> &l, BinaryTree<T> &r) {
   if (IsEmpty()) {
     throw new ItemNotExisted(); // empty tree
   }
@@ -211,33 +198,28 @@ void BinaryTree<T>::BreakTree(T& e, BinaryTree<T>& l, BinaryTree<T>& r) {
   this->root = NULL;
 }
 
-template<typename T>
-void BinaryTree<T>::InOrder(BTVisitor v) const {
+template <typename T> void BinaryTree<T>::InOrder(BTVisitor v) const {
   _InOrder(v, this->root);
 }
 
-template<typename T>
-void BinaryTree<T>::PreOrder(BTVisitor v) const {
+template <typename T> void BinaryTree<T>::PreOrder(BTVisitor v) const {
   _PreOrder(v, this->root);
 }
 
-template<typename T>
-void BinaryTree<T>::PostOrder(BTVisitor v) const {
+template <typename T> void BinaryTree<T>::PostOrder(BTVisitor v) const {
   _PostOrder(v, this->root);
 }
 
-template<typename T>
-void BinaryTree<T>::LevelOrder(BTVisitor v) const {
+template <typename T> void BinaryTree<T>::LevelOrder(BTVisitor v) const {
   _LevelOrder(v, this->root);
 }
 
-template<typename T>
-void BinaryTree<T>::ZigzagOrder(BTVisitor v) const {
+template <typename T> void BinaryTree<T>::ZigzagOrder(BTVisitor v) const {
   _ZigzagOrder(v, root);
 }
 
-template<typename T>
-void BinaryTree<T>::_InOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
+template <typename T>
+void BinaryTree<T>::_InOrder(BTVisitor v, BinaryTreeNode<T> *t) const {
   if (t) {
     _InOrder(v, t->lchild);
     v(t);
@@ -245,8 +227,8 @@ void BinaryTree<T>::_InOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
   }
 }
 
-template<typename T>
-void BinaryTree<T>::_PreOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
+template <typename T>
+void BinaryTree<T>::_PreOrder(BTVisitor v, BinaryTreeNode<T> *t) const {
   if (t) {
     v(t);
     _PreOrder(v, t->lchild);
@@ -254,8 +236,8 @@ void BinaryTree<T>::_PreOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
   }
 }
 
-template<typename T>
-void BinaryTree<T>::_PostOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
+template <typename T>
+void BinaryTree<T>::_PostOrder(BTVisitor v, BinaryTreeNode<T> *t) const {
   if (t) {
     _PostOrder(v, t->lchild);
     _PostOrder(v, t->rchild);
@@ -263,14 +245,14 @@ void BinaryTree<T>::_PostOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
   }
 }
 
-template<typename T>
-void BinaryTree<T>::_LevelOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
+template <typename T>
+void BinaryTree<T>::_LevelOrder(BTVisitor v, BinaryTreeNode<T> *t) const {
   if (t) {
-    LinkedListQueue<BinaryTreeNode<T>*> q;
+    LinkedListQueue<BinaryTreeNode<T> *> q;
     q.EnQueue(t);
 
     while (!q.IsEmpty()) {
-      BinaryTreeNode<T>* p;
+      BinaryTreeNode<T> *p;
       q.DeQueue(p);
       v(p);
 
@@ -285,15 +267,15 @@ void BinaryTree<T>::_LevelOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
   }
 }
 
-template<typename T>
-void BinaryTree<T>::_ZigzagOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
+template <typename T>
+void BinaryTree<T>::_ZigzagOrder(BTVisitor v, BinaryTreeNode<T> *t) const {
   if (t) {
     bool ltr = true; // left to right
-    LinearStack<BinaryTreeNode<T>* > S1, S2;
+    LinearStack<BinaryTreeNode<T> *> S1, S2;
     S1.Push(t);
     while (!S1.IsEmpty()) {
       while (!S1.IsEmpty()) {
-        BinaryTreeNode<T>* p;
+        BinaryTreeNode<T> *p;
         S1.Pop(p);
         v(p);
 
@@ -317,8 +299,8 @@ void BinaryTree<T>::_ZigzagOrder(BTVisitor v, BinaryTreeNode<T>* t) const {
   }
 }
 
-template<typename T>
-int BinaryTree<T>::_CalcHeight(const BinaryTreeNode<T>* t) const {
+template <typename T>
+int BinaryTree<T>::_CalcHeight(const BinaryTreeNode<T> *t) const {
   if (!t) {
     return 0;
   }
@@ -328,8 +310,8 @@ int BinaryTree<T>::_CalcHeight(const BinaryTreeNode<T>* t) const {
   return 1 + (lh > rh ? lh : rh);
 }
 
-template<typename T>
-int BinaryTree<T>::_CalcCount(const BinaryTreeNode<T>* t) const {
+template <typename T>
+int BinaryTree<T>::_CalcCount(const BinaryTreeNode<T> *t) const {
   if (!t) {
     return 0;
   }
@@ -339,19 +321,19 @@ int BinaryTree<T>::_CalcCount(const BinaryTreeNode<T>* t) const {
   return 1 + lc + rc;
 }
 
-template<typename T>
-void BinaryTree<T>::_Destroy() {
+template <typename T> void BinaryTree<T>::_Destroy() {
   _PostOrder(_DestroyVisitor, this->root);
   this->root = NULL;
 }
 
-template<typename T>
-void BinaryTree<T>::_DestroyVisitor(const BinaryTreeNode<T>* t) {
+template <typename T>
+void BinaryTree<T>::_DestroyVisitor(const BinaryTreeNode<T> *t) {
   delete t;
 }
 
-template<typename T>
-void BinaryTree<T>::_PrintHorz(BinaryTreeNode<T>* t, int pos, int indent) const {
+template <typename T>
+void BinaryTree<T>::_PrintHorz(BinaryTreeNode<T> *t, int pos,
+                               int indent) const {
   // visit order: right, root, left
   if (t) {
     _PrintHorz(t->rchild, pos + indent, indent);
@@ -365,8 +347,9 @@ void BinaryTree<T>::_PrintHorz(BinaryTreeNode<T>* t, int pos, int indent) const 
   }
 }
 
-template<typename T>
-void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const {
+template <typename T>
+void BinaryTree<T>::_PrintVert(BinaryTreeNode<T> *t, int level,
+                               int width) const {
   if (!t) {
     return;
   }
@@ -374,7 +357,7 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
   int height = _CalcHeight(t);
 
   // an array of chains
-  Array<Chain<VPrintInfo> > A(height);
+  Array<Chain<VPrintInfo>> A(height);
 
   LinkedListQueue<VPrintInfo> Q;
   Q.EnQueue(VPrintInfo(t, level, width / 2));
@@ -386,13 +369,13 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
     A[p.level].Insert(0, p); // save the print-info into linked-list
 
     if (p.node->lchild) {
-      Q.EnQueue(VPrintInfo(
-                  p.node->lchild, p.level + 1, p.pos - width / (1 << (p.level + 2))));
+      Q.EnQueue(VPrintInfo(p.node->lchild, p.level + 1,
+                           p.pos - width / (1 << (p.level + 2))));
     }
 
     if (p.node->rchild) {
-      Q.EnQueue(VPrintInfo(
-                  p.node->rchild, p.level + 1, p.pos + width / (1 << (p.level + 2))));
+      Q.EnQueue(VPrintInfo(p.node->rchild, p.level + 1,
+                           p.pos + width / (1 << (p.level + 2))));
     }
   }
 
@@ -403,8 +386,8 @@ void BinaryTree<T>::_PrintVert(BinaryTreeNode<T>* t, int level, int width) const
   }
 }
 
-template<typename T>
-void BinaryTree<T>::_PrintVertByLevel(const Chain<VPrintInfo>& c) const {
+template <typename T>
+void BinaryTree<T>::_PrintVertByLevel(const Chain<VPrintInfo> &c) const {
   int maxpos = 0;
   VPrintInfo x;
 
@@ -417,7 +400,7 @@ void BinaryTree<T>::_PrintVertByLevel(const Chain<VPrintInfo>& c) const {
   }
 
   // - init and fill in valid items
-  Array<BinaryTreeNode<T>*> A(maxpos + 1);
+  Array<BinaryTreeNode<T> *> A(maxpos + 1);
   for (int i = 0; i <= maxpos; i++) {
     A[i] = NULL;
   }
@@ -437,8 +420,9 @@ void BinaryTree<T>::_PrintVertByLevel(const Chain<VPrintInfo>& c) const {
   }
 }
 
-template<typename T>
-void BinaryTree<T>::_PrintVertWithLine(BinaryTreeNode<T>* t, int level, int width) const {
+template <typename T>
+void BinaryTree<T>::_PrintVertWithLine(BinaryTreeNode<T> *t, int level,
+                                       int width) const {
   if (!t) {
     return;
   }
@@ -446,7 +430,7 @@ void BinaryTree<T>::_PrintVertWithLine(BinaryTreeNode<T>* t, int level, int widt
   int height = _CalcHeight(t);
 
   // an array of chains
-  Array<Chain<VPrintInfoWithLine> > A(height);
+  Array<Chain<VPrintInfoWithLine>> A(height);
 
   LinkedListQueue<VPrintInfoWithLine> Q;
   Q.EnQueue(VPrintInfoWithLine(t, level, width / 2, -1)); // -1 indicates ROOT
@@ -458,13 +442,15 @@ void BinaryTree<T>::_PrintVertWithLine(BinaryTreeNode<T>* t, int level, int widt
     A[p.level].Insert(0, p); // save the print-info into linked-list
 
     if (p.node->lchild) {
-      Q.EnQueue(VPrintInfoWithLine(
-                  p.node->lchild, p.level + 1, p.pos - width / (1 << (p.level + 2)), p.pos));
+      Q.EnQueue(VPrintInfoWithLine(p.node->lchild, p.level + 1,
+                                   p.pos - width / (1 << (p.level + 2)),
+                                   p.pos));
     }
 
     if (p.node->rchild) {
-      Q.EnQueue(VPrintInfoWithLine(
-                  p.node->rchild, p.level + 1, p.pos + width / (1 << (p.level + 2)), p.pos));
+      Q.EnQueue(VPrintInfoWithLine(p.node->rchild, p.level + 1,
+                                   p.pos + width / (1 << (p.level + 2)),
+                                   p.pos));
     }
   }
 
@@ -475,9 +461,9 @@ void BinaryTree<T>::_PrintVertWithLine(BinaryTreeNode<T>* t, int level, int widt
   }
 }
 
-template<typename T>
+template <typename T>
 void BinaryTree<T>::_PrintVertByLevelWithLine(
-  const Chain<VPrintInfoWithLine>& c, int width) const {
+    const Chain<VPrintInfoWithLine> &c, int width) const {
   int maxpos = 0;
   VPrintInfoWithLine x;
 
@@ -490,7 +476,7 @@ void BinaryTree<T>::_PrintVertByLevelWithLine(
   }
 
   // - init and fill in valid items
-  Array<VPrintInfoWithLine*> A(maxpos + 1);
+  Array<VPrintInfoWithLine *> A(maxpos + 1);
   for (int i = 0; i <= maxpos; i++) {
     A[i] = NULL;
   }
@@ -504,8 +490,8 @@ void BinaryTree<T>::_PrintVertByLevelWithLine(
   if (x.parentpos > 0) { // only apply on child node while skip on ROOT
     int distance = abs(x.parentpos - x.pos);
     int COLUMNSIZE = width; // need the screen width to draw line properly
-    if (distance >= 4) { // distance rather long
-      char* arrayLines = new char[3 * COLUMNSIZE];
+    if (distance >= 4) {    // distance rather long
+      char *arrayLines = new char[3 * COLUMNSIZE];
       memset(arrayLines, ' ', 3 * COLUMNSIZE);
       for (int i = 0; i <= maxpos; i++) {
         if (A[i]) {
@@ -535,13 +521,14 @@ void BinaryTree<T>::_PrintVertByLevelWithLine(
       delete[] arrayLines;
 
     } else {
-      char* arrayLines = new char[COLUMNSIZE];
+      char *arrayLines = new char[COLUMNSIZE];
       memset(arrayLines, ' ', COLUMNSIZE);
       for (int i = 0; i <= maxpos; i++) {
         if (A[i]) {
           int idx;
           if (A[i]->pos == A[i]->parentpos) {
-            // too crowded, cannot determine whether left or right, use '|' directly
+            // too crowded, cannot determine whether left or right, use '|'
+            // directly
             idx = A[i]->parentpos;
             arrayLines[idx] = '|';
           } else if (A[i]->pos < A[i]->parentpos) {
@@ -580,44 +567,40 @@ void BinaryTree<T>::_PrintVertByLevelWithLine(
   }
 }
 
-template<typename T>
-void BinaryTree<T>::PrintHorizontally(int indent) const {
+template <typename T> void BinaryTree<T>::PrintHorizontally(int indent) const {
   _PrintHorz(this->root, 0, indent);
 }
 
-template<typename T>
-void BinaryTree<T>::PrintVertically(int width) const {
+template <typename T> void BinaryTree<T>::PrintVertically(int width) const {
   _PrintVert(this->root, 0, width);
 }
 
-template<typename T>
+template <typename T>
 void BinaryTree<T>::PrintVerticallyWithLine(int width) const {
   _PrintVertWithLine(this->root, 0, width);
 }
 
-template<typename T>
-bool BinaryTree<T>::Compare(const BinaryTree<T>& bt) const {
+template <typename T>
+bool BinaryTree<T>::Compare(const BinaryTree<T> &bt) const {
   return _Compare(this->root, bt.root);
 }
 
-template<typename T>
-bool BinaryTree<T>::_Compare(const BinaryTreeNode<T>* s, const BinaryTreeNode<T>* t) const {
+template <typename T>
+bool BinaryTree<T>::_Compare(const BinaryTreeNode<T> *s,
+                             const BinaryTreeNode<T> *t) const {
   if (!s && !t) {
     return true;
   }
 
   if (s && t) {
-    return
-      s->data == t->data &&
-      _Compare(s->lchild, t->lchild) &&
-      _Compare(s->rchild, t->rchild);
+    return s->data == t->data && _Compare(s->lchild, t->lchild) &&
+           _Compare(s->rchild, t->rchild);
   }
 
   return false;
 }
 
-template<typename T>
-void BinaryTree<T>::Clone(BinaryTree<T>& cp) const {
+template <typename T> void BinaryTree<T>::Clone(BinaryTree<T> &cp) const {
   if (this == &cp) {
     throw new InvalideArgument();
   }
@@ -626,20 +609,21 @@ void BinaryTree<T>::Clone(BinaryTree<T>& cp) const {
   cp.root = _Clone(this->root);
 }
 
-template<typename T>
-BinaryTreeNode<T>* BinaryTree<T>::_Clone(const BinaryTreeNode<T>* t) const {
+template <typename T>
+BinaryTreeNode<T> *BinaryTree<T>::_Clone(const BinaryTreeNode<T> *t) const {
   if (!t) {
     return NULL;
   }
 
-  BinaryTreeNode<T>* r = new BinaryTreeNode<T>(t->data);
+  BinaryTreeNode<T> *r = new BinaryTreeNode<T>(t->data);
   r->lchild = _Clone(t->lchild);
   r->rchild = _Clone(t->rchild);
   return r;
 }
 
-template<typename T>
-void BinaryTree<T>::_BuildCompleteBinaryTree(BinaryTreeNode<T>*& p, int i, const T a[], int n) {
+template <typename T>
+void BinaryTree<T>::_BuildCompleteBinaryTree(BinaryTreeNode<T> *&p, int i,
+                                             const T a[], int n) {
   if (i >= n) {
     p = NULL;
   } else {
@@ -649,11 +633,11 @@ void BinaryTree<T>::_BuildCompleteBinaryTree(BinaryTreeNode<T>*& p, int i, const
   }
 }
 
-template<typename T>
+template <typename T>
 void BinaryTree<T>::BuildCompleteBinaryTree(const T a[], int n) {
   _Destroy();
   _BuildCompleteBinaryTree(root, 0, a, n);
 }
 
-}
-}
+} // namespace BinaryTree
+} // namespace DSCPP

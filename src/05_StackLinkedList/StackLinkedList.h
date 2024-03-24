@@ -11,15 +11,12 @@
 namespace DSCPP {
 namespace Stack {
 
-template<typename T>
-class StackLinkedList : private Chain<T> {
- public:
-  bool IsEmpty() const {
-    return Chain<T>::IsEmpty();
-  }
+template <typename T> class StackLinkedList : private Chain<T> {
+public:
+  bool IsEmpty() const { return Chain<T>::IsEmpty(); }
 
   bool IsFull() const {
-    ChainNode<T>* p = new ChainNode<T>();
+    ChainNode<T> *p = new ChainNode<T>();
     if (p != NULL) {
       delete p;
       return false;
@@ -28,12 +25,14 @@ class StackLinkedList : private Chain<T> {
     }
   }
 
-  StackLinkedList<T>& Push(const T& x) { // internal call will throw exception if there are any
+  StackLinkedList<T> &
+  Push(const T &x) { // internal call will throw exception if there are any
     Chain<T>::Insert(0, x);
     return *this;
   }
 
-  StackLinkedList<T>& Pop(T& x) { // internal call will throw exception if there are any
+  StackLinkedList<T> &
+  Pop(T &x) { // internal call will throw exception if there are any
     Chain<T>::Delete(0, x);
     return *this;
   }
@@ -49,5 +48,5 @@ class StackLinkedList : private Chain<T> {
   }
 };
 
-}
-}
+} // namespace Stack
+} // namespace DSCPP

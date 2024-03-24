@@ -6,11 +6,18 @@
 
 using namespace DSCPP::SearchTree;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   int dummy;
   BSTree<int, int> T;
-  T.Insert(4).Insert(9).Insert(2).Insert(7).Insert(8).Insert(1)
-  .Insert(3).Insert(6).Insert(0);
+  T.Insert(4)
+      .Insert(9)
+      .Insert(2)
+      .Insert(7)
+      .Insert(8)
+      .Insert(1)
+      .Insert(3)
+      .Insert(6)
+      .Insert(0);
 
   cout << "Found: " << (T.Search(4, dummy) ? "Yes" : "No") << endl;
   cout << "Found: " << (T.Search(5, dummy) ? "Yes" : "No") << endl;

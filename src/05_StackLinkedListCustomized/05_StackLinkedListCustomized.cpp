@@ -4,7 +4,7 @@
 #include "StackLinkedListCustomized.h"
 using namespace DSCPP::Stack;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   char x;
   StackLinkedListCustomized<char> s;
 

@@ -3,13 +3,13 @@
 // Test heap (min-heap), Heap-sorting.
 // Shining Yang <y.s.n@live.com>, 2014-12-12
 //
-#include <iostream>
 #include "Heap.h"
+#include <iostream>
 
 using namespace std;
 using namespace DSCPP::PriorityQueue;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   int dummy;
   Heap<int> hp;
 
@@ -24,12 +24,11 @@ int main(int argc, char* argv[]) {
   }
   cout << endl;
 
-
   // Heap sort
   // In this mechanism/implementation, note that:
   // Descending sort by using Min-Heap, while ascending sort should use Max-Heap
-  int a[] = { 1, 3, 4, 2, 5, 9, 3, 6, 7, 9, 4, 8 };
-#define ELEM_COUNT(a)   (sizeof(a) / sizeof(a[0]))
+  int a[] = {1, 3, 4, 2, 5, 9, 3, 6, 7, 9, 4, 8};
+#define ELEM_COUNT(a) (sizeof(a) / sizeof(a[0]))
 
   Heap<int>::Sort(a, ELEM_COUNT(a));
   cout << "Sort array descending: ";

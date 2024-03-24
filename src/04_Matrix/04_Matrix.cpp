@@ -4,12 +4,12 @@
 // Shining Yang <y.s.n@live.com>, 2014-09-30
 //
 
-#include <iostream>
 #include "matrix.h"
+#include <iostream>
 using namespace std;
 
-template<typename T>
-void OutputMatrixElement(const Matrix<T>& m, int i, int j) {
+template <typename T>
+void OutputMatrixElement(const Matrix<T> &m, int i, int j) {
   // i, j are 0-based, different from Matrix
   if ((i >= m.Rows()) || (j >= m.Columns())) {
     return;
@@ -18,8 +18,8 @@ void OutputMatrixElement(const Matrix<T>& m, int i, int j) {
   cout << m(i + 1, j + 1) << " ";
 }
 
-template<typename T>
-void OutputAtSubscriptSum(const Matrix<T>& m, int n, bool ascending) {
+template <typename T>
+void OutputAtSubscriptSum(const Matrix<T> &m, int n, bool ascending) {
   for (int i = 0; i <= n; i++) {
     if (ascending) {
       OutputMatrixElement(m, i, n - i);
@@ -30,8 +30,7 @@ void OutputAtSubscriptSum(const Matrix<T>& m, int n, bool ascending) {
 }
 
 // 锯齿形遍历矩阵
-template<typename T>
-void ZigzagTraverse(const Matrix<T>& m) {
+template <typename T> void ZigzagTraverse(const Matrix<T> &m) {
   int total = m.Rows() - 1 + m.Columns() - 1;
   bool ascending = false;
   for (int i = 0; i <= total; i++) {
@@ -41,8 +40,7 @@ void ZigzagTraverse(const Matrix<T>& m) {
 }
 
 // 水平来回扫描式遍历矩阵
-template<typename T>
-void HorizontallyTraverse(const Matrix<T>& m) {
+template <typename T> void HorizontallyTraverse(const Matrix<T> &m) {
   bool ltr = true; // left to right
   for (int i = 0; i < m.Rows(); i++) {
     if (ltr) {
@@ -60,8 +58,7 @@ void HorizontallyTraverse(const Matrix<T>& m) {
 }
 
 // 垂直来回扫描式遍历矩阵
-template<typename T>
-void VerticallyTraverse(const Matrix<T>& m) {
+template <typename T> void VerticallyTraverse(const Matrix<T> &m) {
   bool utd = true; // up to down
   for (int j = 0; j < m.Columns(); j++) {
     if (utd) {
@@ -79,8 +76,7 @@ void VerticallyTraverse(const Matrix<T>& m) {
 }
 
 // 螺旋式遍历矩阵
-template<typename T>
-void SpiralTraverse(const Matrix<T>& m) {
+template <typename T> void SpiralTraverse(const Matrix<T> &m) {
   int r0 = 0;
   int c0 = 0;
   int r1 = m.Rows() - 1;
@@ -112,7 +108,7 @@ void SpiralTraverse(const Matrix<T>& m) {
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   Matrix<int> m1(2, 3);
   m1(1, 1) = 1;
   m1(1, 2) = 2;
@@ -141,7 +137,7 @@ int main(int argc, char* argv[]) {
   //---- Zigzag output
   char k = 'A';
   int row = 4, column = 4;
-  Matrix<char> mc(row,column);
+  Matrix<char> mc(row, column);
   for (int i = 1; i <= row; i++) {
     for (int j = 1; j <= column; j++) {
       mc(i, j) = k++;
@@ -168,7 +164,6 @@ int main(int argc, char* argv[]) {
   cout << "Spirally: " << endl;
   SpiralTraverse(mc);
   cout << endl;
-
 
   //-- Square matrix operations
   SquareMatrix sm(3);

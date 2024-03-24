@@ -4,7 +4,7 @@
 #include "LinkedListQueue.h"
 using namespace DSCPP::Queue;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   LinkedListQueue<char> q;
   cout << "Queue empty? " << (q.IsEmpty() ? "Yes" : "No") << endl;
 
@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
 
   cout << "Queue empty? " << (q.IsEmpty() ? "Yes" : "No") << endl;
 
-  //q.EnQueue('X');
+  // q.EnQueue('X');
   n = q.Length();
 
   cout << q << endl;

@@ -4,11 +4,12 @@
 // Shining Yang <y.s.n@live.com>, 2014-12-22
 //
 #include <stdlib.h>
+
 #include <iostream>
 using namespace std;
 
 class Queens {
- public:
+public:
   Queens(int n = 8) : num(n) {
     placements = new bool[num * num];
     for (int i = 0; i < num * num; i++) {
@@ -16,15 +17,11 @@ class Queens {
     }
   }
 
-  ~Queens() {
-    delete[] placements;
-  }
+  ~Queens() { delete[] placements; }
 
-  void Place() {
-    TryPlace(0);
-  }
+  void Place() { TryPlace(0); }
 
- protected:
+protected:
   bool _ConflictVertically(int r, int c) const {
     for (int i = 0; i < r; i++) {
       if (placements[i * num + c]) {
@@ -77,13 +74,12 @@ class Queens {
     cout << endl;
   }
 
- private:
+private:
   int num;
-  bool* placements;
+  bool *placements;
 };
 
-
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   int n = 8; // default to 8
   if (argc > 1) {
     n = atoi(argv[1]);

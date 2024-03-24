@@ -4,14 +4,14 @@
 //
 #include "HashTable.h"
 
-template<typename E, typename K>
-void ShowHashInfo(DSCPP::Hash::HashTable<E, K>& ht) {
+template <typename E, typename K>
+void ShowHashInfo(DSCPP::Hash::HashTable<E, K> &ht) {
   cout << "Hash is full? " << (ht.IsFull() ? "Yes" : "No") << endl;
   cout << "Hash is empty? " << (ht.IsEmpty() ? "Yes" : "No") << endl;
   cout << "Hash:\t\t" << ht << endl;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   char dummy;
   char ch = 'A';
   int num = 16;

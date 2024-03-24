@@ -47,27 +47,28 @@ void HanoiRecursively2(char t1, char t2, char t3, int n) {
 }
 
 class HanoiPara {
- public:
+public:
   HanoiPara() {}
-  HanoiPara(char a, char b, char c, int i, int j) : from(a), via(b), to(c), num(i), type(j) {}
+  HanoiPara(char a, char b, char c, int i, int j)
+      : from(a), via(b), to(c), num(i), type(j) {}
   char from;
   char via;
   char to;
-  int num; // number of plates to be moved
-  int type; // Type of move { 0: move the single plate, 1: move a pile of plates }
+  int num;  // number of plates to be moved
+  int type; // Type of move { 0: move the single plate, 1: move a pile of plates
+            // }
 
   enum { SINGLE, MULTIPLE };
 };
 
-template<typename T>
-class Hanoi {
- public:
+template <typename T> class Hanoi {
+public:
   Hanoi(char a, char b, char c, int n) : from(a), via(b), to(c), num(n) {}
 
- public:
+public:
   void Perform();
 
- private:
+private:
   char from;
   char via;
   char to;
@@ -75,8 +76,7 @@ class Hanoi {
   T s; // the stack
 };
 
-template<typename T>
-void Hanoi<T>::Perform() {
+template <typename T> void Hanoi<T>::Perform() {
   static int _times = 0;
 
   HanoiPara x;
@@ -84,25 +84,25 @@ void Hanoi<T>::Perform() {
   while (!s.IsEmpty()) {
     s.Pop(x);
     switch (x.type) {
-      case HanoiPara::MULTIPLE:
-        s.Push(HanoiPara(x.from, x.via, x.to, x.num, HanoiPara::SINGLE));
-        if (x.num > 1) {
-          s.Push(HanoiPara(x.from, x.to, x.via, x.num - 1, HanoiPara::MULTIPLE));
-        }
-        break;
-      case HanoiPara::SINGLE:
+    case HanoiPara::MULTIPLE:
+      s.Push(HanoiPara(x.from, x.via, x.to, x.num, HanoiPara::SINGLE));
+      if (x.num > 1) {
+        s.Push(HanoiPara(x.from, x.to, x.via, x.num - 1, HanoiPara::MULTIPLE));
+      }
+      break;
+    case HanoiPara::SINGLE:
 #ifndef NO_CONSOLE_OUTPUT
-        cout << "[" << ++_times << "] " << x.from << " --> " << x.to << endl;
+      cout << "[" << ++_times << "] " << x.from << " --> " << x.to << endl;
 #endif
-        if (x.num > 1) {
-          s.Push(HanoiPara(x.via, x.from, x.to, x.num - 1, HanoiPara::MULTIPLE));
-        }
-        break;
+      if (x.num > 1) {
+        s.Push(HanoiPara(x.via, x.from, x.to, x.num - 1, HanoiPara::MULTIPLE));
+      }
+      break;
     }
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   int n = 20;
 
   //----
@@ -120,38 +120,43 @@ int main(int argc, char* argv[]) {
   //----
   CHighResTimeCounter tc3;
   tc3.Begin();
-  Hanoi<LinearStack<HanoiPara> > h3('A', 'B', 'C', n);
+  Hanoi<LinearStack<HanoiPara>> h3('A', 'B', 'C', n);
   h3.Perform();
   tc3.End();
 
   //----
   CHighResTimeCounter tc4;
   tc4.Begin();
-  Hanoi<LinearStack2<HanoiPara> > h4('A', 'B', 'C', n);
+  Hanoi<LinearStack2<HanoiPara>> h4('A', 'B', 'C', n);
   h4.Perform();
   tc4.End();
 
   //----
   CHighResTimeCounter tc5;
   tc5.Begin();
-  Hanoi<StackLinkedList<HanoiPara> > h5('A', 'B', 'C', n);
+  Hanoi<StackLinkedList<HanoiPara>> h5('A', 'B', 'C', n);
   h5.Perform();
   tc5.End();
 
   //----
   CHighResTimeCounter tc6;
   tc6.Begin();
-  Hanoi<StackLinkedListCustomized<HanoiPara> > h6('A', 'B', 'C', n);
+  Hanoi<StackLinkedListCustomized<HanoiPara>> h6('A', 'B', 'C', n);
   h6.Perform();
   tc6.End();
 
-
-  cout << "Time costs on recursive: " << tc1.GetElapsedTimeInMS() << " ms" << endl;
-  cout << "Time costs on recursive2: " << tc2.GetElapsedTimeInMS() << " ms" << endl;
-  cout << "Time costs on non-recursive (Stack): " << tc3.GetElapsedTimeInMS() << " ms" << endl;
-  cout << "Time costs on non-recursive (Stack2): " << tc4.GetElapsedTimeInMS() << " ms" << endl;
-  cout << "Time costs on non-recursive (StackLinkedList): " << tc5.GetElapsedTimeInMS() << " ms" << endl;
-  cout << "Time costs on non-recursive (StackLinkedListCustomized): " << tc6.GetElapsedTimeInMS() << " ms" << endl;
+  cout << "Time costs on recursive: " << tc1.GetElapsedTimeInMS() << " ms"
+       << endl;
+  cout << "Time costs on recursive2: " << tc2.GetElapsedTimeInMS() << " ms"
+       << endl;
+  cout << "Time costs on non-recursive (Stack): " << tc3.GetElapsedTimeInMS()
+       << " ms" << endl;
+  cout << "Time costs on non-recursive (Stack2): " << tc4.GetElapsedTimeInMS()
+       << " ms" << endl;
+  cout << "Time costs on non-recursive (StackLinkedList): "
+       << tc5.GetElapsedTimeInMS() << " ms" << endl;
+  cout << "Time costs on non-recursive (StackLinkedListCustomized): "
+       << tc6.GetElapsedTimeInMS() << " ms" << endl;
 
   //
   // {{ Test results on 20 plates when commenting off `cout' statements

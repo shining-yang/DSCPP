@@ -5,7 +5,7 @@
 //
 #include "Currency.h"
 
-std::ostream& operator<<(std::ostream& os, const CCurrency& c) {
+std::ostream &operator<<(std::ostream &os, const CCurrency &c) {
 #if 0 // NO need to be a friend function
   if (c.Sign() == MINUS) { os << "-"; }
   os << "$";
@@ -40,7 +40,7 @@ std::ostream& operator<<(std::ostream& os, const CCurrency& c) {
 // NO CHECKS ON INPUT
 // Valid inputs must contain: +/-, $, dollars, dot, cents
 // Example: +$14.99, -$3.75
-std::istream& operator>>(std::istream& is, CCurrency& c) {
+std::istream &operator>>(std::istream &is, CCurrency &c) {
   SIGN sign = PLUS;
   long dollars = 0;
   long cents = 0;
@@ -48,12 +48,12 @@ std::istream& operator>>(std::istream& is, CCurrency& c) {
   char ch;
   is >> ch;
   switch (ch) {
-    case '+':
-      sign = PLUS;
-      break;
-    case '-':
-      sign = MINUS;
-      break;
+  case '+':
+    sign = PLUS;
+    break;
+  case '-':
+    sign = MINUS;
+    break;
   }
 
   is >> ch; // '$'
@@ -65,23 +65,25 @@ std::istream& operator>>(std::istream& is, CCurrency& c) {
   return is;
 }
 
-CCurrency::CCurrency(unsigned long d /*= 0*/, unsigned long c /*= 0*/, SIGN s /*= PLUS*/) {
-  if (c > 99) { throw new CBadInitializer(); }
+CCurrency::CCurrency(unsigned long d /*= 0*/, unsigned long c /*= 0*/,
+                     SIGN s /*= PLUS*/) {
+  if (c > 99) {
+    throw new CBadInitializer();
+  }
   m_nAmount = d * 100 + c;
   if (s == MINUS) {
     m_nAmount = -m_nAmount;
   }
 }
 
-CCurrency::CCurrency(float c) {
-  Set(c);
-}
+CCurrency::CCurrency(float c) { Set(c); }
 
-CCurrency::~CCurrency() {
-}
+CCurrency::~CCurrency() {}
 
 bool CCurrency::Set(unsigned long d, unsigned long c, SIGN s) {
-  if (c > 99) { return false; }
+  if (c > 99) {
+    return false;
+  }
   m_nAmount = d * 100 + c;
   if (s == MINUS) {
     m_nAmount = -m_nAmount;
@@ -103,9 +105,7 @@ bool CCurrency::Set(float c) {
   return true;
 }
 
-SIGN CCurrency::Sign() const {
-  return m_nAmount > 0 ? PLUS : MINUS;
-}
+SIGN CCurrency::Sign() const { return m_nAmount > 0 ? PLUS : MINUS; }
 
 unsigned long CCurrency::Dollars() const {
   if (m_nAmount > 0) {
@@ -123,24 +123,24 @@ unsigned long CCurrency::Cents() const {
   }
 }
 
-CCurrency CCurrency::operator+(const CCurrency& c) const {
+CCurrency CCurrency::operator+(const CCurrency &c) const {
   CCurrency t;
   t.m_nAmount = this->m_nAmount + c.m_nAmount;
   return t;
 }
 
-CCurrency CCurrency::operator-(const CCurrency& c) const {
+CCurrency CCurrency::operator-(const CCurrency &c) const {
   CCurrency t;
   t.m_nAmount = this->m_nAmount - c.m_nAmount;
   return t;
 }
 
-CCurrency& CCurrency::operator+=(const CCurrency& c) {
+CCurrency &CCurrency::operator+=(const CCurrency &c) {
   this->m_nAmount += c.m_nAmount;
   return *this;
 }
 
-CCurrency& CCurrency::operator-=(const CCurrency& c) {
+CCurrency &CCurrency::operator-=(const CCurrency &c) {
   this->m_nAmount -= c.m_nAmount;
   return *this;
 }

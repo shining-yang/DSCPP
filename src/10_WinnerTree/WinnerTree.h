@@ -24,7 +24,7 @@ using namespace DSCPP::Utils;
 namespace DSCPP {
 namespace WinnerTree {
 
-template<typename T>
+template <typename T>
 class WinnerTree {
  public:
   WinnerTree(int size = 16);
@@ -39,29 +39,29 @@ class WinnerTree {
 
  private:
   int MaxSize;
-  int n; //µ±Ç°´óĞ¡
-  int LowExt; //×îµ×²ãµÄÍâ²¿½Úµã
-  int offset; //2^k-1
-  int *t; //Ó®ÕßÊ÷Êı×é
-  T   *e; //ÔªËØÊı×é
+  int n;       // å½“å‰å¤§å°
+  int LowExt;  // æœ€åº•å±‚çš„å¤–éƒ¨èŠ‚ç‚¹
+  int offset;  // 2^k-1
+  int *t;      // èµ¢è€…æ ‘æ•°ç»„
+  T *e;        // å…ƒç´ æ•°ç»„
 };
 
-template<typename T>
+template <typename T>
 void WinnerTree<T>::Replay(int i, int (*winner)(T a[], int b, int c)) {
-  i++; // Our array starts from 1
+  i++;  // Our array starts from 1
 
   if (i <= 0 || i > n) {
     throw new OutOfBounds();
   }
 
-  int p,  // ±ÈÈü½Úµã
-      lc, // pµÄ×óº¢×Ó
-      rc; // pµÄÓÒº¢×Ó
+  int p,   // æ¯”èµ›èŠ‚ç‚¹
+      lc,  // pçš„å·¦å­©å­
+      rc;  // pçš„å³å­©å­
 
-  // ÕÒµ½µÚÒ»¸ö±ÈÈü½Úµã¼°Æä×ÓÅ®
-  if (i <= LowExt) {//´Ó×îµ×²ã¿ªÊ¼
+  // æ‰¾åˆ°ç¬¬ä¸€ä¸ªæ¯”èµ›èŠ‚ç‚¹åŠå…¶å­å¥³
+  if (i <= LowExt) {  // ä»æœ€åº•å±‚å¼€å§‹
     p = (offset + i) / 2;
-    lc = 2 * p - offset; // pµÄ×óº¢×Ó
+    lc = 2 * p - offset;  // pçš„å·¦å­©å­
     rc = lc + 1;
   } else {
     p = (i - LowExt + n - 1) / 2;
@@ -76,8 +76,8 @@ void WinnerTree<T>::Replay(int i, int (*winner)(T a[], int b, int c)) {
 
   t[p] = winner(e, lc, rc);
 
-  // Ê£Óà½ÚµãµÄ±ÈÈü
-  p /= 2; //ÒÆµ½¸¸½Úµã´¦
+  // å‰©ä½™èŠ‚ç‚¹çš„æ¯”èµ›
+  p /= 2;  // ç§»åˆ°çˆ¶èŠ‚ç‚¹å¤„
   for (; p >= 1; p /= 2) {
     if (2 * p >= n - 1) {
       t[p] = winner(e, t[2 * p], LowExt + 1);
@@ -87,27 +87,29 @@ void WinnerTree<T>::Replay(int i, int (*winner)(T a[], int b, int c)) {
   }
 }
 
-// ÔÚt[p]´¦¿ªÊ¼±ÈÈü
-template<typename T>
-void WinnerTree<T>::_Play(int p, int lc, int rc, int (*winner)(T a[], int b, int c)) {
-  // lcºÍrcÊÇt[p]µÄº¢×Ó
+// åœ¨t[p]å¤„å¼€å§‹æ¯”èµ›
+template <typename T>
+void WinnerTree<T>::_Play(int p, int lc, int rc,
+                          int (*winner)(T a[], int b, int c)) {
+  // lcå’Œrcæ˜¯t[p]çš„å­©å­
   t[p] = winner(e, lc, rc);
 
-  // ÈôÔÚÓÒº¢×Ó´¦£¬Ôò¿ÉÄÜÓĞ¶à³¡±ÈÈü
-  while (p > 1 && p % 2) {//ÔÚÓÒº¢×Ó´¦
+  // è‹¥åœ¨å³å­©å­å¤„ï¼Œåˆ™å¯èƒ½æœ‰å¤šåœºæ¯”èµ›
+  while (p > 1 && p % 2) {  // åœ¨å³å­©å­å¤„
     t[p / 2] = winner(e, t[p - 1], t[p]);
-    p /= 2; //µ½¸¸½Úµã
+    p /= 2;  // åˆ°çˆ¶èŠ‚ç‚¹
   }
 }
 
 // Return the index of final winner. -1 means error.
-template<typename T>
+template <typename T>
 int WinnerTree<T>::Winner() const {
   return n ? (t[1] - 1) : -1;
 }
 
-template<typename T>
-void WinnerTree<T>::Initialize(T a[], int size, int (*winner)(T a[], int b, int c)) {
+template <typename T>
+void WinnerTree<T>::Initialize(T a[], int size,
+                               int (*winner)(T a[], int b, int c)) {
   if (size > MaxSize || size < 2) {
     throw new BadInitializer();
   }
@@ -119,8 +121,8 @@ void WinnerTree<T>::Initialize(T a[], int size, int (*winner)(T a[], int b, int 
   // Actually, we will never touch [0]
   e = a - 1;
 
-  // ¼ÆËã s = 2 ^ log(n - 1)
-  // Ğ¡ÓÚµÈÓÚ(n - 1)µÄ×î´ó2´Î·½Êı
+  // è®¡ç®— s = 2 ^ log(n - 1)
+  // å°äºç­‰äº(n - 1)çš„æœ€å¤§2æ¬¡æ–¹æ•°
   int i, s;
   for (s = 1; 2 * s <= n - 1; s *= 2) {
   }
@@ -128,27 +130,27 @@ void WinnerTree<T>::Initialize(T a[], int size, int (*winner)(T a[], int b, int 
   LowExt = 2 * (n - s);
   offset = 2 * s - 1;
 
-  // ×îµ×²ãÍâ²¿½ÚµãµÄ±ÈÈü
+  // æœ€åº•å±‚å¤–éƒ¨èŠ‚ç‚¹çš„æ¯”èµ›
   for (i = 2; i <= LowExt; i += 2) {
     _Play((offset + i) / 2, i - 1, i, winner);
   }
 
-  // ´¦ÀíÆäÓàÍâ²¿½Úµã
-  if (n % 2) {//µ±nÆæÊıÊ±£¬ÄÚ²¿½ÚµãºÍÍâ²¿½ÚµãµÄ±ÈÈü
+  // å¤„ç†å…¶ä½™å¤–éƒ¨èŠ‚ç‚¹
+  if (n % 2) {  // å½“nå¥‡æ•°æ—¶ï¼Œå†…éƒ¨èŠ‚ç‚¹å’Œå¤–éƒ¨èŠ‚ç‚¹çš„æ¯”èµ›
     _Play(n / 2, t[n - 1], LowExt + 1, winner);
     i = LowExt + 3;
   } else {
     i = LowExt + 2;
   }
 
-  // iÎª×î×óÊ£Óà½Úµã
+  // iä¸ºæœ€å·¦å‰©ä½™èŠ‚ç‚¹
   for (; i <= n; i += 2) {
     _Play((i - LowExt + n - 1) / 2, i - 1, i, winner);
   }
 }
 
-template<typename T>
-WinnerTree<T>::WinnerTree(int size/* = 16*/) {
+template <typename T>
+WinnerTree<T>::WinnerTree(int size /* = 16*/) {
   MaxSize = size;
   t = new int[size];
   n = 0;
@@ -157,10 +159,10 @@ WinnerTree<T>::WinnerTree(int size/* = 16*/) {
   e = NULL;
 }
 
-template<typename T>
+template <typename T>
 WinnerTree<T>::~WinnerTree() {
   delete[] t;
 }
 
-}
-}
+}  // namespace WinnerTree
+}  // namespace DSCPP

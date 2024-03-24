@@ -9,46 +9,40 @@ using namespace std;
 #include "../Utility/Exception.h"
 using namespace DSCPP::Utils;
 
-template<class T>
-class LinearList {
- public:
+template <class T> class LinearList {
+public:
   LinearList(int nMaxSize = 16);
   virtual ~LinearList();
-  LinearList(const LinearList<T>& obj);
-  LinearList<T>& operator=(const LinearList<T>& obj);
+  LinearList(const LinearList<T> &obj);
+  LinearList<T> &operator=(const LinearList<T> &obj);
 
- public:
+public:
   bool IsEmpty() const;
   int Length() const;
-  bool Find(int k, T& x) const; // Get the number k element
-  int Search(const T& x) const; // Get position of x
-  LinearList<T>& Delete(int k, T& x);
-  LinearList<T>& Insert(int k, const T& x);
-  void Output(std::ostream& os) const;
+  bool Find(int k, T &x) const; // Get the number k element
+  int Search(const T &x) const; // Get position of x
+  LinearList<T> &Delete(int k, T &x);
+  LinearList<T> &Insert(int k, const T &x);
+  void Output(std::ostream &os) const;
 
- protected:
+protected:
   int GetMaxSize() const { return m_nMaxSize; }
 
- private:
+private:
   int m_nMaxSize;
   int m_nLength;
-  T* m_element;
+  T *m_element;
 };
 
-template<class T>
-LinearList<T>::LinearList(int nMaxSize/* = 16*/) {
+template <class T> LinearList<T>::LinearList(int nMaxSize /* = 16*/) {
   m_nLength = 0;
   m_nMaxSize = nMaxSize;
   m_element = new T[nMaxSize];
 }
 
-template<class T>
-LinearList<T>::~LinearList() {
-  delete[] m_element;
-}
+template <class T> LinearList<T>::~LinearList() { delete[] m_element; }
 
-template<class T>
-LinearList<T>::LinearList(const LinearList<T>& obj) {
+template <class T> LinearList<T>::LinearList(const LinearList<T> &obj) {
   m_nLength = obj.m_nLength;
   m_nMaxSize = obj.m_nMaxSize;
   m_element = new T[obj.m_nMaxSize];
@@ -58,8 +52,8 @@ LinearList<T>::LinearList(const LinearList<T>& obj) {
   }
 }
 
-template<class T>
-LinearList<T>& LinearList<T>::operator=(const LinearList<T>& obj) {
+template <class T>
+LinearList<T> &LinearList<T>::operator=(const LinearList<T> &obj) {
   if (this == &obj) {
     return *this;
   }
@@ -77,18 +71,13 @@ LinearList<T>& LinearList<T>::operator=(const LinearList<T>& obj) {
   return *this;
 }
 
-template<class T>
-bool LinearList<T>::IsEmpty() const {
+template <class T> bool LinearList<T>::IsEmpty() const {
   return m_nLength == 0;
 }
 
-template<class T>
-int LinearList<T>::Length() const {
-  return m_nLength;
-}
+template <class T> int LinearList<T>::Length() const { return m_nLength; }
 
-template<class T>
-bool LinearList<T>::Find(int k, T& x) const {
+template <class T> bool LinearList<T>::Find(int k, T &x) const {
   if (k >= 0 && k < m_nLength) {
     x = m_element[k];
     return true;
@@ -97,8 +86,7 @@ bool LinearList<T>::Find(int k, T& x) const {
   return false;
 }
 
-template<class T>
-int LinearList<T>::Search(const T& x) const {
+template <class T> int LinearList<T>::Search(const T &x) const {
   for (int i = 0; i < m_nLength; i++) {
     if (m_element[i] == x) {
       return i;
@@ -108,8 +96,7 @@ int LinearList<T>::Search(const T& x) const {
   return -1;
 }
 
-template<class T>
-LinearList<T>& LinearList<T>::Delete(int k, T& x) {
+template <class T> LinearList<T> &LinearList<T>::Delete(int k, T &x) {
   if (!Find(k, x)) {
     throw OutOfBounds();
   }
@@ -122,8 +109,7 @@ LinearList<T>& LinearList<T>::Delete(int k, T& x) {
   return *this;
 }
 
-template<class T>
-LinearList<T>& LinearList<T>::Insert(int k, const T& x) {
+template <class T> LinearList<T> &LinearList<T>::Insert(int k, const T &x) {
   if (k < 0 || k > m_nLength) {
     throw OutOfBounds();
   }
@@ -141,8 +127,7 @@ LinearList<T>& LinearList<T>::Insert(int k, const T& x) {
   return *this;
 }
 
-template<class T>
-void LinearList<T>::Output(std::ostream& os) const {
+template <class T> void LinearList<T>::Output(std::ostream &os) const {
   for (int i = 0; i < m_nLength; i++) {
     os << m_element[i] << " ";
   }

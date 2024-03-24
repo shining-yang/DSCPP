@@ -2,45 +2,41 @@
 // File: 09_PriorityQueue.cpp
 // Shining Yang <y.s.n@live.com>, 2014-12-05
 //
-#include <string>
-#include <iostream>
-#include <iomanip>
 #include "PriorityQueue.h"
+#include <iomanip>
+#include <iostream>
+#include <string>
 using namespace std;
 using namespace DSCPP::PriorityQueue;
 
 class Motor {
- public:
+public:
   Motor() {}
-  Motor(const std::string& v, const std::string& m, double p, int pri)
-    : vendor(v), model(m), price(p), priority(pri) {}
+  Motor(const std::string &v, const std::string &m, double p, int pri)
+      : vendor(v), model(m), price(p), priority(pri) {}
 
-  operator int() const {
-    return priority;
-  }
+  operator int() const { return priority; }
 
-  operator double() const {
-    return price;
-  }
+  operator double() const { return price; }
 
-  friend ostream& operator<<(ostream& os, const Motor& m);
+  friend ostream &operator<<(ostream &os, const Motor &m);
 
- private:
+private:
   std::string vendor;
   std::string model;
   double price;
   int priority;
 };
 
-ostream& operator<<(ostream& os, const Motor& m) {
+ostream &operator<<(ostream &os, const Motor &m) {
   os << setiosflags(std::ios::left) << setw(8) << m.vendor << ", "
-     << resetiosflags(std::ios::left) << setw(4) << m.model << ", "
-     << "$" << setprecision(2) << setiosflags(std::ios::fixed) << m.price << ", "
+     << resetiosflags(std::ios::left) << setw(4) << m.model << ", " << "$"
+     << setprecision(2) << setiosflags(std::ios::fixed) << m.price << ", "
      << setw(10) << m.priority;
   return os;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   PriorityQueue<Motor, int> pq;
 
   Motor m1("BMW", "i8", 250000.99, 3);
